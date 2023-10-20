@@ -1,0 +1,88 @@
+{
+  "name": "template-ts-vite",
+  "version": "1.1.0",
+  "description": "Excalibur TypeScript template for Vite",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build-prod": "tsc && vite build",
+    "serve": "vite preview",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/excaliburjs/template-ts-vite.git"
+  },
+  "keywords": [
+    "excalibur",
+    "excaliburjs",
+    "vite",
+    "game-engine"
+  ],
+  "author": "Erik Onarheim",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/excaliburjs/template-ts-vite/issues"
+  },
+  "homepage": "https://github.com/excaliburjs/template-ts-vite#readme",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.1",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/jest": "^29.5.11",
+    "@types/react": "^18.2.33",
+    "@types/react-blockies": "^1.4.4",
+    "@types/react-dom": "^18.2.14",
+    "@types/react-typing-effect": "^2.0.6",
+    "autoprefixer": "^10.4.16",
+    "daisyui": "^3.9.4",
+    "excalibur": "0.28.1",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.2.2",
+    "vite": "4.5.0"
+  },
+  "dependencies": {
+    "@excaliburjs/testing": "^0.25.0",
+    "@tensorflow/tfjs": "^4.16.0",
+    "@types/react-router-dom": "^5.3.3",
+    "classnames": "^2.3.2",
+    "jest-canvas-mock": "^2.5.2",
+    "react": "^18.2.0",
+    "react-blockies": "^1.4.1",
+    "react-dom": "^18.2.0",
+    "react-fps": "^1.0.6",
+    "react-router-dom": "^6.22.0",
+    "react-typing-effect": "^2.0.5",
+    "ts-node": "^10.9.2",
+    "unique-names-generator": "^4.7.1",
+    "vitest": "^1.2.2"
+  },
+  "jest": {
+    "setupFiles": [
+      "jest-canvas-mock"
+    ],
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {
+      "^.+\\.svg$": "jest-svg-transformer",
+      "^.+\\.(css|less|scss)$": "identity-obj-proxy"
+    },
+    "transform": {
+      "^.+\\.(js|jsx|ts|tsx)$": "ts-jest"
+    },
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "jsx",
+      "ts",
+      "tsx"
+    ]
+  }
+}

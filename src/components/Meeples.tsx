@@ -102,7 +102,7 @@ const Meeples = () => {
                   <span className="w-full text-left flex items-center gap-2">
                     <Blockies
                       seed={actor.owner.name}
-                      size={10}
+                      size={8}
                       scale={3}
                       color={actor.color.toHex()}
                       bgColor="#000"

@@ -66,7 +66,7 @@ const Meeples = () => {
           all
         </NavLink>
         <NavLink
-          to="/meeples/?filter=ships"
+          to="?filter=ships"
           className={cx("hover:underline p-2", {
             "bg-purple-800 ": filter === "ships",
           })}
@@ -74,7 +74,7 @@ const Meeples = () => {
           ships
         </NavLink>
         <NavLink
-          to="/meeples/?filter=destinations"
+          to="?filter=destinations"
           className={cx("hover:underline p-2", {
             "bg-purple-800 ": filter === "destinations",
           })}
@@ -96,7 +96,7 @@ const Meeples = () => {
             >
               <div className={cx("flex items-center gap-2")}>
                 <NavLink
-                  to={`/meeples/${actor.id}`}
+                  to={`/meeples/${actor.id}?filter=${params.get("filter")}`}
                   title="Click to zoom and follow"
                 >
                   <span className="w-full text-left flex items-center gap-2">

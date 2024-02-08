@@ -25,18 +25,11 @@ export function filterActors(actors: Actor[], filter: Filter) {
         case "destinations":
           return a instanceof Destination;
         default:
-          return a instanceof Ship || a instanceof Destination;
+          return a instanceof Destination || a instanceof Ship;
       }
     })
     .map((a) => {
-      switch (filter) {
-        case "ships":
-          return a as Ship;
-        case "destinations":
-          return a as Destination;
-        default:
-          return a as Meeple;
-      }
+      return a as Meeple;
     });
 }
 

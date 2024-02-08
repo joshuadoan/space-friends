@@ -25,6 +25,23 @@ export type StateMachine = {
   };
 };
 
+const machine: StateMachine = {
+  ["off"]: {
+    ["turn on"]: "plotting course",
+  },
+  ["plotting course"]: {
+    ["go to station"]: "traveling to destination",
+    ["turn off"]: "off",
+  },
+  "traveling to destination": {
+    ["turn off"]: "off",
+    ["trade"]: "working",
+  },
+  working: {
+    "turn off": "off",
+  },
+};
+
 export class Ship extends Meeple {
   private speed = randomIntFromInterval(10, 20);
   private state: ShipState = "off";
@@ -51,24 +68,13 @@ export class Ship extends Meeple {
     engine.add(timer);
     timer.start();
   }
-
+  /**
+   * Dispatch method, which is responsible for determining the next state
+   * of the ship based on the current state and the action that was
+   * dispatched.
+   */
   async dispatch(action: ShipAction) {
-    const newState = {
-      ["off"]: {
-        ["turn on"]: "plotting course",
-      },
-      ["plotting course"]: {
-        ["go to station"]: "traveling to destination",
-        ["turn off"]: "off",
-      },
-      "traveling to destination": {
-        ["turn off"]: "off",
-        ["trade"]: "working",
-      },
-      working: {
-        "turn off": "off",
-      },
-    }[this.state][action.name] as ShipState;
+    const newState = machine[this.state][action.name] as ShipState;
 
     if (!newState) {
       throw new Error(
@@ -80,6 +86,37 @@ export class Ship extends Meeple {
       action.action();
     }
     this.setState(newState);
+  }
+
+  /**
+   * Determines the next state of the ship based on the current state and
+   * the action that was dispatched
+   */
+  next() {
+    switch (this.state) {
+      case "off":
+        this.graphics.opacity = 0.5;
+        this.dispatch({
+          name: "turn on",
+        });
+        break;
+      case "plotting course":
+        this.graphics.opacity = 1;
+        this.dispatch({
+          name: "go to station",
+          action: () => this.goToWork(),
+        });
+        break;
+      case "traveling to destination":
+        this.graphics.opacity = 1;
+        break;
+      case "working":
+        this.graphics.opacity = 0.5;
+        this.dispatch({
+          name: "turn off",
+        });
+        break;
+    }
   }
 
   setName(name: string) {
@@ -118,46 +155,5 @@ export class Ship extends Meeple {
           name: "trade",
         });
       });
-  }
-
-  next() {
-    this.handleLights();
-    switch (this.state) {
-      case "off":
-        this.dispatch({
-          name: "turn on",
-        });
-        break;
-      case "plotting course":
-        this.dispatch({
-          name: "go to station",
-          action: () => this.goToWork(),
-        });
-        break;
-      case "traveling to destination":
-        break;
-      case "working":
-        this.dispatch({
-          name: "turn off",
-        });
-        break;
-    }
-  }
-
-  handleLights() {
-    switch (this.state) {
-      case "off":
-        this.graphics.opacity = 0.5;
-        break;
-      case "plotting course":
-        this.graphics.opacity = 1;
-        break;
-      case "traveling to destination":
-        this.graphics.opacity = 1;
-        break;
-      case "working":
-        this.graphics.opacity = 0.5;
-        break;
-    }
   }
 }

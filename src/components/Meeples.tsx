@@ -118,8 +118,8 @@ const Meeples = () => {
                 </div>
                 <div className="flex gap-2">
                   <label className="opacity-70">type:</label>
-                  {actor instanceof Ship && <span>Ship</span>}
-                  {actor instanceof Destination && <span>Destination</span>}
+                  {actor instanceof Ship && <span>ship</span>}
+                  {actor instanceof Destination && <span>destination</span>}
                 </div>
                 <div className="flex gap-2">
                   <label className="opacity-70">position:</label>

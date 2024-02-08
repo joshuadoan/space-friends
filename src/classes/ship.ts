@@ -6,11 +6,11 @@ import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 
 const colors = [Color.Violet, Color.Viridian, Color.Gray, Color.Orange];
 
-export enum ShipStates {
+export enum ShipState {
   off = "off",
-  waiting = "waiting",
-  traveling = "traveling",
-  trading = "trading",
+  plotting_course = "plotting course",
+  traveling_to_work = "traveling to work",
+  working = "working",
 }
 
 export enum ShipActions {
@@ -20,22 +20,22 @@ export enum ShipActions {
   trade = "trade",
 }
 
-export type ShipState = keyof typeof ShipStates;
-// export type ShipAction = keyof typeof ShipActions;
+// export type ShipState = keyof typeof ShipStates;
+
 export type ShipAction = {
-  name: keyof typeof ShipActions;
+  name: ShipActions;
   action?: () => void;
 };
 
 export type StateMachine = {
-  [state in ShipStates]: {
+  [state in ShipState]: {
     [action in ShipActions]?: ShipState;
   };
 };
 
 export class Ship extends Meeple {
   private speed = randomIntFromInterval(10, 20);
-  private state: ShipState = ShipStates.off;
+  private state: ShipState = ShipState.off;
 
   constructor() {
     super({
@@ -62,19 +62,19 @@ export class Ship extends Meeple {
 
   async dispatch(action: ShipAction) {
     const newState = {
-      [ShipStates.off]: {
-        [ShipActions.turn_on]: ShipStates.waiting,
+      [ShipState.off]: {
+        [ShipActions.turn_on]: ShipState.plotting_course,
       },
-      [ShipStates.waiting]: {
-        [ShipActions.go_to_station]: ShipStates.traveling,
-        [ShipActions.turn_off]: ShipStates.off,
+      [ShipState.plotting_course]: {
+        [ShipActions.go_to_station]: ShipState.traveling_to_work,
+        [ShipActions.turn_off]: ShipState.off,
       },
-      [ShipStates.traveling]: {
-        [ShipActions.turn_off]: ShipStates.off,
-        [ShipActions.trade]: ShipStates.trading,
+      [ShipState.traveling_to_work]: {
+        [ShipActions.turn_off]: ShipState.off,
+        [ShipActions.trade]: ShipState.working,
       },
-      [ShipStates.trading]: {
-        [ShipActions.turn_off]: ShipStates.off,
+      [ShipState.working]: {
+        [ShipActions.turn_off]: ShipState.off,
       },
     }[this.state][action.name];
 
@@ -132,20 +132,20 @@ export class Ship extends Meeple {
   next() {
     this.handleLights();
     switch (this.state) {
-      case ShipStates.off:
+      case ShipState.off:
         this.dispatch({
           name: ShipActions.turn_on,
         });
         break;
-      case ShipStates.waiting:
+      case ShipState.plotting_course:
         this.dispatch({
           name: ShipActions.go_to_station,
           action: () => this.goToWork(),
         });
         break;
-      case ShipStates.traveling:
+      case ShipState.traveling_to_work:
         break;
-      case ShipStates.trading:
+      case ShipState.working:
         this.dispatch({
           name: ShipActions.turn_off,
         });
@@ -155,16 +155,16 @@ export class Ship extends Meeple {
 
   handleLights() {
     switch (this.state) {
-      case ShipStates.off:
+      case ShipState.off:
         this.graphics.opacity = 0.5;
         break;
-      case ShipStates.waiting:
+      case ShipState.plotting_course:
         this.graphics.opacity = 1;
         break;
-      case ShipStates.traveling:
+      case ShipState.traveling_to_work:
         this.graphics.opacity = 1;
         break;
-      case ShipStates.trading:
+      case ShipState.working:
         this.graphics.opacity = 0.5;
         break;
     }

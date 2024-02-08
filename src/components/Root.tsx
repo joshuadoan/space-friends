@@ -44,7 +44,7 @@ const Root = () => {
   const location = useLocation();
 
   if (location.pathname === "/") {
-    return <Navigate to="/meeples" />;
+    return <Navigate to="/meeples/?filter=ships" />;
   }
 
   return (

@@ -7,6 +7,8 @@ import { filterActors } from "../utils/helpers";
 import { Meeple } from "../classes/meeple";
 import { Game } from "../classes/game";
 import NavLink from "./NavLink";
+import { Ship } from "../classes/ship";
+import { Destination } from "../classes/destination";
 
 const Meeples = () => {
   const [params] = useSearchParams();
@@ -81,7 +83,7 @@ const Meeples = () => {
         </NavLink>
       </nav>
       <menu
-        className="flex flex-col justify-start overflow-auto h-full p-2"
+        className="flex flex-col justify-start overflow-auto h-full p-4"
         role="menu"
       >
         {filterActors([...state.actors], params.get("filter") as Filter).map(
@@ -113,6 +115,11 @@ const Meeples = () => {
                 <div className="flex gap-2">
                   <label className="opacity-70">state:</label>
                   <span>{actor.getState()}</span>
+                </div>
+                <div className="flex gap-2">
+                  <label className="opacity-70">type:</label>
+                  {actor instanceof Ship && <span>Ship</span>}
+                  {actor instanceof Destination && <span>Destination</span>}
                 </div>
                 <div className="flex gap-2">
                   <label className="opacity-70">position:</label>

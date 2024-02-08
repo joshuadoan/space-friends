@@ -56,7 +56,7 @@ const Meeples = () => {
       <nav className="sticky top-0 flex items-center gap-2 bg-black bg-opacity-50 p-2">
         Filters:
         <NavLink
-          to="?filter=ships"
+          to="/meeples/?filter=ships"
           className={cx("hover:underline p-2", {
             "bg-purple-800 ": params.get("filter") === "ships",
           })}
@@ -64,7 +64,7 @@ const Meeples = () => {
           ships
         </NavLink>
         <NavLink
-          to="?filter=destinations"
+          to="/meeples/?filter=destinations"
           className={cx("hover:underline p-2", {
             "bg-purple-800 ": params.get("filter") === "destinations",
           })}

@@ -6,21 +6,13 @@ import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 
 const colors = [Color.Violet, Color.Viridian, Color.Gray, Color.Orange];
 
-export enum ShipState {
-  off = "off",
-  plotting_course = "plotting course",
-  traveling_to_work = "traveling to work",
-  working = "working",
-}
+export type ShipState =
+  | "off"
+  | "plotting course"
+  | "traveling to destination"
+  | "working";
 
-export enum ShipActions {
-  turn_on = "turn_on",
-  turn_off = "turn_off",
-  go_to_station = "go_to_station",
-  trade = "trade",
-}
-
-// export type ShipState = keyof typeof ShipStates;
+export type ShipActions = "turn on" | "turn off" | "go to station" | "trade";
 
 export type ShipAction = {
   name: ShipActions;
@@ -35,7 +27,7 @@ export type StateMachine = {
 
 export class Ship extends Meeple {
   private speed = randomIntFromInterval(10, 20);
-  private state: ShipState = ShipState.off;
+  private state: ShipState = "off";
 
   constructor() {
     super({
@@ -62,21 +54,21 @@ export class Ship extends Meeple {
 
   async dispatch(action: ShipAction) {
     const newState = {
-      [ShipState.off]: {
-        [ShipActions.turn_on]: ShipState.plotting_course,
+      ["off"]: {
+        ["turn on"]: "plotting course",
       },
-      [ShipState.plotting_course]: {
-        [ShipActions.go_to_station]: ShipState.traveling_to_work,
-        [ShipActions.turn_off]: ShipState.off,
+      ["plotting course"]: {
+        ["go to station"]: "traveling to destination",
+        ["turn off"]: "off",
       },
-      [ShipState.traveling_to_work]: {
-        [ShipActions.turn_off]: ShipState.off,
-        [ShipActions.trade]: ShipState.working,
+      "traveling to destination": {
+        ["turn off"]: "off",
+        ["trade"]: "working",
       },
-      [ShipState.working]: {
-        [ShipActions.turn_off]: ShipState.off,
+      working: {
+        "turn off": "off",
       },
-    }[this.state][action.name];
+    }[this.state][action.name] as ShipState;
 
     if (!newState) {
       throw new Error(
@@ -122,9 +114,8 @@ export class Ship extends Meeple {
         this.speed
       )
       .callMethod(() => {
-        // destination.addGuest(this);
         this.dispatch({
-          name: ShipActions.trade,
+          name: "trade",
         });
       });
   }
@@ -132,22 +123,22 @@ export class Ship extends Meeple {
   next() {
     this.handleLights();
     switch (this.state) {
-      case ShipState.off:
+      case "off":
         this.dispatch({
-          name: ShipActions.turn_on,
+          name: "turn on",
         });
         break;
-      case ShipState.plotting_course:
+      case "plotting course":
         this.dispatch({
-          name: ShipActions.go_to_station,
+          name: "go to station",
           action: () => this.goToWork(),
         });
         break;
-      case ShipState.traveling_to_work:
+      case "traveling to destination":
         break;
-      case ShipState.working:
+      case "working":
         this.dispatch({
-          name: ShipActions.turn_off,
+          name: "turn off",
         });
         break;
     }
@@ -155,16 +146,16 @@ export class Ship extends Meeple {
 
   handleLights() {
     switch (this.state) {
-      case ShipState.off:
+      case "off":
         this.graphics.opacity = 0.5;
         break;
-      case ShipState.plotting_course:
+      case "plotting course":
         this.graphics.opacity = 1;
         break;
-      case ShipState.traveling_to_work:
+      case "traveling to destination":
         this.graphics.opacity = 1;
         break;
-      case ShipState.working:
+      case "working":
         this.graphics.opacity = 0.5;
         break;
     }

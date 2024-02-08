@@ -4,7 +4,7 @@ import { MAX_ZOOM } from "../consts";
 
 export class Meeple extends Actor {
   public owner = {
-    name: `The ${getDestinationName()}`,
+    name: `${getDestinationName()}`,
   };
 
   private guests: {

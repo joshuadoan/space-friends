@@ -1,5 +1,11 @@
 import React from "react";
-import { Navigate, Outlet, useLoaderData, useLocation } from "react-router-dom";
+import {
+  Navigate,
+  Outlet,
+  useLoaderData,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { Game } from "../classes/game";
 import Button from "./Button";
 import NavLink from "./NavLink";
@@ -37,9 +43,16 @@ export async function rootLoader() {
 }
 
 const Root = () => {
+  const navigate = useNavigate();
+
   const { game } = useLoaderData() as {
     game: Game;
   };
+
+  // Add click event to all actors for selection
+  game.currentScene.actors.map((a) =>
+    a.on("pointerdown", () => navigate(`/meeples/${a.id}?filter=`))
+  );
 
   const location = useLocation();
 

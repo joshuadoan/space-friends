@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import Root from "./components/Root";
 import Meeples from "./components/Meeples";
 import Help from "./components/Help";
-import { rootLoader } from "./components/root-loader";
+import { rootLoader } from "./components/Root";
 import ErrorPage from "./components/ErrorPage";
 
 const router = createBrowserRouter([

@@ -31,4 +31,8 @@ export class Meeple extends Actor {
   getGuests() {
     return this.guests;
   }
+
+  getState() {
+    return "off";
+  }
 }

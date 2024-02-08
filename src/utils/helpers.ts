@@ -18,10 +18,26 @@ export function randomIntFromInterval(min: number, max: number) {
  */
 export function filterActors(actors: Actor[], filter: Filter) {
   return actors
-    .filter((a) =>
-      filter === "ships" ? a instanceof Ship : a instanceof Destination
-    )
-    .map((a) => (filter === "ships" ? (a as Ship) : (a as Destination)));
+    .filter((a) => {
+      switch (filter) {
+        case "ships":
+          return a instanceof Ship;
+        case "destinations":
+          return a instanceof Destination;
+        default:
+          return a instanceof Ship || a instanceof Destination;
+      }
+    })
+    .map((a) => {
+      switch (filter) {
+        case "ships":
+          return a as Ship;
+        case "destinations":
+          return a as Destination;
+        default:
+          return a as Meeple;
+      }
+    });
 }
 
 /**

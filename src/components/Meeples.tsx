@@ -24,6 +24,7 @@ const Meeples = () => {
   }>();
 
   const selectedActor = state.actors.find((a) => a.id === Number(meepleId));
+  const filter = params.get("filter") as Filter;
 
   useEffect(
     function syncGameWithState() {
@@ -53,12 +54,19 @@ const Meeples = () => {
 
   return (
     <>
-      <nav className="sticky top-0 flex items-center gap-2 bg-black bg-opacity-50 p-2">
-        Filters:
+      <nav className="flex items-center gap-2 bg-black bg-opacity-50 px-4">
+        <NavLink
+          to="/meeples"
+          className={cx("hover:underline p-2", {
+            "bg-purple-800 ": !filter,
+          })}
+        >
+          all
+        </NavLink>
         <NavLink
           to="/meeples/?filter=ships"
           className={cx("hover:underline p-2", {
-            "bg-purple-800 ": params.get("filter") === "ships",
+            "bg-purple-800 ": filter === "ships",
           })}
         >
           ships
@@ -66,27 +74,27 @@ const Meeples = () => {
         <NavLink
           to="/meeples/?filter=destinations"
           className={cx("hover:underline p-2", {
-            "bg-purple-800 ": params.get("filter") === "destinations",
+            "bg-purple-800 ": filter === "destinations",
           })}
         >
           destinations
         </NavLink>
       </nav>
       <menu
-        className="p-2 flex flex-col justify-start overflow-auto h-full"
+        className="flex flex-col justify-start overflow-auto h-full p-2"
         role="menu"
       >
         {filterActors(
-          [...(state.actors ?? [])],
+          [...state.actors],
           (params.get("filter") as Filter) ?? "ships"
         ).map((actor) => (
           <li
             key={actor.id}
-            className={cx("", {
+            className={cx("p-2", {
               "bg-purple-800 ": actor.id === selectedActor?.id,
             })}
           >
-            <div className={cx("flex items-center gap-2 ")}>
+            <div className={cx("flex items-center gap-2")}>
               <NavLink
                 to={`/meeples/${actor.id}`}
                 title="Click to zoom and follow"
@@ -102,14 +110,17 @@ const Meeples = () => {
                   {actor.owner.name}
                 </span>
               </NavLink>
-              <span>{actor.getState()}</span>
             </div>
-            <div className="flex gap-2 p-2">
-              <span>x: {Math.round(actor.pos.x)}</span>
-              <span>y:{Math.round(actor.pos.y)}</span>
-            </div>
-            <div className="flex gap-2 p-2">
-              {Object.values(actor.getGuests()).map((a) => a.owner.name)}
+            <div className="px-2">
+              <div className="flex gap-2">
+                <label className="opacity-70">state:</label>
+                <span>{actor.getState()}</span>
+              </div>
+              <div className="flex gap-2">
+                <label className="opacity-70">position:</label>
+                <span>x: {Math.round(actor.pos.x)}</span>
+                <span>y:{Math.round(actor.pos.y)}</span>
+              </div>
             </div>
           </li>
         ))}

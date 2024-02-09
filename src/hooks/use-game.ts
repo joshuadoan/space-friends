@@ -9,7 +9,7 @@ import {
 import { makeStar } from "../utils/helpers";
 import { Destination } from "../classes/destination";
 import { Ship } from "../classes/ship";
-import { Game } from "../classes/game";
+import Game from "../classes/game";
 
 export default function useGame() {
   const [game, setGame] = React.useState<Game | null>(null);

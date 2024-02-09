@@ -7,7 +7,7 @@ import Help from "./components/Help";
 import { rootLoader } from "./components/Root";
 import ErrorPage from "./components/ErrorPage";
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,

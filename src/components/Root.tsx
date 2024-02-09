@@ -6,7 +6,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { Game } from "../classes/game";
+import Game from "../classes/game";
 import Button from "./Button";
 import NavLink from "./NavLink";
 import { Destination } from "../classes/destination";

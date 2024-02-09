@@ -5,7 +5,7 @@ import { useOutletContext, useParams, useSearchParams } from "react-router-dom";
 import useUxState, { ActionNames, Filter } from "../hooks/use-ux-state";
 import { filterActors } from "../utils/helpers";
 import { Meeple } from "../classes/meeple";
-import { Game } from "../classes/game";
+import Game from "../classes/game";
 import NavLink from "./NavLink";
 import { Ship } from "../classes/ship";
 import { Destination } from "../classes/destination";
@@ -126,6 +126,10 @@ const Meeples = () => {
                   <span>x: {Math.round(actor.pos.x)}</span>
                   <span>y:{Math.round(actor.pos.y)}</span>
                 </div>
+                <details>
+                  <summary>more details</summary>
+                  <div>more details here.</div>
+                </details>
               </div>
             </li>
           )

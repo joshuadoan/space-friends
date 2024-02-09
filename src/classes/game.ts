@@ -4,7 +4,7 @@ import { MIN_ZOOM } from "../consts";
 /**
  * Resets the zoom of the camera.
  */
-export class Game extends Engine {
+class Game extends Engine {
   resetZoom() {
     const center = vec(
       (this.drawWidth / 2) * this.currentScene.camera.zoom,
@@ -17,3 +17,4 @@ export class Game extends Engine {
     camera.strategy.camera.zoomOverTime(MIN_ZOOM, 1000);
   }
 }
+export default Game;

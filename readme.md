@@ -5,7 +5,7 @@ Typescript, React, canvas state machines, and so many space friends!
 
 - Vite for building
 - React Router for navigation
-- Excaliber JS for the game rendering
+- Excaliber JS for the canvas game rendering
 - Fully navigatable by keyboard
 - Tested with React Testing Library
 

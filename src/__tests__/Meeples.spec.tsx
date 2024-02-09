@@ -1,74 +1,16 @@
 import React from "react";
 import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/jest-globals";
 import { enableFetchMocks } from "jest-fetch-mock";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import Root from "../components/Root";
-import { Ship } from "../classes/ship";
-import { Destination } from "../classes/destination";
-import ErrorPage from "../components/ErrorPage";
-import Meeples from "../components/Meeples";
-import Help from "../components/Help";
+import { mockRouter } from "./test-utils/mockRouter";
 
 enableFetchMocks();
 
 test("Renders the application", async () => {
-  render(
-    <RouterProvider
-      router={createBrowserRouter([
-        {
-          path: "/",
-          element: <Root />,
-          errorElement: <ErrorPage />,
-          loader: () => {
-            return new Promise((resolve) => {
-              resolve({
-                game: {
-                  currentScene: {
-                    actors: [
-                      new Ship({
-                        name: "Meeple 1",
-                      }),
-                      new Ship({
-                        name: "Meeple 2",
-                      }),
-                      new Ship({
-                        name: "Meeple 3",
-                      }),
-                      new Destination({
-                        name: "Destination 1",
-                      }),
-                      new Destination({
-                        name: "Destination 2",
-                      }),
-                    ],
-                  },
-                },
-              });
-            });
-          },
-          shouldRevalidate: () => false,
-          children: [
-            {
-              path: "/meeples",
-              element: <Meeples />,
-              children: [
-                {
-                  path: "/meeples/:meepleId",
-                  element: <Meeples />,
-                },
-              ],
-            },
-            {
-              path: "/help",
-              element: <Help />,
-            },
-          ],
-        },
-      ])}
-    />
-  );
+  render(<RouterProvider router={mockRouter()} />);
 
   await screen.findByText("meeples");
   await screen.findByText("help");

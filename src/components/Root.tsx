@@ -61,14 +61,16 @@ const Root = () => {
   }
 
   return (
-    <div className="h-full absolute">
-      <nav className="flex gap-2 bg-black bg-opacity-50 p-4">
-        <NavLink to="/meeples">meeples</NavLink>
-        <NavLink to="/help">help</NavLink>
-        <Button onClick={() => game?.resetZoom()}>reset zoom</Button>
-      </nav>
-      <Outlet context={{ game }} />
-    </div>
+    <>
+      <div className="h-full absolute">
+        <nav className="flex gap-2 bg-black bg-opacity-50 p-4">
+          <NavLink to="/meeples">meeples</NavLink>
+          <NavLink to="/help">help</NavLink>
+          <Button onClick={() => game?.resetZoom()}>reset zoom</Button>
+        </nav>
+        <Outlet context={{ game }} />
+      </div>
+    </>
   );
 };
 export default Root;

@@ -8,17 +8,15 @@ import { getDestinationName } from "../utils/get-name";
 const colors = [Color.Violet, Color.Viridian, Color.Gray, Color.Orange];
 
 export enum ShipState {
-  Off = "off",
   PlottingCourse = "plotting course",
   TravelingToWork = "traveling to work",
   Working = "working",
 }
 
 export enum ShipAction {
-  TurnOn = "turn on",
-  TurnOff = "turn off",
-  GoToStation = "go to station",
-  Trade = "trade",
+  GoToWork = "go to work",
+  StartWorking = "start working",
+  FinishWorking = "finish working",
 }
 
 export type StateMachine = {
@@ -28,25 +26,20 @@ export type StateMachine = {
 };
 
 const machine: StateMachine = {
-  [ShipState.Off]: {
-    [ShipAction.TurnOn]: ShipState.PlottingCourse,
-  },
   [ShipState.PlottingCourse]: {
-    [ShipAction.GoToStation]: ShipState.TravelingToWork,
-    [ShipAction.TurnOff]: ShipState.Off,
+    [ShipAction.GoToWork]: ShipState.TravelingToWork,
   },
   [ShipState.TravelingToWork]: {
-    [ShipAction.TurnOff]: ShipState.Off,
-    [ShipAction.Trade]: ShipState.Working,
+    [ShipAction.StartWorking]: ShipState.Working,
   },
   [ShipState.Working]: {
-    [ShipAction.TurnOff]: ShipState.Off,
+    [ShipAction.FinishWorking]: ShipState.PlottingCourse,
   },
 };
 
 export class Ship extends Meeple {
-  private speed = randomIntFromInterval(10, 20);
-  private state: ShipState = ShipState.Off;
+  private speed = randomIntFromInterval(27, 37);
+  private state: ShipState = ShipState.PlottingCourse;
 
   constructor(options?: { name?: string }) {
     super({
@@ -58,11 +51,11 @@ export class Ship extends Meeple {
   }
 
   onInitialize(engine: Engine): void {
-    this.graphics.opacity = 0.5;
     this.pos = getRandomScreenPosition(engine);
+    this.turnOffLights();
 
     const timer = new Timer({
-      interval: randomIntFromInterval(300, 10000),
+      interval: randomIntFromInterval(3000, 10000),
       repeats: true,
     });
 
@@ -85,18 +78,18 @@ export class Ship extends Meeple {
         `Action ${action} is not a valid step from state ${this.state}`
       );
     }
+    this.setJournal(action);
 
     switch (action) {
-      case ShipAction.TurnOn:
+      case ShipAction.GoToWork:
         this.turnOnLights();
-        break;
-      case ShipAction.TurnOff:
-        this.turnOffLights();
-        break;
-      case ShipAction.GoToStation:
         this.goToWork();
         break;
-      case ShipAction.Trade:
+      case ShipAction.StartWorking:
+        this.turnOffLights();
+        break;
+      case ShipAction.FinishWorking:
+        this.turnOnLights();
         break;
     }
 
@@ -109,16 +102,13 @@ export class Ship extends Meeple {
    */
   next() {
     switch (this.state) {
-      case ShipState.Off:
-        this.dispatch(ShipAction.TurnOn);
-        break;
       case "plotting course":
-        this.dispatch(ShipAction.GoToStation);
+        this.dispatch(ShipAction.GoToWork);
         break;
       case "traveling to work":
         break;
       case "working":
-        this.dispatch(ShipAction.TurnOff);
+        this.dispatch(ShipAction.FinishWorking);
         break;
     }
   }
@@ -151,7 +141,7 @@ export class Ship extends Meeple {
         this.speed
       )
       .callMethod(() => {
-        this.dispatch(ShipAction.Trade);
+        this.dispatch(ShipAction.StartWorking);
       });
   }
 

@@ -1,10 +1,25 @@
 import { Actor } from "excalibur";
 import { MAX_ZOOM } from "../consts";
+import { ShipAction } from "./ship";
+import Game from "./game";
 
 export class Meeple extends Actor {
   private guests: {
     [id: string]: Meeple;
   } = {};
+
+  private journal: {
+    [timeStamp: number]: ShipAction;
+  } = {};
+
+  setJournal(action: ShipAction) {
+    const timeStamp = Date.now();
+    this.journal[timeStamp] = action;
+  }
+
+  getJournal() {
+    return Object.values(this.journal);
+  }
 
   /**
    * Zooms the camera in on the specified actor over a period of time.
@@ -28,6 +43,10 @@ export class Meeple extends Actor {
   }
 
   getState() {
-    return "off";
+    return "";
+  }
+
+  getGame(): Game {
+    return this.scene.engine as Game;
   }
 }

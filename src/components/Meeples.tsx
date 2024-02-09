@@ -127,10 +127,16 @@ const Meeples = () => {
                   <span>x: {Math.round(actor.pos.x)}</span>
                   <span>y:{Math.round(actor.pos.y)}</span>
                 </div>
-                {/* <details>
-                  <summary>more details</summary>
-                  <div>more details here.</div>
-                </details> */}
+                <details>
+                  <summary>Journal ({actor.getJournal().length})</summary>
+                  <div>
+                    <ul>
+                      {actor.getJournal().map((entry, i) => (
+                        <li key={i}>{entry}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </details>
               </div>
             </li>
           )

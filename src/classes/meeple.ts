@@ -1,12 +1,7 @@
 import { Actor } from "excalibur";
-import { getDestinationName } from "../utils/get-name";
 import { MAX_ZOOM } from "../consts";
 
 export class Meeple extends Actor {
-  public owner = {
-    name: `${getDestinationName()}`,
-  };
-
   private guests: {
     [id: string]: Meeple;
   } = {};

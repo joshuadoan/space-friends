@@ -7,7 +7,7 @@ import Help from "./components/Help";
 import { rootLoader } from "./components/Root";
 import ErrorPage from "./components/ErrorPage";
 
-export const router = createBrowserRouter([
+export const routes = [
   {
     path: "/",
     element: <Root />,
@@ -35,7 +35,9 @@ export const router = createBrowserRouter([
     path: "*",
     element: <ErrorPage />,
   },
-]);
+];
+
+export const router = createBrowserRouter(routes);
 
 ReactDOM.createRoot(document.getElementById("pepper") as HTMLElement).render(
   <React.StrictMode>

@@ -93,6 +93,7 @@ const Meeples = () => {
               className={cx("p-2", {
                 "bg-purple-800 ": actor.id === selectedActor?.id,
               })}
+              data-testid="meeple"
             >
               <div className={cx("flex items-center gap-2")}>
                 <NavLink
@@ -101,13 +102,13 @@ const Meeples = () => {
                 >
                   <span className="w-full text-left flex items-center gap-2">
                     <Blockies
-                      seed={actor.owner.name}
+                      seed={actor.name}
                       size={8}
                       scale={3}
                       color={actor.color.toHex()}
                       bgColor="#000"
                     />
-                    {actor.owner.name}
+                    {actor.name}
                   </span>
                 </NavLink>
               </div>

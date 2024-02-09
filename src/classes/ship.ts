@@ -3,6 +3,7 @@ import { getRandomDestination, randomIntFromInterval } from "../utils/helpers";
 import { Destination } from "./destination";
 import { Meeple } from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
+import { getDestinationName } from "../utils/get-name";
 
 const colors = [Color.Violet, Color.Viridian, Color.Gray, Color.Orange];
 
@@ -46,11 +47,12 @@ export class Ship extends Meeple {
   private speed = randomIntFromInterval(10, 20);
   private state: ShipState = "off";
 
-  constructor() {
+  constructor(options?: { name?: string }) {
     super({
       width: 4,
       height: 2,
       color: colors[Math.floor(Math.random() * colors.length)],
+      name: options?.name ?? `${getDestinationName()}`,
     });
   }
 
@@ -117,10 +119,6 @@ export class Ship extends Meeple {
         });
         break;
     }
-  }
-
-  setName(name: string) {
-    this.owner.name = name;
   }
 
   getState(): ShipState {

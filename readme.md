@@ -7,6 +7,7 @@ Typescript, React, canvas state machines, and so many space friends!
 - React Router for navigation
 - Excaliber JS for the game rendering
 - Fully navigatable by keyboard
+- Tested with React Testing Library
 
 Demo https://pachinspac.com/
 

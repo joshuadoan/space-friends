@@ -126,10 +126,10 @@ const Meeples = () => {
                   <span>x: {Math.round(actor.pos.x)}</span>
                   <span>y:{Math.round(actor.pos.y)}</span>
                 </div>
-                <details>
+                {/* <details>
                   <summary>more details</summary>
                   <div>more details here.</div>
-                </details>
+                </details> */}
               </div>
             </li>
           )

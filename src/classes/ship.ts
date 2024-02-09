@@ -28,19 +28,19 @@ export type StateMachine = {
 };
 
 const machine: StateMachine = {
-  ["off"]: {
-    ["turn on"]: ShipState.PlottingCourse,
+  [ShipState.Off]: {
+    [ShipAction.TurnOn]: ShipState.PlottingCourse,
   },
-  ["plotting course"]: {
-    ["go to station"]: ShipState.TravelingToWork,
-    ["turn off"]: ShipState.Off,
+  [ShipState.PlottingCourse]: {
+    [ShipAction.GoToStation]: ShipState.TravelingToWork,
+    [ShipAction.TurnOff]: ShipState.Off,
   },
-  "traveling to work": {
-    ["turn off"]: ShipState.Off,
-    ["trade"]: ShipState.Working,
+  [ShipState.TravelingToWork]: {
+    [ShipAction.TurnOff]: ShipState.Off,
+    [ShipAction.Trade]: ShipState.Working,
   },
-  working: {
-    "turn off": ShipState.Off,
+  [ShipState.Working]: {
+    [ShipAction.TurnOff]: ShipState.Off,
   },
 };
 

@@ -7,45 +7,46 @@ import { getDestinationName } from "../utils/get-name";
 
 const colors = [Color.Violet, Color.Viridian, Color.Gray, Color.Orange];
 
-export type ShipState =
-  | "off"
-  | "plotting course"
-  | "traveling to destination"
-  | "working";
+export enum ShipState {
+  Off = "off",
+  PlottingCourse = "plotting course",
+  TravelingToWork = "traveling to work",
+  Working = "working",
+}
 
-export type ShipActions = "turn on" | "turn off" | "go to station" | "trade";
-
-export type ShipAction = {
-  name: ShipActions;
-  action?: () => void;
-};
+export enum ShipAction {
+  TurnOn = "turn on",
+  TurnOff = "turn off",
+  GoToStation = "go to station",
+  Trade = "trade",
+}
 
 export type StateMachine = {
   [state in ShipState]: {
-    [action in ShipActions]?: ShipState;
+    [action in ShipAction]?: ShipState;
   };
 };
 
 const machine: StateMachine = {
   ["off"]: {
-    ["turn on"]: "plotting course",
+    ["turn on"]: ShipState.PlottingCourse,
   },
   ["plotting course"]: {
-    ["go to station"]: "traveling to destination",
-    ["turn off"]: "off",
+    ["go to station"]: ShipState.TravelingToWork,
+    ["turn off"]: ShipState.Off,
   },
-  "traveling to destination": {
-    ["turn off"]: "off",
-    ["trade"]: "working",
+  "traveling to work": {
+    ["turn off"]: ShipState.Off,
+    ["trade"]: ShipState.Working,
   },
   working: {
-    "turn off": "off",
+    "turn off": ShipState.Off,
   },
 };
 
 export class Ship extends Meeple {
   private speed = randomIntFromInterval(10, 20);
-  private state: ShipState = "off";
+  private state: ShipState = ShipState.Off;
 
   constructor(options?: { name?: string }) {
     super({
@@ -70,13 +71,14 @@ export class Ship extends Meeple {
     engine.add(timer);
     timer.start();
   }
+
   /**
    * Dispatch method, which is responsible for determining the next state
-   * of the ship based on the current state and the action that was
-   * dispatched.
+   * of the ship based on the current state, runs actions, and the action
+   * that was dispatched.
    */
   async dispatch(action: ShipAction) {
-    const newState = machine[this.state][action.name] as ShipState;
+    const newState = machine[this.state][action] as ShipState;
 
     if (!newState) {
       throw new Error(
@@ -84,17 +86,17 @@ export class Ship extends Meeple {
       );
     }
 
-    switch (action.name) {
-      case "turn on":
+    switch (action) {
+      case ShipAction.TurnOn:
         this.turnOnLights();
         break;
-      case "turn off":
+      case ShipAction.TurnOff:
         this.turnOffLights();
         break;
-      case "go to station":
+      case ShipAction.GoToStation:
         this.goToWork();
         break;
-      case "trade":
+      case ShipAction.Trade:
         break;
     }
 
@@ -107,22 +109,16 @@ export class Ship extends Meeple {
    */
   next() {
     switch (this.state) {
-      case "off":
-        this.dispatch({
-          name: "turn on",
-        });
+      case ShipState.Off:
+        this.dispatch(ShipAction.TurnOn);
         break;
       case "plotting course":
-        this.dispatch({
-          name: "go to station",
-        });
+        this.dispatch(ShipAction.GoToStation);
         break;
-      case "traveling to destination":
+      case "traveling to work":
         break;
       case "working":
-        this.dispatch({
-          name: "turn off",
-        });
+        this.dispatch(ShipAction.TurnOff);
         break;
     }
   }
@@ -155,9 +151,7 @@ export class Ship extends Meeple {
         this.speed
       )
       .callMethod(() => {
-        this.dispatch({
-          name: "trade",
-        });
+        this.dispatch(ShipAction.Trade);
       });
   }
 

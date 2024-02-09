@@ -84,9 +84,20 @@ export class Ship extends Meeple {
       );
     }
 
-    if (action.action) {
-      action.action();
+    switch (action.name) {
+      case "turn on":
+        this.turnOnLights();
+        break;
+      case "turn off":
+        this.turnOffLights();
+        break;
+      case "go to station":
+        this.goToWork();
+        break;
+      case "trade":
+        break;
     }
+
     this.setState(newState);
   }
 
@@ -97,23 +108,18 @@ export class Ship extends Meeple {
   next() {
     switch (this.state) {
       case "off":
-        this.graphics.opacity = 0.5;
         this.dispatch({
           name: "turn on",
         });
         break;
       case "plotting course":
-        this.graphics.opacity = 1;
         this.dispatch({
           name: "go to station",
-          action: () => this.goToWork(),
         });
         break;
       case "traveling to destination":
-        this.graphics.opacity = 1;
         break;
       case "working":
-        this.graphics.opacity = 0.5;
         this.dispatch({
           name: "turn off",
         });
@@ -153,5 +159,13 @@ export class Ship extends Meeple {
           name: "trade",
         });
       });
+  }
+
+  turnOffLights() {
+    this.graphics.opacity = 0.5;
+  }
+
+  turnOnLights() {
+    this.graphics.opacity = 1;
   }
 }

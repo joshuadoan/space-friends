@@ -1,9 +1,15 @@
 import React, { useEffect } from "react";
-import { useOutletContext, useParams } from "react-router-dom";
+import cx from "classnames";
+import { useOutletContext, useParams, useSearchParams } from "react-router-dom";
 import { OutletContext } from "./Root";
 import Avatar from "./Avatar";
+import StyledLink from "./StyledLink";
+import { Filter } from "../hooks/use-ux-state";
 
 const MeepleDetail = () => {
+  const [params] = useSearchParams();
+  const filter = params.get("filter") as Filter;
+
   const { state } = useOutletContext() as OutletContext;
 
   let { meepleId } = useParams<{
@@ -25,25 +31,38 @@ const MeepleDetail = () => {
   }
   return (
     <section className="p-4">
+      <p className="py-2">
+        <StyledLink
+          to={{
+            pathname: "/meeples",
+            search: `?filter=${filter}`,
+          }}
+        >
+          {`<--`} back
+        </StyledLink>
+      </p>
       <div className="w-full text-left flex items-center gap-2 mb-4">
         <Avatar url={meeple.getAvatar()} />
-
-        {meeple.name}
+        {meeple.name}{" "}
+        <span className=" text-slate-400">{meeple.getState()}</span>
       </div>
 
-      <dl className="bg-purple-800 bg-opacity-50 p-2">
+      <dl
+        className={cx("bg-purple-800 bg-opacity-50 p-2", {
+          hidden: !journal.length,
+        })}
+      >
         <dt>journal:</dt>
         {journal
           ?.slice(Math.max(journal.length - 5, 0))
           .map(([timestamp, entry], i) => {
             const spaceDate = new Date(Number(timestamp) * 1000);
             return (
-              <dd key={i}>
-                <span className="bg-black p-2 rounded-md">
-                  {spaceDate.getHours()}
-                  {spaceDate.getMinutes()}
-                  {spaceDate.getSeconds()}
-                  {spaceDate.getMilliseconds()}
+              <dd key={i} className="flex gap-2 items-center">
+                <span className="flex gap-0.5">
+                  <span className="bg-black p-1"> {spaceDate.getHours()}</span>
+                  <span className="bg-black p-1">{spaceDate.getMinutes()}</span>
+                  <span className="bg-black p-1">{spaceDate.getSeconds()}</span>
                 </span>
                 {entry}
               </dd>

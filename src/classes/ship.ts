@@ -1,7 +1,7 @@
 import { Color, Engine, Timer, vec } from "excalibur";
 import { getRandomDestination, randomIntFromInterval } from "../utils/helpers";
 import { Destination } from "./destination";
-import { Meeple } from "./meeple";
+import { Meeple, MeepleKind } from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { getDestinationName } from "../utils/get-name";
 
@@ -10,13 +10,18 @@ const colors = [Color.Violet, Color.Viridian, Color.Gray, Color.Orange];
 export enum ShipState {
   PlottingCourse = "plotting course",
   TravelingToWork = "traveling to work",
+  TravelingHome = "traveling home",
   Working = "working",
+  AtHome = "chilling at home",
 }
 
 export enum ShipAction {
   GoToWork = "go to work",
   StartWorking = "start working",
   FinishWorking = "finish working",
+  GoHome = "go home",
+  StartHome = "start chilling at home",
+  FinishHome = "finish finish chilling home",
 }
 
 export type StateMachine = {
@@ -28,6 +33,7 @@ export type StateMachine = {
 const machine: StateMachine = {
   [ShipState.PlottingCourse]: {
     [ShipAction.GoToWork]: ShipState.TravelingToWork,
+    [ShipAction.GoHome]: ShipState.TravelingHome,
   },
   [ShipState.TravelingToWork]: {
     [ShipAction.StartWorking]: ShipState.Working,
@@ -35,11 +41,18 @@ const machine: StateMachine = {
   [ShipState.Working]: {
     [ShipAction.FinishWorking]: ShipState.PlottingCourse,
   },
+  [ShipState.TravelingHome]: {
+    [ShipAction.StartHome]: ShipState.AtHome,
+  },
+  [ShipState.AtHome]: {
+    [ShipAction.FinishHome]: ShipState.PlottingCourse,
+  },
 };
 
 export class Ship extends Meeple {
   private speed = randomIntFromInterval(50, 200);
   private state: ShipState = ShipState.PlottingCourse;
+  private previousState: ShipState = ShipState.PlottingCourse;
 
   constructor(options?: { name?: string }) {
     super({
@@ -51,6 +64,7 @@ export class Ship extends Meeple {
   }
 
   onInitialize(engine: Engine): void {
+    this.addTag(MeepleKind.SpaceLaborer);
     this.pos = getRandomScreenPosition(engine);
     this.turnOffLights();
 
@@ -84,7 +98,11 @@ export class Ship extends Meeple {
     switch (action) {
       case ShipAction.GoToWork:
         this.turnOnLights();
-        this.goToWork();
+        this.goToDestination(MeepleKind.SpaceShop);
+        break;
+      case ShipAction.GoHome:
+        this.turnOnLights();
+        this.goToDestination(MeepleKind.Home);
         break;
       case ShipAction.StartWorking:
         this.turnOffLights();
@@ -104,12 +122,27 @@ export class Ship extends Meeple {
   next() {
     switch (this.state) {
       case "plotting course":
-        this.dispatch(ShipAction.GoToWork);
+        switch (this.previousState) {
+          case "working":
+            this.dispatch(ShipAction.GoHome);
+            break;
+          case "chilling at home":
+            this.dispatch(ShipAction.GoToWork);
+            break;
+          default:
+            this.dispatch(ShipAction.GoHome);
+            break;
+        }
         break;
       case "traveling to work":
         break;
       case "working":
         this.dispatch(ShipAction.FinishWorking);
+        break;
+      case "traveling home":
+        break;
+      case "chilling at home":
+        this.dispatch(ShipAction.FinishHome);
         break;
     }
   }
@@ -119,19 +152,22 @@ export class Ship extends Meeple {
   }
 
   setState(state: ShipState) {
+    this.previousState = this.state;
     this.state = state;
   }
 
-  getDestination() {
+  getDestination(type: MeepleKind = MeepleKind.SpaceShop) {
     return getRandomDestination(
       this.scene.engine.currentScene.actors
-        .filter((a) => a instanceof Destination)
+        .filter((a) => {
+          return a instanceof Destination && a.hasTag(type);
+        })
         .map((a) => a as Destination)
     );
   }
 
-  goToWork() {
-    const destination = this.getDestination();
+  goToDestination(type?: MeepleKind) {
+    const destination = this.getDestination(type);
 
     this.actions
       .moveTo(
@@ -142,7 +178,17 @@ export class Ship extends Meeple {
         this.speed
       )
       .callMethod(() => {
-        this.dispatch(ShipAction.StartWorking);
+        switch (this.previousState) {
+          case ShipState.Working:
+            this.dispatch(ShipAction.StartWorking);
+            break;
+          case ShipState.AtHome:
+            this.dispatch(ShipAction.StartHome);
+            break;
+          default:
+            this.dispatch(ShipAction.StartHome);
+            break;
+        }
       });
   }
 

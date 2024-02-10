@@ -4,6 +4,7 @@ import {
   useLoaderData,
   useLocation,
   useNavigate,
+  useSearchParams,
 } from "react-router-dom";
 import Game from "../classes/game";
 import Button from "./Button";
@@ -13,13 +14,19 @@ import { Ship } from "../classes/ship";
 import {
   ENGINE_DEFAULTS,
   NUMBER_OF_STARS,
-  NUMBER_OF_STATIONS,
+  NUMBER_OF_SPACE_SHOPS,
   NUMBER_OF_SHIPS,
+  NUMBER_OF_SPACE_HOMES,
 } from "../consts";
 
 import { makeStar } from "../utils/helpers";
-import useUxState, { Action, ActionNames, State } from "../hooks/use-ux-state";
-import { Meeple } from "../classes/meeple";
+import useUxState, {
+  Action,
+  ActionNames,
+  Filter,
+  State,
+} from "../hooks/use-ux-state";
+import { Meeple, MeepleKind } from "../classes/meeple";
 
 export type OutletContext = {
   game: Game;
@@ -35,8 +42,17 @@ export async function rootLoader() {
     game.add(star);
   }
 
-  for (let i = 0; i < NUMBER_OF_STATIONS; i++) {
-    const station = new Destination();
+  for (let i = 0; i < NUMBER_OF_SPACE_SHOPS; i++) {
+    const station = new Destination({
+      kind: MeepleKind.SpaceShop,
+    });
+    game.add(station);
+  }
+
+  for (let i = 0; i < NUMBER_OF_SPACE_HOMES; i++) {
+    const station = new Destination({
+      kind: MeepleKind.Home,
+    });
     game.add(station);
   }
 
@@ -51,6 +67,8 @@ export async function rootLoader() {
 
 const Root = () => {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const filter = params.get("filter") as Filter;
 
   const { state, dispatch } = useUxState({
     actors: [],
@@ -63,14 +81,14 @@ const Root = () => {
 
   // Add click event to all actors for selection
   game.currentScene.actors.map((a) =>
-    a.on("pointerdown", () => navigate(`/meeples/${a.id}?filter=`))
+    a.on("pointerdown", () => navigate(`/meeples/${a.id}?filter=${filter}`))
   );
 
   const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === "/") {
-      navigate("/meeples/?filter=ships");
+      navigate(`/meeples/?filter=ships`);
     }
   }, [location.pathname]);
 
@@ -95,7 +113,14 @@ const Root = () => {
     <>
       <div className="h-full absolute">
         <nav className="flex gap-2 bg-black bg-opacity-50 p-4">
-          <StyledNavLink to="/meeples">meeples</StyledNavLink>
+          <StyledNavLink
+            to={{
+              pathname: "/meeples",
+              search: `?filter=${filter}`,
+            }}
+          >
+            meeples
+          </StyledNavLink>
           <StyledNavLink to="/help">help</StyledNavLink>
           <Button onClick={() => game?.resetZoom()}>reset zoom</Button>
         </nav>

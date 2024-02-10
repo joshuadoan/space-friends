@@ -1,18 +1,20 @@
 import { Color, Engine } from "excalibur";
 import { getDestinationName } from "../utils/get-name";
-import { Meeple } from "./meeple";
+import { Meeple, MeepleKind } from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 
 export class Destination extends Meeple {
   public state = "open";
 
-  constructor(options?: { name?: string }) {
+  constructor(options: { name?: string; kind: MeepleKind; color?: Color }) {
     super({
       width: 8,
       height: 8,
-      color: Color.ExcaliburBlue,
+      color: options.color ?? Color.ExcaliburBlue,
       name: options?.name ?? `The ${getDestinationName()}`,
     });
+
+    this.addTag(options.kind);
   }
 
   onInitialize(engine: Engine): void {

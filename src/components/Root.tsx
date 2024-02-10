@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import {
-  Navigate,
   Outlet,
   useLoaderData,
   useLocation,

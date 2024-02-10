@@ -4,6 +4,13 @@ import { MAX_ZOOM } from "../consts";
 import { ShipAction } from "./ship";
 import Game from "./game";
 
+export enum MeepleKind {
+  SpaceLaborer = "space laborer",
+  SpaceShop = "space shop",
+  Home = "home",
+  Unknown = "unknown",
+}
+
 export class Meeple extends Actor {
   private guests: {
     [id: string]: Meeple;

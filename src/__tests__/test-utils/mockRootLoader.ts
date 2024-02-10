@@ -1,4 +1,5 @@
 import { Destination } from "../../classes/destination";
+import { MeepleKind } from "../../classes/meeple";
 import { Ship } from "../../classes/ship";
 
 export default async () => {
@@ -18,9 +19,11 @@ export default async () => {
             }),
             new Destination({
               name: "Destination 1",
+              kind: MeepleKind.SpaceShop,
             }),
             new Destination({
               name: "Destination 2",
+              kind: MeepleKind.SpaceShop,
             }),
           ],
         },

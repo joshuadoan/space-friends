@@ -31,19 +31,20 @@ const MeepleDetail = () => {
   }
   return (
     <section className="p-4">
-      <p>
+      <p className="py-2">
         <StyledLink
           to={{
             pathname: "/meeples",
             search: `?filter=${filter}`,
           }}
         >
-          {`<--`}back
+          {`<--`} back
         </StyledLink>
       </p>
       <div className="w-full text-left flex items-center gap-2 mb-4">
         <Avatar url={meeple.getAvatar()} />
-        {meeple.name}
+        {meeple.name}{" "}
+        <span className=" text-slate-400">{meeple.getState()}</span>
       </div>
 
       <dl

@@ -69,9 +69,11 @@ const Root = () => {
 
   const location = useLocation();
 
-  if (location.pathname === "/") {
-    return <Navigate to="/meeples/?filter=ships" />;
-  }
+  useEffect(() => {
+    if (location.pathname === "/") {
+      navigate("/meeples/?filter=ships");
+    }
+  }, [location.pathname]);
 
   useEffect(
     function syncGameWithState() {

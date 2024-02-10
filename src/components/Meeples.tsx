@@ -1,6 +1,5 @@
 import React from "react";
 import cx from "classnames";
-import Blockies from "react-blockies";
 import {
   useOutletContext,
   useParams,
@@ -13,6 +12,7 @@ import Game from "../classes/game";
 import StyledNavLink from "./StyledNavLink";
 import { Ship } from "../classes/ship";
 import { Destination } from "../classes/destination";
+import Avatar from "./Avatar";
 
 const Meeples = () => {
   const [params] = useSearchParams();
@@ -76,13 +76,7 @@ const Meeples = () => {
                   title="Click to zoom and follow"
                 >
                   <span className="w-full text-left flex items-center gap-2">
-                    <Blockies
-                      seed={actor.name}
-                      size={8}
-                      scale={3}
-                      color={actor.color.toHex()}
-                      bgColor="#000"
-                    />
+                    <Avatar url={actor.getAvatar()} />
                     {actor.name}
                   </span>
                 </StyledNavLink>

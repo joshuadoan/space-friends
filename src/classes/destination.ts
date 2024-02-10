@@ -17,6 +17,7 @@ export class Destination extends Meeple {
 
   onInitialize(engine: Engine): void {
     this.pos = getRandomScreenPosition(engine);
+    this.setAvatar(this.color.toString() + this.id + this.name);
   }
 
   getState() {

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
-import Blockies from "react-blockies";
 import { OutletContext } from "./Root";
+import Avatar from "./Avatar";
 
 const MeepleDetail = () => {
   const { state } = useOutletContext() as OutletContext;
@@ -26,13 +26,8 @@ const MeepleDetail = () => {
   return (
     <section className="p-4">
       <div className="w-full text-left flex items-center gap-2 mb-4">
-        <Blockies
-          seed={meeple.name}
-          size={8}
-          scale={3}
-          color={meeple.color.toHex()}
-          bgColor="#000"
-        />
+        <Avatar url={meeple.getAvatar()} />
+
         {meeple.name}
       </div>
 

@@ -1,4 +1,5 @@
 import { Actor } from "excalibur";
+import * as blockies from "blockies-ts";
 import { MAX_ZOOM } from "../consts";
 import { ShipAction } from "./ship";
 import Game from "./game";
@@ -12,6 +13,8 @@ export class Meeple extends Actor {
     [timeStamp: number]: ShipAction;
   } = {};
 
+  private imageUrl = "";
+
   setJournal(action: ShipAction) {
     const timeStamp = Date.now();
     this.journal[timeStamp] = action;
@@ -19,6 +22,14 @@ export class Meeple extends Actor {
 
   getJournal() {
     return this.journal;
+  }
+
+  getAvatar() {
+    return this.imageUrl;
+  }
+
+  setAvatar(seed: string) {
+    this.imageUrl = blockies.create({ seed }).toDataURL();
   }
 
   /**

@@ -1,25 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
 import cx from "classnames";
 import Blockies from "react-blockies";
-import { useOutletContext, useParams, useSearchParams } from "react-router-dom";
-import useUxState, { ActionNames, Filter } from "../hooks/use-ux-state";
+import {
+  useOutletContext,
+  useParams,
+  useSearchParams,
+  Outlet,
+} from "react-router-dom";
+import { Action, Filter, State } from "../hooks/use-ux-state";
 import { filterActors } from "../utils/helpers";
-import { Meeple } from "../classes/meeple";
 import Game from "../classes/game";
-import NavLink from "./NavLink";
+import StyledNavLink from "./StyledNavLink";
 import { Ship } from "../classes/ship";
 import { Destination } from "../classes/destination";
 
 const Meeples = () => {
   const [params] = useSearchParams();
-  const { game } = useOutletContext() as {
+  const { state } = useOutletContext() as {
     game: Game;
+    state: State;
+    dispatch: React.Dispatch<Action>;
   };
-
-  const { state, dispatch } = useUxState({
-    actors: [],
-    selectedActor: null,
-  });
 
   let { meepleId } = useParams<{
     meepleId: string;
@@ -28,59 +29,33 @@ const Meeples = () => {
   const selectedActor = state.actors.find((a) => a.id === Number(meepleId));
   const filter = params.get("filter") as Filter;
 
-  useEffect(
-    function syncGameWithState() {
-      const interval = setInterval(() => {
-        dispatch({
-          name: ActionNames.SET_ACTORS,
-          payload: [
-            ...(game?.currentScene.actors
-              .filter((a) => a instanceof Meeple)
-              .map((a) => a as Meeple) ?? []),
-          ],
-        });
-      }, 300);
-      return () => clearInterval(interval);
-    },
-    [game]
-  );
-
-  useEffect(
-    function handleSelected() {
-      if (selectedActor) {
-        selectedActor.zoomTo();
-      }
-    },
-    [selectedActor]
-  );
-
   return (
     <>
       <nav className="flex items-center gap-2 bg-black bg-opacity-50 px-4">
-        <NavLink
+        <StyledNavLink
           to="/meeples"
           className={cx("hover:underline p-2", {
             "bg-purple-800 ": !filter,
           })}
         >
           all
-        </NavLink>
-        <NavLink
+        </StyledNavLink>
+        <StyledNavLink
           to="?filter=ships"
           className={cx("hover:underline p-2", {
             "bg-purple-800 ": filter === "ships",
           })}
         >
           ships
-        </NavLink>
-        <NavLink
+        </StyledNavLink>
+        <StyledNavLink
           to="?filter=destinations"
           className={cx("hover:underline p-2", {
             "bg-purple-800 ": filter === "destinations",
           })}
         >
           destinations
-        </NavLink>
+        </StyledNavLink>
       </nav>
       <menu
         className="flex flex-col justify-start overflow-auto h-full p-4"
@@ -96,7 +71,7 @@ const Meeples = () => {
               data-testid="meeple"
             >
               <div className={cx("flex items-center gap-2")}>
-                <NavLink
+                <StyledNavLink
                   to={`/meeples/${actor.id}?filter=${params.get("filter")}`}
                   title="Click to zoom and follow"
                 >
@@ -110,7 +85,7 @@ const Meeples = () => {
                     />
                     {actor.name}
                   </span>
-                </NavLink>
+                </StyledNavLink>
               </div>
               <div className="px-2">
                 <div className="flex gap-2">
@@ -127,21 +102,12 @@ const Meeples = () => {
                   <span>x: {Math.round(actor.pos.x)}</span>
                   <span>y:{Math.round(actor.pos.y)}</span>
                 </div>
-                <details>
-                  <summary>Journal ({actor.getJournal().length})</summary>
-                  <div>
-                    <ul>
-                      {actor.getJournal().map((entry, i) => (
-                        <li key={i}>{entry}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </details>
               </div>
             </li>
           )
         )}
       </menu>
+      <Outlet />
     </>
   );
 };

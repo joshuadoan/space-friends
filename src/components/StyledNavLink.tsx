@@ -1,9 +1,9 @@
 import React from "react";
-import { NavLink as ReactDomNavLink, NavLinkProps } from "react-router-dom";
+import { NavLink, NavLinkProps } from "react-router-dom";
 import cx from "classnames";
-const NavLink = (props: NavLinkProps) => {
+const StyledNavLink = (props: NavLinkProps) => {
   return (
-    <ReactDomNavLink
+    <NavLink
       className={({ isActive }) =>
         cx("hover:underline p-2", {
           "bg-purple-800  ": isActive,
@@ -12,8 +12,8 @@ const NavLink = (props: NavLinkProps) => {
       {...props}
     >
       {props.children}
-    </ReactDomNavLink>
+    </NavLink>
   );
 };
 
-export default NavLink;
+export default StyledNavLink;

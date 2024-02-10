@@ -38,7 +38,7 @@ const machine: StateMachine = {
 };
 
 export class Ship extends Meeple {
-  private speed = randomIntFromInterval(27, 37);
+  private speed = randomIntFromInterval(50, 200);
   private state: ShipState = ShipState.PlottingCourse;
 
   constructor(options?: { name?: string }) {

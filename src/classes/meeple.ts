@@ -18,7 +18,7 @@ export class Meeple extends Actor {
   }
 
   getJournal() {
-    return Object.values(this.journal);
+    return this.journal;
   }
 
   /**

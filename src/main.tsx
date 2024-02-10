@@ -6,23 +6,7 @@ import Meeples from "./components/Meeples";
 import Help from "./components/Help";
 import { rootLoader } from "./components/Root";
 import ErrorPage from "./components/ErrorPage";
-
-export const childRoutes = [
-  {
-    path: "/meeples",
-    element: <Meeples />,
-    children: [
-      {
-        path: "/meeples/:meepleId",
-        element: <Meeples />,
-      },
-    ],
-  },
-  {
-    path: "/help",
-    element: <Help />,
-  },
-];
+import MeepleDetail from "./components/Meeple";
 
 export const routes = [
   {
@@ -31,7 +15,20 @@ export const routes = [
     loader: rootLoader,
     errorElement: <ErrorPage />,
     shouldRevalidate: () => false,
-    children: childRoutes,
+    children: [
+      {
+        path: "/meeples",
+        element: <Meeples />,
+      },
+      {
+        path: "/meeples/:meepleId",
+        element: <MeepleDetail />,
+      },
+      {
+        path: "/help",
+        element: <Help />,
+      },
+    ],
   },
   {
     path: "*",

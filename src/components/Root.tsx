@@ -4,6 +4,7 @@ import {
   useLoaderData,
   useLocation,
   useNavigate,
+  useSearchParams,
 } from "react-router-dom";
 import Game from "../classes/game";
 import Button from "./Button";
@@ -18,7 +19,12 @@ import {
 } from "../consts";
 
 import { makeStar } from "../utils/helpers";
-import useUxState, { Action, ActionNames, State } from "../hooks/use-ux-state";
+import useUxState, {
+  Action,
+  ActionNames,
+  Filter,
+  State,
+} from "../hooks/use-ux-state";
 import { Meeple } from "../classes/meeple";
 
 export type OutletContext = {
@@ -51,6 +57,8 @@ export async function rootLoader() {
 
 const Root = () => {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const filter = params.get("filter") as Filter;
 
   const { state, dispatch } = useUxState({
     actors: [],
@@ -63,14 +71,14 @@ const Root = () => {
 
   // Add click event to all actors for selection
   game.currentScene.actors.map((a) =>
-    a.on("pointerdown", () => navigate(`/meeples/${a.id}?filter=`))
+    a.on("pointerdown", () => navigate(`/meeples/${a.id}?filter=${filter}`))
   );
 
   const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === "/") {
-      navigate("/meeples/?filter=ships");
+      navigate(`/meeples/?filter=ships`);
     }
   }, [location.pathname]);
 
@@ -95,7 +103,14 @@ const Root = () => {
     <>
       <div className="h-full absolute">
         <nav className="flex gap-2 bg-black bg-opacity-50 p-4">
-          <StyledNavLink to="/meeples">meeples</StyledNavLink>
+          <StyledNavLink
+            to={{
+              pathname: "/meeples",
+              search: `?filter=${filter}`,
+            }}
+          >
+            meeples
+          </StyledNavLink>
           <StyledNavLink to="/help">help</StyledNavLink>
           <Button onClick={() => game?.resetZoom()}>reset zoom</Button>
         </nav>

@@ -19,5 +19,23 @@ export class Destination extends Meeple {
     this.pos = getRandomScreenPosition(engine);
     this.setAvatar(this.color.toString() + this.id + this.name);
     this.setState(DestinationState.Open);
+    this.setStatus({
+      ...this.getStatus(),
+      stuff: 100,
+    });
+  }
+
+  transact() {
+    if (this.getStatus().stuff > 0) {
+      this.setStatus({
+        ...this.getStatus(),
+        stuff: this.getStatus().stuff - 1,
+      });
+    } else {
+      this.setStatus({
+        ...this.getStatus(),
+        stuff: 100,
+      });
+    }
   }
 }

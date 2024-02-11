@@ -59,6 +59,7 @@ export class Ship extends Meeple {
     this.turnOffLights();
 
     this.setAvatar(this.color.toString() + this.id + this.name);
+
     const timer = new Timer({
       interval: randomIntFromInterval(3000, 10000),
       repeats: true,
@@ -165,6 +166,7 @@ export class Ship extends Meeple {
       .callMethod(() => {
         switch (type) {
           case MeepleKind.SpaceShop:
+            destination.transact();
             this.dispatch(ShipAction.StartWorking);
             break;
           case MeepleKind.SpaceLaborer:

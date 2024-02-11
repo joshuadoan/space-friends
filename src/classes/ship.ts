@@ -13,7 +13,7 @@ export enum ShipAction {
   FinishWorking = "finish working",
   GoHome = "go home",
   StartHome = "start chilling at home",
-  FinishHome = "finish finish chilling home",
+  FinishHome = "finish chilling home",
 }
 
 export type StateMachine = {

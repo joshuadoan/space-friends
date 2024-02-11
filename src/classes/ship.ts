@@ -9,11 +9,9 @@ const colors = [Color.Violet, Color.Viridian, Color.Gray, Color.Orange];
 
 export enum ShipAction {
   GoToWork = "go to work",
-  StartWorking = "start working",
-  FinishWorking = "finish working",
   GoHome = "go home",
-  StartHome = "start chilling at home",
-  FinishHome = "finish chilling home",
+  Work = "start working",
+  Hangout = "hang out at home",
 }
 
 export type StateMachine = {
@@ -23,26 +21,28 @@ export type StateMachine = {
 };
 
 const machine: StateMachine = {
-  [ShipState.PlottingCourse]: {
-    [ShipAction.GoToWork]: ShipState.TravelingToWork,
+  [ShipState.Off]: {
     [ShipAction.GoHome]: ShipState.TravelingHome,
+    [ShipAction.GoToWork]: ShipState.TravelingToWork,
   },
   [ShipState.TravelingToWork]: {
-    [ShipAction.StartWorking]: ShipState.Working,
+    [ShipAction.Work]: ShipState.Working,
   },
   [ShipState.Working]: {
-    [ShipAction.FinishWorking]: ShipState.PlottingCourse,
+    [ShipAction.GoHome]: ShipState.TravelingHome,
+    [ShipAction.Work]: ShipState.Working,
   },
   [ShipState.TravelingHome]: {
-    [ShipAction.StartHome]: ShipState.AtHome,
+    [ShipAction.Hangout]: ShipState.AtHome,
   },
   [ShipState.AtHome]: {
-    [ShipAction.FinishHome]: ShipState.PlottingCourse,
+    [ShipAction.GoToWork]: ShipState.TravelingToWork,
+    [ShipAction.Hangout]: ShipState.AtHome,
   },
 };
 
 export class Ship extends Meeple {
-  private speed = randomIntFromInterval(27, 42);
+  private speed = randomIntFromInterval(27, 420);
 
   constructor(options?: { name?: string }) {
     super({
@@ -88,32 +88,10 @@ export class Ship extends Meeple {
 
     switch (action) {
       case ShipAction.GoToWork:
-        this.turnOnLights();
         this.goToDestination(MeepleKind.SpaceShop);
         break;
       case ShipAction.GoHome:
-        this.turnOnLights();
         this.goToDestination(MeepleKind.Home);
-        break;
-      case ShipAction.StartWorking:
-        this.turnOffLights();
-        break;
-      case ShipAction.FinishWorking:
-        this.turnOnLights();
-        this.setStatus({
-          ...this.getStatus(),
-          stuff: this.getStatus().stuff + 1,
-        });
-        break;
-      case ShipAction.StartHome:
-        this.turnOffLights();
-        break;
-      case ShipAction.FinishHome:
-        this.turnOnLights();
-        this.setStatus({
-          ...this.getStatus(),
-          stuff: this.getStatus().stuff - 1,
-        });
         break;
     }
 
@@ -126,21 +104,34 @@ export class Ship extends Meeple {
    */
   next() {
     switch (this.getState()) {
-      case "plotting course":
-        if (this.getStatus().stuff < 1) {
-          this.dispatch(ShipAction.GoToWork);
-        } else {
+      case ShipState.Off:
+        this.dispatch(ShipAction.GoToWork);
+        break;
+      case ShipState.TravelingToWork:
+        this.dispatch(ShipAction.Work);
+        break;
+      case ShipState.TravelingHome:
+        this.dispatch(ShipAction.Hangout);
+        break;
+      case ShipState.Working:
+        this.setStatus({
+          ...this.getStatus(),
+          stuff: this.getStatus().stuff + 1,
+        });
+
+        if (this.getStatus().stuff > 5) {
           this.dispatch(ShipAction.GoHome);
         }
         break;
-      case "traveling to work":
-      case "traveling home":
-        break;
-      case "working":
-        this.dispatch(ShipAction.FinishWorking);
-        break;
-      case "chilling at home":
-        this.dispatch(ShipAction.FinishHome);
+      case ShipState.AtHome:
+        this.setStatus({
+          ...this.getStatus(),
+          stuff: this.getStatus().stuff - 1,
+        });
+
+        if (this.getStatus().stuff < 1) {
+          this.dispatch(ShipAction.GoToWork);
+        }
         break;
     }
   }
@@ -170,11 +161,11 @@ export class Ship extends Meeple {
         switch (type) {
           case MeepleKind.SpaceShop:
             destination.transact();
-            this.dispatch(ShipAction.StartWorking);
+            this.dispatch(ShipAction.Work);
             break;
           case MeepleKind.SpaceLaborer:
           default:
-            this.dispatch(ShipAction.StartHome);
+            this.dispatch(ShipAction.Hangout);
             break;
         }
       });

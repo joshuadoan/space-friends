@@ -12,11 +12,11 @@ export enum MeepleKind {
 }
 
 export enum ShipState {
-  PlottingCourse = "plotting course",
+  Off = "off",
   TravelingToWork = "traveling to work",
   TravelingHome = "traveling home",
   Working = "working",
-  AtHome = "chilling at home",
+  AtHome = "home",
 }
 
 type Status = {
@@ -37,7 +37,7 @@ export class Meeple extends Actor {
   } = {};
 
   private imageUrl = "";
-  private state: ShipState | DestinationState = ShipState.PlottingCourse;
+  private state: ShipState | DestinationState = ShipState.Off;
   private status: Status = {
     health: 100,
     stuff: 0,

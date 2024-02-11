@@ -105,7 +105,11 @@ export class Ship extends Meeple {
           stuff: this.getStatus().stuff + 1,
         });
         break;
+      case ShipAction.StartHome:
+        this.turnOffLights();
+        break;
       case ShipAction.FinishHome:
+        this.turnOnLights();
         this.setStatus({
           ...this.getStatus(),
           stuff: this.getStatus().stuff - 1,
@@ -123,18 +127,17 @@ export class Ship extends Meeple {
   next() {
     switch (this.getState()) {
       case "plotting course":
-        if (this.getStatus().stuff < 3) {
+        if (this.getStatus().stuff < 1) {
           this.dispatch(ShipAction.GoToWork);
         } else {
           this.dispatch(ShipAction.GoHome);
         }
         break;
       case "traveling to work":
+      case "traveling home":
         break;
       case "working":
         this.dispatch(ShipAction.FinishWorking);
-        break;
-      case "traveling home":
         break;
       case "chilling at home":
         this.dispatch(ShipAction.FinishHome);

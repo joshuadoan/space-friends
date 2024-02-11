@@ -1,7 +1,7 @@
 import React from "react";
 import { Meeple } from "../classes/meeple";
 
-export type Filter = "ships" | "destinations";
+export type Filter = "ships" | "destinations" | "homes";
 export type Tab = "meeples" | "help";
 
 export type State = {

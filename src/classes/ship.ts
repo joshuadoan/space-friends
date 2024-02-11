@@ -178,13 +178,11 @@ export class Ship extends Meeple {
         this.speed
       )
       .callMethod(() => {
-        switch (this.previousState) {
-          case ShipState.Working:
+        switch (type) {
+          case MeepleKind.SpaceShop:
             this.dispatch(ShipAction.StartWorking);
             break;
-          case ShipState.AtHome:
-            this.dispatch(ShipAction.StartHome);
-            break;
+          case MeepleKind.SpaceLaborer:
           default:
             this.dispatch(ShipAction.StartHome);
             break;

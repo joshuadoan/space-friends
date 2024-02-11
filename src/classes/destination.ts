@@ -1,11 +1,9 @@
 import { Color, Engine } from "excalibur";
 import { getDestinationName } from "../utils/get-name";
-import { Meeple, MeepleKind } from "./meeple";
+import { DestinationState, Meeple, MeepleKind } from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 
 export class Destination extends Meeple {
-  public state = "open";
-
   constructor(options: { name?: string; kind: MeepleKind; color?: Color }) {
     super({
       width: 8,
@@ -20,9 +18,6 @@ export class Destination extends Meeple {
   onInitialize(engine: Engine): void {
     this.pos = getRandomScreenPosition(engine);
     this.setAvatar(this.color.toString() + this.id + this.name);
-  }
-
-  getState() {
-    return this.state;
+    this.setState(DestinationState.Open);
   }
 }

@@ -11,6 +11,22 @@ export enum MeepleKind {
   Unknown = "unknown",
 }
 
+export enum ShipState {
+  PlottingCourse = "plotting course",
+  TravelingToWork = "traveling to work",
+  TravelingHome = "traveling home",
+  Working = "working",
+  AtHome = "chilling at home",
+}
+
+type Status = {
+  health: number;
+  stuff: number;
+};
+
+export enum DestinationState {
+  Open = "open",
+}
 export class Meeple extends Actor {
   private guests: {
     [id: string]: Meeple;
@@ -21,6 +37,19 @@ export class Meeple extends Actor {
   } = {};
 
   private imageUrl = "";
+  private state: ShipState | DestinationState = ShipState.PlottingCourse;
+  private status: Status = {
+    health: 100,
+    stuff: 0,
+  };
+
+  setStatus(status: Status) {
+    this.status = status;
+  }
+
+  getStatus() {
+    return this.status;
+  }
 
   setJournal(action: ShipAction) {
     const timeStamp = Date.now();
@@ -60,8 +89,12 @@ export class Meeple extends Actor {
     return this.guests;
   }
 
+  setState(state: ShipState | DestinationState) {
+    this.state = state;
+  }
+
   getState() {
-    return "";
+    return this.state;
   }
 
   getGame(): Game {

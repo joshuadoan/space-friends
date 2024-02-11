@@ -1,19 +1,11 @@
 import { Color, Engine, Timer, vec } from "excalibur";
 import { getRandomDestination, randomIntFromInterval } from "../utils/helpers";
 import { Destination } from "./destination";
-import { Meeple, MeepleKind } from "./meeple";
+import { Meeple, MeepleKind, ShipState } from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { getDestinationName } from "../utils/get-name";
 
 const colors = [Color.Violet, Color.Viridian, Color.Gray, Color.Orange];
-
-export enum ShipState {
-  PlottingCourse = "plotting course",
-  TravelingToWork = "traveling to work",
-  TravelingHome = "traveling home",
-  Working = "working",
-  AtHome = "chilling at home",
-}
 
 export enum ShipAction {
   GoToWork = "go to work",
@@ -51,8 +43,6 @@ const machine: StateMachine = {
 
 export class Ship extends Meeple {
   private speed = randomIntFromInterval(50, 200);
-  private state: ShipState = ShipState.PlottingCourse;
-  private previousState: ShipState = ShipState.PlottingCourse;
 
   constructor(options?: { name?: string }) {
     super({
@@ -86,11 +76,11 @@ export class Ship extends Meeple {
    * that was dispatched.
    */
   async dispatch(action: ShipAction) {
-    const newState = machine[this.state][action] as ShipState;
+    const newState = machine[this.getState() as ShipState][action] as ShipState;
 
     if (!newState) {
       throw new Error(
-        `Action ${action} is not a valid step from state ${this.state}`
+        `Action ${action} is not a valid step from state ${this.getState()}`
       );
     }
     this.setJournal(action);
@@ -109,6 +99,16 @@ export class Ship extends Meeple {
         break;
       case ShipAction.FinishWorking:
         this.turnOnLights();
+        this.setStatus({
+          ...this.getStatus(),
+          stuff: this.getStatus().stuff + 1,
+        });
+        break;
+      case ShipAction.FinishHome:
+        this.setStatus({
+          ...this.getStatus(),
+          stuff: this.getStatus().stuff - 1,
+        });
         break;
     }
 
@@ -120,18 +120,12 @@ export class Ship extends Meeple {
    * the action that was dispatched
    */
   next() {
-    switch (this.state) {
+    switch (this.getState()) {
       case "plotting course":
-        switch (this.previousState) {
-          case "working":
-            this.dispatch(ShipAction.GoHome);
-            break;
-          case "chilling at home":
-            this.dispatch(ShipAction.GoToWork);
-            break;
-          default:
-            this.dispatch(ShipAction.GoHome);
-            break;
+        if (this.getStatus().stuff < 1) {
+          this.dispatch(ShipAction.GoToWork);
+        } else {
+          this.dispatch(ShipAction.GoHome);
         }
         break;
       case "traveling to work":
@@ -145,15 +139,6 @@ export class Ship extends Meeple {
         this.dispatch(ShipAction.FinishHome);
         break;
     }
-  }
-
-  getState(): ShipState {
-    return this.state;
-  }
-
-  setState(state: ShipState) {
-    this.previousState = this.state;
-    this.state = state;
   }
 
   getDestination(type: MeepleKind = MeepleKind.SpaceShop) {

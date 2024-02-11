@@ -122,7 +122,7 @@ export class Ship extends Meeple {
   next() {
     switch (this.getState()) {
       case "plotting course":
-        if (this.getStatus().stuff < 1) {
+        if (this.getStatus().stuff < 3) {
           this.dispatch(ShipAction.GoToWork);
         } else {
           this.dispatch(ShipAction.GoHome);

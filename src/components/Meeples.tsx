@@ -92,8 +92,8 @@ const Meeples = () => {
                   {actor instanceof Destination && <span>destination</span>}
                 </div>
                 <div className="flex gap-2">
-                  <label className="opacity-70">status: </label>
-                  h({actor.getStatus().health}) h({actor.getStatus().stuff})
+                  <label className="opacity-70">status: </label>♡{" "}
+                  {actor.getStatus().health} &#65504; {actor.getStatus().stuff}
                 </div>
                 <div className="flex gap-2">
                   <label className="opacity-70">position:</label>

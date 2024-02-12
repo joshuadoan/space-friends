@@ -42,7 +42,7 @@ const machine: StateMachine = {
 };
 
 export class Ship extends Meeple {
-  private speed = randomIntFromInterval(27, 420);
+  private speed = randomIntFromInterval(27, 42);
 
   constructor(options?: { name?: string }) {
     super({

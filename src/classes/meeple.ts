@@ -22,7 +22,13 @@ export enum ShipState {
 type Status = {
   health: number;
   stuff: number;
+  lights: Lights;
 };
+
+export enum Lights {
+  On = "on",
+  Off = "off",
+}
 
 export enum DestinationState {
   Open = "open",
@@ -41,6 +47,7 @@ export class Meeple extends Actor {
   private status: Status = {
     health: 100,
     stuff: 0,
+    lights: Lights.Off,
   };
 
   setStatus(status: Status) {
@@ -113,5 +120,19 @@ export class Meeple extends Actor {
         stuff: 100,
       });
     }
+  }
+
+  turnOffLights() {
+    this.setStatus({
+      ...this.getStatus(),
+      lights: Lights.On,
+    });
+  }
+
+  turnOnLights() {
+    this.setStatus({
+      ...this.getStatus(),
+      lights: Lights.Off,
+    });
   }
 }

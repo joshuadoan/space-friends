@@ -114,7 +114,7 @@ const Root = () => {
   return (
     <>
       <div className="h-full absolute">
-        <nav className="flex gap-2 bg-black bg-opacity-50 p-4">
+        <nav className="flex gap-2 bg-black bg-opacity-50 p-4 items-center">
           <StyledNavLink
             to={{
               pathname: "/meeples",
@@ -123,8 +123,9 @@ const Root = () => {
           >
             meeples
           </StyledNavLink>
-          <StyledNavLink to="/help">help</StyledNavLink>
+          <StyledNavLink to="/help">help</StyledNavLink> |
           <Button onClick={() => game?.resetZoom()}>reset zoom</Button>
+          {/* <Button onClick={() => game?.stop()}>pause</Button> */}
         </nav>
         <Outlet context={{ game, state, dispatch }} />
       </div>

@@ -1,7 +1,7 @@
 import { Color, Engine, Timer, vec } from "excalibur";
 import { getRandomDestination, randomIntFromInterval } from "../utils/helpers";
 import { Destination } from "./destination";
-import { Meeple, MeepleKind, ShipState } from "./meeple";
+import { Lights, Meeple, MeepleKind, ShipState } from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { getDestinationName } from "../utils/get-name";
 
@@ -56,12 +56,11 @@ export class Ship extends Meeple {
   onInitialize(engine: Engine): void {
     this.addTag(MeepleKind.SpaceLaborer);
     this.pos = getRandomScreenPosition(engine);
-    this.turnOffLights();
 
     this.setAvatar(this.color.toString() + this.id + this.name);
 
     const timer = new Timer({
-      interval: randomIntFromInterval(3000, 10000),
+      interval: randomIntFromInterval(1000, 5000),
       repeats: true,
     });
 
@@ -88,10 +87,18 @@ export class Ship extends Meeple {
 
     switch (action) {
       case ShipAction.GoToWork:
+        this.turnOnLights();
         this.goToDestination(MeepleKind.SpaceShop);
         break;
       case ShipAction.GoHome:
+        this.turnOnLights();
         this.goToDestination(MeepleKind.Home);
+        break;
+      case ShipAction.Hangout:
+      case ShipAction.Work:
+        this.turnOffLights();
+        break;
+      default:
         break;
     }
 
@@ -103,6 +110,19 @@ export class Ship extends Meeple {
    * the action that was dispatched
    */
   next() {
+    if (!this.actions.getQueue().isComplete()) {
+      return;
+    }
+
+    switch (this.getStatus().lights) {
+      case Lights.On:
+        this.graphics.opacity = 1;
+        break;
+      case Lights.Off:
+        this.graphics.opacity = 0.5;
+        break;
+    }
+
     switch (this.getState()) {
       case ShipState.Off:
         this.dispatch(ShipAction.GoToWork);
@@ -158,24 +178,7 @@ export class Ship extends Meeple {
         this.speed
       )
       .callMethod(() => {
-        switch (type) {
-          case MeepleKind.SpaceShop:
-            destination.transact();
-            this.dispatch(ShipAction.Work);
-            break;
-          case MeepleKind.SpaceLaborer:
-          default:
-            this.dispatch(ShipAction.Hangout);
-            break;
-        }
+        destination.transact();
       });
-  }
-
-  turnOffLights() {
-    this.graphics.opacity = 0.5;
-  }
-
-  turnOnLights() {
-    this.graphics.opacity = 1;
   }
 }

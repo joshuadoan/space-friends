@@ -27,6 +27,7 @@ import useUxState, {
   State,
 } from "../hooks/use-ux-state";
 import { Meeple, MeepleKind } from "../classes/meeple";
+import { Color } from "excalibur";
 
 export type OutletContext = {
   game: Game;
@@ -52,6 +53,7 @@ export async function rootLoader() {
   for (let i = 0; i < NUMBER_OF_SPACE_HOMES; i++) {
     const station = new Destination({
       kind: MeepleKind.Home,
+      color: Color.Orange,
     });
     game.add(station);
   }

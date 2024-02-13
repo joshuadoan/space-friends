@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Root from "../../components/Root";
 import ErrorPage from "../../components/ErrorPage";
 import mockRootLoader from "./mockRootLoader";
-import Meeples from "../../components/Meeples";
+import List from "../../components/List";
 import Help from "../../components/Help";
 import MeepleDetail from "../../components/Details";
 
@@ -18,7 +18,7 @@ export function mockRouter() {
       children: [
         {
           path: "/meeples",
-          element: <Meeples />,
+          element: <List />,
         },
         {
           path: "/meeples/:meepleId",

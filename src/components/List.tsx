@@ -1,18 +1,13 @@
 import React from "react";
 import cx from "classnames";
-import {
-  useOutletContext,
-  useParams,
-  useSearchParams,
-  Outlet,
-} from "react-router-dom";
+import { useOutletContext, useSearchParams, Outlet } from "react-router-dom";
 import { Action, Filter, State } from "../hooks/use-ux-state";
 import { filterActors } from "../utils/helpers";
 import Game from "../classes/game";
 import StyledNavLink from "./StyledNavLink";
 import { Meeple } from "./Meeple";
 
-const Meeples = () => {
+const List = () => {
   const [params] = useSearchParams();
   const { state } = useOutletContext() as {
     game: Game;
@@ -20,11 +15,6 @@ const Meeples = () => {
     dispatch: React.Dispatch<Action>;
   };
 
-  let { meepleId } = useParams<{
-    meepleId: string;
-  }>();
-
-  const selectedActor = state.actors.find((a) => a.id === Number(meepleId));
   const filter = params.get("filter") as Filter;
 
   return (
@@ -72,4 +62,4 @@ const Meeples = () => {
   );
 };
 
-export default Meeples;
+export default List;

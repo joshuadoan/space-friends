@@ -1,7 +1,6 @@
 import React from "react";
 import { MeepleClass } from "../classes/meeple";
 import { useSearchParams } from "react-router-dom";
-import StyledNavLink from "./StyledNavLink";
 import Avatar from "./Avatar";
 import StyledLink from "./StyledLink";
 

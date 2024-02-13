@@ -2,7 +2,7 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import Root from "./components/Root";
-import Meeples from "./components/Meeples";
+import List from "./components/List";
 import Help from "./components/Help";
 import { rootLoader } from "./components/Root";
 import ErrorPage from "./components/ErrorPage";
@@ -18,7 +18,7 @@ export const routes = [
     children: [
       {
         path: "/meeples",
-        element: <Meeples />,
+        element: <List />,
       },
       {
         path: "/meeples/:meepleId",

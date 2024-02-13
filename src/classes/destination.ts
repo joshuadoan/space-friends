@@ -24,4 +24,26 @@ export class Destination extends Meeple {
       stuff: 100,
     });
   }
+
+  transact(meeple: Meeple, action?: string) {
+    console.log("transact", meeple.name, action);
+    if (this.getStatus().stuff > 0) {
+      this.setStatus({
+        ...this.getStatus(),
+        stuff: this.getStatus().stuff - 1,
+      });
+    } else {
+      this.setStatus({
+        ...this.getStatus(),
+        stuff: 100,
+      });
+    }
+    if (this.hasTag(MeepleKind.SpaceShop)) {
+      this.setJournal(`Transacting with ${meeple.name}`);
+    }
+
+    if (this.hasTag(MeepleKind.Home)) {
+      this.setJournal(`Hosting ${meeple.name}`);
+    }
+  }
 }

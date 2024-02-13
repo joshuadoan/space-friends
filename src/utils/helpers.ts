@@ -68,6 +68,6 @@ function getRandomScreenPosition(game: Engine) {
 /**
  * Returns a random element from an array.
  */
-export function getRandomDestination(actors: Meeple[]) {
+export function getRandomDestination(actors: Destination[]) {
   return actors[Math.floor(Math.random() * actors.length)];
 }

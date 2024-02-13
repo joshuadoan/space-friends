@@ -107,22 +107,6 @@ export class Meeple extends Actor {
     return this.scene.engine as Game;
   }
 
-  transact(meeple: Meeple, action?: string) {
-    console.log("transact", meeple.name, action);
-    if (this.getStatus().stuff > 0) {
-      this.setStatus({
-        ...this.getStatus(),
-        stuff: this.getStatus().stuff - 1,
-      });
-    } else {
-      this.setStatus({
-        ...this.getStatus(),
-        stuff: 100,
-      });
-    }
-    this.setJournal(`Transacted with ${meeple.name}`);
-  }
-
   turnOffLights() {
     this.setStatus({
       ...this.getStatus(),

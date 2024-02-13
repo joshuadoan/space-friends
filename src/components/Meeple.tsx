@@ -56,7 +56,7 @@ const MeepleDetail = () => {
             </dd>
           );
         })}
-        <dd>Tags: {meeple.tags.map()}</dd>
+        <dd>Type: {meeple.tags.map((tag) => tag)}</dd>
       </dl>
 
       <dl

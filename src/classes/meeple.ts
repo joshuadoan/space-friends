@@ -3,6 +3,7 @@ import * as blockies from "blockies-ts";
 import { MAX_ZOOM } from "../consts";
 import Game from "./game";
 
+
 export enum MeepleKind {
   SpaceLaborer = "space laborer",
   SpaceShop = "space shop",
@@ -16,6 +17,23 @@ export enum ShipState {
   TravelingHome = "traveling home",
   Working = "working",
   AtHome = "home",
+}
+
+export enum ShipAction {
+  GoToWork = "go to work",
+  GoHome = "go home",
+  Work = "start working",
+  Hangout = "hang out at home",
+}
+
+export enum DestinationState {
+  Open = "open",
+  Closed = "closed",
+}
+
+export enum DestinationAction {
+  Open = "open",
+  Close = "close",
 }
 
 export type Journal = {
@@ -33,9 +51,6 @@ export enum Lights {
   Off = "off",
 }
 
-export enum DestinationState {
-  Open = "open",
-}
 export class MeepleClass extends Actor {
   private guests: {
     [id: string]: MeepleClass;

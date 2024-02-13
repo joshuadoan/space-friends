@@ -1,19 +1,20 @@
 import { Color, Engine, Timer, vec } from "excalibur";
 import { getRandomDestination, randomIntFromInterval } from "../utils/helpers";
 import { Destination } from "./destination";
-import { Lights, MeepleClass, MeepleKind, ShipState } from "./meeple";
+import {
+  Lights,
+  MeepleClass,
+  MeepleKind,
+  ShipAction,
+  ShipState,
+} from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { getDestinationName } from "../utils/get-name";
-import { MAX_SPEED, MIN_SPEED } from "../consts";
+
+export const MAX_SPEED = 42;
+export const MIN_SPEED = 27;
 
 const colors = [Color.Violet, Color.Viridian, Color.Gray, Color.Orange];
-
-export enum ShipAction {
-  GoToWork = "go to work",
-  GoHome = "go home",
-  Work = "start working",
-  Hangout = "hang out at home",
-}
 
 export type StateMachine = {
   [state in ShipState]: {
@@ -88,7 +89,7 @@ export class Ship extends MeepleClass {
    * that was dispatched.
    */
   async dispatch(action: ShipAction) {
-    const newState = machine[this.getState() as ShipState][action] as ShipState;
+    const newState = machine[this.getState() as ShipState][action];
 
     if (!newState) {
       throw new Error(
@@ -141,8 +142,7 @@ export class Ship extends MeepleClass {
           ...this.getStatus(),
           stuff: this.getStatus().stuff + 1,
         });
-
-        if (this.getStatus().stuff > 3) {
+        if (this.getStatus().stuff > 5) {
           this.dispatch(ShipAction.GoHome);
         }
         break;
@@ -151,7 +151,6 @@ export class Ship extends MeepleClass {
           ...this.getStatus(),
           stuff: this.getStatus().stuff - 1,
         });
-
         if (this.getStatus().stuff < 1) {
           this.dispatch(ShipAction.GoToWork);
         }

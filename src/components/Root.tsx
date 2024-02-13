@@ -3,13 +3,7 @@ import { Outlet, useLoaderData } from "react-router-dom";
 import Game from "../classes/game";
 import { Destination } from "../classes/destination";
 import { Ship } from "../classes/ship";
-import {
-  ENGINE_DEFAULTS,
-  NUMBER_OF_STARS,
-  NUMBER_OF_SPACE_SHOPS,
-  NUMBER_OF_SHIPS,
-  NUMBER_OF_SPACE_HOMES,
-} from "../consts";
+import { ENGINE_DEFAULTS } from "../consts";
 import { makeStar } from "../utils/helpers";
 import useUxState, { Action, ActionNames, State } from "../hooks/use-ux-state";
 import { MeepleClass, MeepleKind } from "../classes/meeple";
@@ -21,6 +15,11 @@ export type OutletContext = {
   state: State;
   dispatch: React.Dispatch<Action>;
 };
+
+export const NUMBER_OF_STARS = 256;
+export const NUMBER_OF_SPACE_SHOPS = 5;
+export const NUMBER_OF_SPACE_HOMES = 10;
+export const NUMBER_OF_SHIPS = 42;
 
 export async function rootLoader() {
   const game = new Game(ENGINE_DEFAULTS);

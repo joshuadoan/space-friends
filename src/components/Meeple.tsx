@@ -47,11 +47,7 @@ const MeepleDetail = () => {
         <span className=" text-slate-400">{meeple.getState()}</span>
       </div>
 
-      <dl
-        className={cx("bg-purple-800 bg-opacity-50 p-2", {
-          hidden: false,
-        })}
-      >
+      <dl className={cx("bg-purple-800 bg-opacity-50 p-2")}>
         <dt className="font-semibold">status</dt>
         {Object.entries(meeple.getStatus()).map(([key, value]) => {
           return (
@@ -60,6 +56,7 @@ const MeepleDetail = () => {
             </dd>
           );
         })}
+        <dd>Tags: {meeple.tags.map()}</dd>
       </dl>
 
       <dl

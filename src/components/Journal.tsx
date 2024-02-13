@@ -14,9 +14,9 @@ const Journal = (props: { journal: Journal }) => {
             const spaceDate = new Date(Number(timestamp) * 1000);
             return (
               <dd key={i} className="flex gap-2 items-center">
-                <span className="opacity-60">
+                <label className="opacity-70">
                   {spaceDate.toLocaleTimeString()}
-                </span>
+                </label>
                 <span className="flex-1">{entry}</span>
               </dd>
             );

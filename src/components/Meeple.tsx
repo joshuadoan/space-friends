@@ -35,6 +35,12 @@ export const Meeple = (props: { meeple: MeepleClass }) => {
           <span>x: {Math.round(props.meeple.pos.x)}</span>
           <span>y:{Math.round(props.meeple.pos.y)}</span>
         </dd>
+        <dd className="flex gap-2 items-center">
+          <label className="opacity-70">tags:</label>
+          {props.meeple.tags.map((tag, i) => (
+            <span key={i}>{tag}</span>
+          ))}
+        </dd>
       </dl>
     </div>
   );

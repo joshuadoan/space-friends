@@ -1,12 +1,6 @@
 import Game from "./classes/game";
 import { MeepleClass } from "./classes/meeple";
 
-export type StateMachine = {
-  [state in ShipState]: {
-    [action in ShipAction]?: ShipState;
-  };
-};
-
 export enum MeepleKind {
   SpaceLaborer = "space laborer",
   SpaceShop = "space shop",
@@ -22,12 +16,17 @@ export enum ShipState {
   AtHome = "home",
 }
 
-export enum ShipAction {
+export enum ShipActionKind {
   GoToWork = "go to work",
   GoHome = "go home",
   Work = "start working",
   Hangout = "hang out at home",
 }
+
+export type ShipAction = {
+  kind: ShipActionKind;
+  effect: () => void;
+};
 
 export enum DestinationState {
   Open = "open",

@@ -5,13 +5,13 @@ import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { randomIntFromInterval } from "../utils/helpers";
 import { DestinationAction, DestinationState, MeepleKind } from "../types";
 
-export type StateMachine = {
+export type Transitions = {
   [state in DestinationState]: {
     [action in DestinationAction]?: DestinationState;
   };
 };
 
-const machine: StateMachine = {
+const machine: Transitions = {
   [DestinationState.Open]: {
     [DestinationAction.Close]: DestinationState.Closed,
   },
@@ -40,6 +40,7 @@ export class Destination extends MeepleClass {
       ...this.getStatus(),
       stuff: 100,
     });
+    this.turnOnLights();
 
     const timer = new Timer({
       interval: randomIntFromInterval(1000, 5000),

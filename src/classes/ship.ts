@@ -4,37 +4,37 @@ import { Destination } from "./destination";
 import { MeepleClass } from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { getDestinationName } from "../utils/get-name";
-import {
-  Lights,
-  MeepleKind,
-  ShipAction,
-  ShipState,
-  StateMachine,
-} from "../types";
+import { MeepleKind, ShipAction, ShipActionKind, ShipState } from "../types";
 
 export const MAX_SPEED = 42;
 export const MIN_SPEED = 27;
 
 const colors = [Color.Violet, Color.Viridian, Color.Gray, Color.Orange];
 
-const machine: StateMachine = {
+export type Transitions = {
+  [state in ShipState]: {
+    [action in ShipActionKind]?: ShipState;
+  };
+};
+
+const machine: Transitions = {
   [ShipState.Off]: {
-    [ShipAction.GoHome]: ShipState.TravelingHome,
-    [ShipAction.GoToWork]: ShipState.TravelingToWork,
+    [ShipActionKind.GoHome]: ShipState.TravelingHome,
+    [ShipActionKind.GoToWork]: ShipState.TravelingToWork,
   },
   [ShipState.TravelingToWork]: {
-    [ShipAction.Work]: ShipState.Working,
+    [ShipActionKind.Work]: ShipState.Working,
   },
   [ShipState.Working]: {
-    [ShipAction.GoHome]: ShipState.TravelingHome,
-    [ShipAction.Work]: ShipState.Working,
+    [ShipActionKind.GoHome]: ShipState.TravelingHome,
+    [ShipActionKind.Work]: ShipState.Working,
   },
   [ShipState.TravelingHome]: {
-    [ShipAction.Hangout]: ShipState.AtHome,
+    [ShipActionKind.Hangout]: ShipState.AtHome,
   },
   [ShipState.AtHome]: {
-    [ShipAction.GoToWork]: ShipState.TravelingToWork,
-    [ShipAction.Hangout]: ShipState.AtHome,
+    [ShipActionKind.GoToWork]: ShipState.TravelingToWork,
+    [ShipActionKind.Hangout]: ShipState.AtHome,
   },
 };
 
@@ -52,9 +52,8 @@ export class Ship extends MeepleClass {
 
   onInitialize(engine: Engine): void {
     this.addTag(MeepleKind.SpaceLaborer);
-    this.pos = getRandomScreenPosition(engine);
-
     this.setAvatar(this.color.toString() + this.id + this.name);
+    this.pos = getRandomScreenPosition(engine);
 
     const timer = new Timer({
       interval: randomIntFromInterval(1000, 5000),
@@ -62,55 +61,24 @@ export class Ship extends MeepleClass {
     });
 
     timer.on(() => this.next());
+    timer.start();
 
     engine.add(timer);
-    timer.start();
   }
 
-  onPostUpdate(_engine: Engine, _delta: number): void {
-    switch (this.getStatus().lights) {
-      case Lights.On:
-        this.graphics.opacity = 1;
-        break;
-      case Lights.Off:
-        this.graphics.opacity = 0.5;
-        break;
-    }
-  }
-
-  /**
-   * Dispatch method, which is responsible for determining the next state
-   * of the ship based on the current state, runs actions, and the action
-   * that was dispatched.
-   */
   async dispatch(action: ShipAction) {
-    const newState = machine[this.getState() as ShipState][action];
+    const newState = machine[this.getState() as ShipState][action.kind];
 
     if (!newState) {
-      throw new Error(
+      console.warn(
         `Action ${action} is not a valid step from state ${this.getState()}`
       );
-    }
-    this.setJournal(action);
-
-    switch (action) {
-      case ShipAction.GoToWork:
-        this.turnOnLights();
-        this.goToDestination(MeepleKind.SpaceShop);
-        break;
-      case ShipAction.GoHome:
-        this.turnOnLights();
-        this.goToDestination(MeepleKind.Home);
-        break;
-      case ShipAction.Hangout:
-      case ShipAction.Work:
-        this.turnOffLights();
-        break;
-      default:
-        break;
+      return;
     }
 
+    this.setJournal(action.kind);
     this.setState(newState);
+    action.effect();
   }
 
   /**
@@ -124,13 +92,30 @@ export class Ship extends MeepleClass {
 
     switch (this.getState()) {
       case ShipState.Off:
-        this.dispatch(ShipAction.GoToWork);
+        this.dispatch({
+          kind: ShipActionKind.GoToWork,
+          effect: () => {
+            this.turnOnLights();
+            this.goToDestination(MeepleKind.SpaceShop);
+          },
+        });
         break;
       case ShipState.TravelingToWork:
-        this.dispatch(ShipAction.Work);
+        this.dispatch({
+          kind: ShipActionKind.Work,
+          effect: () => {
+            this.turnOffLights();
+          },
+        });
         break;
       case ShipState.TravelingHome:
-        this.dispatch(ShipAction.Hangout);
+        this.dispatch({
+          kind: ShipActionKind.Hangout,
+          effect: () => {
+            this.turnOffLights();
+          },
+        });
+
         break;
       case ShipState.Working:
         this.setStatus({
@@ -138,7 +123,13 @@ export class Ship extends MeepleClass {
           stuff: this.getStatus().stuff + 1,
         });
         if (this.getStatus().stuff > 5) {
-          this.dispatch(ShipAction.GoHome);
+          this.dispatch({
+            kind: ShipActionKind.GoHome,
+            effect: () => {
+              this.turnOnLights();
+              this.goToDestination(MeepleKind.Home);
+            },
+          });
         }
         break;
       case ShipState.AtHome:
@@ -147,7 +138,13 @@ export class Ship extends MeepleClass {
           stuff: this.getStatus().stuff - 1,
         });
         if (this.getStatus().stuff < 1) {
-          this.dispatch(ShipAction.GoToWork);
+          this.dispatch({
+            kind: ShipActionKind.GoToWork,
+            effect: () => {
+              this.turnOnLights();
+              this.goToDestination(MeepleKind.SpaceShop);
+            },
+          });
         }
         break;
     }

@@ -1,7 +1,7 @@
 import { Color, Engine, Timer, vec } from "excalibur";
 import { getRandomDestination, randomIntFromInterval } from "../utils/helpers";
 import { Destination } from "./destination";
-import { Lights, Meeple, MeepleKind, ShipState } from "./meeple";
+import { Lights, MeepleClass, MeepleKind, ShipState } from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { getDestinationName } from "../utils/get-name";
 import { MAX_SPEED, MIN_SPEED } from "../consts";
@@ -42,7 +42,7 @@ const machine: StateMachine = {
   },
 };
 
-export class Ship extends Meeple {
+export class Ship extends MeepleClass {
   private speed = randomIntFromInterval(MIN_SPEED, MAX_SPEED);
 
   constructor(options?: { name?: string }) {

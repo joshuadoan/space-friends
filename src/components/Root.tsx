@@ -7,8 +7,6 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import Game from "../classes/game";
-import Button from "./Button";
-import StyledNavLink from "./StyledNavLink";
 import { Destination } from "../classes/destination";
 import { Ship } from "../classes/ship";
 import {
@@ -26,8 +24,9 @@ import useUxState, {
   Filter,
   State,
 } from "../hooks/use-ux-state";
-import { Meeple, MeepleKind } from "../classes/meeple";
+import { MeepleClass, MeepleKind } from "../classes/meeple";
 import { Color } from "excalibur";
+import Nav from "./Nav";
 
 export type OutletContext = {
   game: Game;
@@ -101,8 +100,8 @@ const Root = () => {
           name: ActionNames.SET_ACTORS,
           payload: [
             ...(game?.currentScene.actors
-              .filter((a) => a instanceof Meeple)
-              .map((a) => a as Meeple) ?? []),
+              .filter((a) => a instanceof MeepleClass)
+              .map((a) => a as MeepleClass) ?? []),
           ],
         });
       }, 300);
@@ -113,27 +112,7 @@ const Root = () => {
 
   return (
     <div className="h-full absolute">
-      <nav className="flex gap-2 bg-black bg-opacity-50 p-4 items-center">
-        <StyledNavLink
-          to={{
-            pathname: "/meeples",
-            search: `?filter=${filter}`,
-          }}
-        >
-          meeples
-        </StyledNavLink>
-        <StyledNavLink to="/help">help</StyledNavLink>
-        <Button onClick={() => game?.resetZoom()}>reset zoom</Button>
-        {game.isRunning() ? (
-          <Button title="play" onClick={() => game?.stop()}>
-            pause
-          </Button>
-        ) : (
-          <Button title="pause" onClick={() => game?.start()}>
-            play
-          </Button>
-        )}
-      </nav>
+      <Nav game={game} />
       <Outlet context={{ game, state, dispatch }} />
     </div>
   );

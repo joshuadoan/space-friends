@@ -3,7 +3,7 @@ import { Ship } from "../classes/ship";
 import { Destination } from "../classes/destination";
 import { getPersonName } from "./get-name";
 import { Filter } from "../hooks/use-ux-state";
-import { Meeple } from "../classes/meeple";
+import { MeepleClass } from "../classes/meeple";
 
 /**
  * Returns a random integer between the given minimum and maximum values, inclusive.
@@ -29,7 +29,7 @@ export function filterActors(actors: Actor[], filter: Filter) {
       }
     })
     .map((a) => {
-      return a as Meeple;
+      return a as MeepleClass;
     });
 }
 

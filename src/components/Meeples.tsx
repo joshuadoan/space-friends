@@ -10,9 +10,7 @@ import { Action, Filter, State } from "../hooks/use-ux-state";
 import { filterActors } from "../utils/helpers";
 import Game from "../classes/game";
 import StyledNavLink from "./StyledNavLink";
-import { Ship } from "../classes/ship";
-import { Destination } from "../classes/destination";
-import Avatar from "./Avatar";
+import { Meeple } from "./Meeple";
 
 const Meeples = () => {
   const [params] = useSearchParams();
@@ -30,7 +28,7 @@ const Meeples = () => {
   const filter = params.get("filter") as Filter;
 
   return (
-    <>
+    <div className="flex flex-col h-full">
       <nav className="flex items-center gap-2 bg-black bg-opacity-50 px-4">
         <StyledNavLink
           to="/meeples"
@@ -58,55 +56,19 @@ const Meeples = () => {
         </StyledNavLink>
       </nav>
       <menu
-        className="flex flex-col justify-start overflow-auto h-full p-4"
+        className="flex flex-col justify-start overflow-auto flex-1 p-4"
         role="menu"
       >
         {filterActors([...state.actors], params.get("filter") as Filter).map(
           (actor) => (
-            <li
-              key={actor.id}
-              className={cx("p-2", {
-                "bg-purple-800 ": actor.id === selectedActor?.id,
-              })}
-              data-testid="meeple"
-            >
-              <div className={cx("flex items-center gap-2")}>
-                <StyledNavLink
-                  to={`/meeples/${actor.id}?filter=${params.get("filter")}`}
-                  title="Click to zoom and follow"
-                >
-                  <span className="w-full text-left flex items-center gap-2">
-                    <Avatar url={actor.getAvatar()} />
-                    {actor.name}
-                  </span>
-                </StyledNavLink>
-              </div>
-              <div className="px-2">
-                <div className="flex gap-2">
-                  <label className="opacity-70">state:</label>
-                  <span>{actor.getState()}</span>
-                </div>
-                <div className="flex gap-2">
-                  <label className="opacity-70">type:</label>
-                  {actor instanceof Ship && <span>ship</span>}
-                  {actor instanceof Destination && <span>destination</span>}
-                </div>
-                <div className="flex gap-2">
-                  <label className="opacity-70">status: </label>♡{" "}
-                  {actor.getStatus().health} &#65504; {actor.getStatus().stuff}
-                </div>
-                <div className="flex gap-2">
-                  <label className="opacity-70">position:</label>
-                  <span>x: {Math.round(actor.pos.x)}</span>
-                  <span>y:{Math.round(actor.pos.y)}</span>
-                </div>
-              </div>
+            <li key={actor.id} data-testid="meeple">
+              <Meeple meeple={actor} />
             </li>
           )
         )}
       </menu>
       <Outlet />
-    </>
+    </div>
   );
 };
 

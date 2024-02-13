@@ -6,7 +6,7 @@ import Meeples from "./components/Meeples";
 import Help from "./components/Help";
 import { rootLoader } from "./components/Root";
 import ErrorPage from "./components/ErrorPage";
-import MeepleDetail from "./components/Meeple";
+import MeepleDetail from "./components/Details";
 
 export const routes = [
   {

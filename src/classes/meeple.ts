@@ -18,6 +18,10 @@ export enum ShipState {
   AtHome = "home",
 }
 
+export type Journal = {
+  [timeStamp: number]: string;
+};
+
 type Status = {
   health: number;
   stuff: number;
@@ -32,14 +36,12 @@ export enum Lights {
 export enum DestinationState {
   Open = "open",
 }
-export class Meeple extends Actor {
+export class MeepleClass extends Actor {
   private guests: {
-    [id: string]: Meeple;
+    [id: string]: MeepleClass;
   } = {};
 
-  private journal: {
-    [timeStamp: number]: string;
-  } = {};
+  private journal: Journal = {};
 
   private imageUrl = "";
   private state: ShipState | DestinationState = ShipState.Off;
@@ -84,7 +86,7 @@ export class Meeple extends Actor {
     camera.strategy.camera.zoomOverTime(MAX_ZOOM, 5000);
   }
 
-  addGuest(guest: Meeple) {
+  addGuest(guest: MeepleClass) {
     this.guests[guest.id] = guest;
   }
   removeGuest(id: string) {

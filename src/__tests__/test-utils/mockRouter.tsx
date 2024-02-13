@@ -5,7 +5,7 @@ import ErrorPage from "../../components/ErrorPage";
 import mockRootLoader from "./mockRootLoader";
 import Meeples from "../../components/Meeples";
 import Help from "../../components/Help";
-import MeepleDetail from "../../components/Meeple";
+import MeepleDetail from "../../components/Details";
 
 export function mockRouter() {
   return createBrowserRouter([

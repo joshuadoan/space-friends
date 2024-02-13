@@ -1,12 +1,12 @@
 import React from "react";
-import { Meeple } from "../classes/meeple";
+import { MeepleClass } from "../classes/meeple";
 
 export type Filter = "ships" | "destinations" | "homes";
 export type Tab = "meeples" | "help";
 
 export type State = {
-  selectedActor: Meeple | null;
-  actors: Meeple[];
+  selectedActor: MeepleClass | null;
+  actors: MeepleClass[];
 };
 
 export enum ActionNames {
@@ -15,7 +15,7 @@ export enum ActionNames {
 
 type SetActors = {
   name: ActionNames.SET_ACTORS;
-  payload: Meeple[];
+  payload: MeepleClass[];
 };
 
 export type Action = SetActors;

@@ -1,9 +1,9 @@
 import { Color, Engine } from "excalibur";
 import { getDestinationName } from "../utils/get-name";
-import { DestinationState, Meeple, MeepleKind } from "./meeple";
+import { DestinationState, MeepleClass, MeepleKind } from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 
-export class Destination extends Meeple {
+export class Destination extends MeepleClass {
   constructor(options: { name?: string; kind: MeepleKind; color?: Color }) {
     super({
       width: 8,
@@ -25,7 +25,7 @@ export class Destination extends Meeple {
     });
   }
 
-  transact(meeple: Meeple, action?: string) {
+  transact(meeple: MeepleClass, action?: string) {
     console.log("transact", meeple.name, action);
     if (this.getStatus().stuff > 0) {
       this.setStatus({

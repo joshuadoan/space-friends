@@ -17,6 +17,10 @@ export const routes = [
     shouldRevalidate: () => false,
     children: [
       {
+        path: "/",
+        element: <List />,
+      },
+      {
         path: "/meeples",
         element: <List />,
       },

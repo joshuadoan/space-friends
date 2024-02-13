@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Outlet,
-  useLoaderData,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 import Game from "../classes/game";
 import { Destination } from "../classes/destination";
 import { Ship } from "../classes/ship";
@@ -15,13 +10,11 @@ import {
   NUMBER_OF_SHIPS,
   NUMBER_OF_SPACE_HOMES,
 } from "../consts";
-
 import { makeStar } from "../utils/helpers";
 import useUxState, { Action, ActionNames, State } from "../hooks/use-ux-state";
 import { MeepleClass, MeepleKind } from "../classes/meeple";
 import { Color } from "excalibur";
 import Nav from "./Nav";
-import useFilters from "../hooks/useFilters";
 
 export type OutletContext = {
   game: Game;
@@ -62,9 +55,6 @@ export async function rootLoader() {
 }
 
 const Root = () => {
-  const navigate = useNavigate();
-  const { filter } = useFilters();
-
   const { state, dispatch } = useUxState({
     actors: [],
     selectedActor: null,
@@ -74,22 +64,6 @@ const Root = () => {
   const { game } = useLoaderData() as {
     game: Game;
   };
-
-  // Add click event to all actors for selection
-  game.currentScene.actors.map((a) =>
-    a.on("pointerdown", () => navigate(`/meeples/${a.id}?filter=${filter}`))
-  );
-
-  const location = useLocation();
-
-  useEffect(
-    function redirectToShipsFilter() {
-      if (location.pathname === "/") {
-        navigate(`/meeples/?filter=ships`);
-      }
-    },
-    [location.pathname]
-  );
 
   useEffect(
     function handlePause() {
@@ -110,6 +84,7 @@ const Root = () => {
           payload: [
             ...(game?.currentScene.actors
               .filter((a) => a instanceof MeepleClass)
+              .sort((a, b) => a.name.localeCompare(b.name))
               .map((a) => a as MeepleClass) ?? []),
           ],
         });

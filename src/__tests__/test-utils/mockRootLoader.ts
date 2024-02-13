@@ -28,6 +28,9 @@ export default async () => {
           ],
         },
         isRunning: jest.fn().mockImplementation(() => true),
+        start: jest.fn(),
+        stop: jest.fn(),
+        resetZoom: jest.fn(),
       },
     });
   });

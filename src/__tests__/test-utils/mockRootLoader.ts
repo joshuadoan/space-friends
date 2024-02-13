@@ -1,5 +1,5 @@
 import { Destination } from "../../classes/destination";
-import { MeepleKind } from "../../classes/meeple";
+import { MeepleKind } from "../../types";
 import { Ship } from "../../classes/ship";
 
 export default async () => {

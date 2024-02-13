@@ -1,13 +1,9 @@
 import { Color, Engine, Timer } from "excalibur";
 import { getDestinationName } from "../utils/get-name";
-import {
-  DestinationAction,
-  DestinationState,
-  MeepleClass,
-  MeepleKind,
-} from "./meeple";
+import { MeepleClass } from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { randomIntFromInterval } from "../utils/helpers";
+import { DestinationAction, DestinationState, MeepleKind } from "../types";
 
 export type StateMachine = {
   [state in DestinationState]: {

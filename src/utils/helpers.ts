@@ -2,8 +2,8 @@ import { Actor, Color, Engine, vec } from "excalibur";
 import { Ship } from "../classes/ship";
 import { Destination } from "../classes/destination";
 import { getPersonName } from "./get-name";
-import { Filter } from "../hooks/use-ux-state";
 import { MeepleClass } from "../classes/meeple";
+import { Filter } from "../types";
 
 /**
  * Returns a random integer between the given minimum and maximum values, inclusive.

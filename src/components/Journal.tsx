@@ -1,5 +1,5 @@
 import React from "react";
-import { Journal } from "../classes/meeple";
+import { Journal } from "../types";
 
 const Journal = (props: { journal: Journal }) => {
   const journal = Object.entries(props.journal);

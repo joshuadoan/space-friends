@@ -5,16 +5,11 @@ import { Destination } from "../classes/destination";
 import { Ship } from "../classes/ship";
 import { ENGINE_DEFAULTS } from "../consts";
 import { makeStar } from "../utils/helpers";
-import useUxState, { Action, ActionNames, State } from "../hooks/use-ux-state";
-import { MeepleClass, MeepleKind } from "../classes/meeple";
+import useUxState from "../hooks/use-ux-state";
 import { Color } from "excalibur";
 import Nav from "./Nav";
-
-export type OutletContext = {
-  game: Game;
-  state: State;
-  dispatch: React.Dispatch<Action>;
-};
+import { ActionNames, MeepleKind } from "../types";
+import { MeepleClass } from "../classes/meeple";
 
 export const NUMBER_OF_STARS = 256;
 export const NUMBER_OF_SPACE_SHOPS = 5;

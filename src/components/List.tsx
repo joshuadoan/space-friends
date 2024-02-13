@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import cx from "classnames";
 import { useOutletContext, Outlet } from "react-router-dom";
-import { Action, State } from "../hooks/use-ux-state";
+import { Action, State } from "../types";
 import { filterActors } from "../utils/helpers";
 import Game from "../classes/game";
 import StyledNavLink from "./StyledNavLink";

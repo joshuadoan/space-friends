@@ -2,54 +2,7 @@ import { Actor } from "excalibur";
 import * as blockies from "blockies-ts";
 import { MAX_ZOOM } from "../consts";
 import Game from "./game";
-
-
-export enum MeepleKind {
-  SpaceLaborer = "space laborer",
-  SpaceShop = "space shop",
-  Home = "home",
-  Unknown = "unknown",
-}
-
-export enum ShipState {
-  Off = "off",
-  TravelingToWork = "traveling to work",
-  TravelingHome = "traveling home",
-  Working = "working",
-  AtHome = "home",
-}
-
-export enum ShipAction {
-  GoToWork = "go to work",
-  GoHome = "go home",
-  Work = "start working",
-  Hangout = "hang out at home",
-}
-
-export enum DestinationState {
-  Open = "open",
-  Closed = "closed",
-}
-
-export enum DestinationAction {
-  Open = "open",
-  Close = "close",
-}
-
-export type Journal = {
-  [timeStamp: number]: string;
-};
-
-type Status = {
-  health: number;
-  stuff: number;
-  lights: Lights;
-};
-
-export enum Lights {
-  On = "on",
-  Off = "off",
-}
+import { DestinationState, Journal, Lights, ShipState, Status } from "../types";
 
 export class MeepleClass extends Actor {
   private guests: {

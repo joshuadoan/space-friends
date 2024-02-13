@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
-import { OutletContext } from "./Root";
+import { OutletContext } from "../types";
 import StyledLink from "./StyledLink";
 import { Meeple } from "./Meeple";
 import Journal from "./Journal";

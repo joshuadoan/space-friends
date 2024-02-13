@@ -2,7 +2,7 @@ import React from "react";
 import StyledNavLink from "./StyledNavLink";
 import Button from "./Button";
 import useFilters from "../hooks/useFilters";
-import { Action, ActionNames, State } from "../hooks/use-ux-state";
+import { Action, ActionNames, State } from "../types";
 
 const Nav = (props: { state: State; dispatch: React.Dispatch<Action> }) => {
   const { filter } = useFilters();

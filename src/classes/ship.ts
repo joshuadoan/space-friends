@@ -1,26 +1,21 @@
 import { Color, Engine, Timer, vec } from "excalibur";
 import { getRandomDestination, randomIntFromInterval } from "../utils/helpers";
 import { Destination } from "./destination";
+import { MeepleClass } from "./meeple";
+import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
+import { getDestinationName } from "../utils/get-name";
 import {
   Lights,
-  MeepleClass,
   MeepleKind,
   ShipAction,
   ShipState,
-} from "./meeple";
-import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
-import { getDestinationName } from "../utils/get-name";
+  StateMachine,
+} from "../types";
 
 export const MAX_SPEED = 42;
 export const MIN_SPEED = 27;
 
 const colors = [Color.Violet, Color.Viridian, Color.Gray, Color.Orange];
-
-export type StateMachine = {
-  [state in ShipState]: {
-    [action in ShipAction]?: ShipState;
-  };
-};
 
 const machine: StateMachine = {
   [ShipState.Off]: {

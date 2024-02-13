@@ -9,7 +9,13 @@ const Button = (
 ) => {
   const { children, className, ...rest } = props;
   return (
-    <button className={cx("hover:bg-stone-800 p-2", className)} {...rest}>
+    <button
+      className={cx(
+        "hover:bg-stone-800 p-2 border hover:border-stone-800",
+        className
+      )}
+      {...rest}
+    >
       {children}
     </button>
   );

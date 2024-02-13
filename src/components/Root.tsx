@@ -122,7 +122,7 @@ const Root = () => {
         >
           meeples
         </StyledNavLink>
-        <StyledNavLink to="/help">help</StyledNavLink> |
+        <StyledNavLink to="/help">help</StyledNavLink>
         <Button onClick={() => game?.resetZoom()}>reset zoom</Button>
         {game.isRunning() ? (
           <Button title="play" onClick={() => game?.stop()}>

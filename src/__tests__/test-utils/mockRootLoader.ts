@@ -27,6 +27,7 @@ export default async () => {
             }),
           ],
         },
+        isRunning: jest.fn().mockImplementation(() => true),
       },
     });
   });

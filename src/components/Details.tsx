@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
-import { useOutletContext, useParams, useSearchParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import { OutletContext } from "./Root";
 import StyledLink from "./StyledLink";
-import { Filter } from "../hooks/use-ux-state";
 import { Meeple } from "./Meeple";
 import Journal from "./Journal";
+import useFilters from "../hooks/useFilters";
 
 const MeepleDetail = () => {
-  const [params] = useSearchParams();
-  const filter = params.get("filter") as Filter;
-
+  const { filter } = useFilters();
   const { state } = useOutletContext() as OutletContext;
 
   let { meepleId } = useParams<{

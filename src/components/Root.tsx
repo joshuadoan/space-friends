@@ -4,7 +4,6 @@ import {
   useLoaderData,
   useLocation,
   useNavigate,
-  useSearchParams,
 } from "react-router-dom";
 import Game from "../classes/game";
 import { Destination } from "../classes/destination";
@@ -18,15 +17,11 @@ import {
 } from "../consts";
 
 import { makeStar } from "../utils/helpers";
-import useUxState, {
-  Action,
-  ActionNames,
-  Filter,
-  State,
-} from "../hooks/use-ux-state";
+import useUxState, { Action, ActionNames, State } from "../hooks/use-ux-state";
 import { MeepleClass, MeepleKind } from "../classes/meeple";
 import { Color } from "excalibur";
 import Nav from "./Nav";
+import useFilters from "../hooks/useFilters";
 
 export type OutletContext = {
   game: Game;
@@ -68,12 +63,12 @@ export async function rootLoader() {
 
 const Root = () => {
   const navigate = useNavigate();
-  const [params] = useSearchParams();
-  const filter = params.get("filter") as Filter;
+  const { filter } = useFilters();
 
   const { state, dispatch } = useUxState({
     actors: [],
     selectedActor: null,
+    paused: false,
   });
 
   const { game } = useLoaderData() as {
@@ -87,11 +82,25 @@ const Root = () => {
 
   const location = useLocation();
 
-  useEffect(() => {
-    if (location.pathname === "/") {
-      navigate(`/meeples/?filter=ships`);
-    }
-  }, [location.pathname]);
+  useEffect(
+    function redirectToShipsFilter() {
+      if (location.pathname === "/") {
+        navigate(`/meeples/?filter=ships`);
+      }
+    },
+    [location.pathname]
+  );
+
+  useEffect(
+    function handlePause() {
+      if (state.paused) {
+        game.stop();
+      } else {
+        game.start();
+      }
+    },
+    [state.paused]
+  );
 
   useEffect(
     function syncGameWithState() {
@@ -112,7 +121,7 @@ const Root = () => {
 
   return (
     <div className="h-full absolute">
-      <Nav game={game} />
+      <Nav state={state} dispatch={dispatch} />
       <Outlet context={{ game, state, dispatch }} />
     </div>
   );

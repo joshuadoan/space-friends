@@ -13,14 +13,20 @@ export const Meeple = (props: { meeple: MeepleClass }) => {
           to={`/meeples/${props.meeple.id}?filter=${params.get("filter")}`}
           title="Click to zoom and follow"
         >
-          <span className="w-full text-left flex items-center gap-2">
+          <div className="w-full text-left flex items-center gap-2">
             <Avatar url={props.meeple.getAvatar()} />
-            {props.meeple.name}
-          </span>
+            <div className="flex flex-col">
+              {props.meeple.name}
+              {props.meeple.tags.map((tag, i) => (
+                <span key={i} className="opacity-70">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
         </StyledLink>
       </div>
-      <dl className={"p-2"}>
-        <dt className="font-semibold">Status</dt>
+      <dl className={"px-2"}>
         <dd className="flex gap-2 items-center">
           <label className="opacity-70">state:</label>
           <span>{props.meeple.getState()}</span>
@@ -34,12 +40,6 @@ export const Meeple = (props: { meeple: MeepleClass }) => {
           <label className="opacity-70">position:</label>
           <span>x: {Math.round(props.meeple.pos.x)}</span>
           <span>y:{Math.round(props.meeple.pos.y)}</span>
-        </dd>
-        <dd className="flex gap-2 items-center">
-          <label className="opacity-70">tags:</label>
-          {props.meeple.tags.map((tag, i) => (
-            <span key={i}>{tag}</span>
-          ))}
         </dd>
       </dl>
     </div>

@@ -1,13 +1,11 @@
 import React from "react";
 import StyledNavLink from "./StyledNavLink";
-import { useSearchParams } from "react-router-dom";
-import { Filter } from "../hooks/use-ux-state";
 import Button from "./Button";
-import Game from "../classes/game";
+import useFilters from "../hooks/useFilters";
+import { Action, ActionNames, State } from "../hooks/use-ux-state";
 
-const Nav = (props: { game: Game }) => {
-  const [params] = useSearchParams();
-  const filter = params.get("filter") as Filter;
+const Nav = (props: { state: State; dispatch: React.Dispatch<Action> }) => {
+  const { filter } = useFilters();
   return (
     <nav className="flex gap-2 p-4 items-center">
       <StyledNavLink
@@ -19,14 +17,27 @@ const Nav = (props: { game: Game }) => {
         meeples
       </StyledNavLink>
       <StyledNavLink to="/help">help</StyledNavLink>
-      <Button onClick={() => props.game.resetZoom()}>reset zoom</Button>
-      {props.game.isRunning() ? (
-        <Button title="play" onClick={() => props.game.stop()}>
-          pause
+      {props.state.paused ? (
+        <Button
+          title="pause"
+          onClick={() =>
+            props.dispatch({
+              name: ActionNames.RESUME_GAME,
+            })
+          }
+        >
+          play
         </Button>
       ) : (
-        <Button title="pause" onClick={() => props.game.start()}>
-          play
+        <Button
+          title="play"
+          onClick={() =>
+            props.dispatch({
+              name: ActionNames.PAUSE_GAME,
+            })
+          }
+        >
+          pause
         </Button>
       )}
     </nav>

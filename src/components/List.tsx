@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import cx from "classnames";
-import { useOutletContext, useSearchParams, Outlet } from "react-router-dom";
-import { Action, Filter, State } from "../hooks/use-ux-state";
+import { useOutletContext, Outlet } from "react-router-dom";
+import { Action, State } from "../hooks/use-ux-state";
 import { filterActors } from "../utils/helpers";
 import Game from "../classes/game";
 import StyledNavLink from "./StyledNavLink";
 import { Meeple } from "./Meeple";
+import useFilters from "../hooks/useFilters";
 
 const List = () => {
-  const [params] = useSearchParams();
-  const { state } = useOutletContext() as {
+  const { filter } = useFilters();
+  const { state, game } = useOutletContext() as {
     game: Game;
     state: State;
     dispatch: React.Dispatch<Action>;
   };
 
-  const filter = params.get("filter") as Filter;
+  useEffect(
+    function handleSelected() {
+      game.resetZoom();
+    },
+    [game]
+  );
 
   return (
     <div className="flex flex-col h-full">
@@ -49,13 +55,11 @@ const List = () => {
         className="flex flex-col justify-start overflow-auto flex-1 p-4"
         role="menu"
       >
-        {filterActors([...state.actors], params.get("filter") as Filter).map(
-          (actor) => (
-            <li key={actor.id} data-testid="meeple">
-              <Meeple meeple={actor} />
-            </li>
-          )
-        )}
+        {filterActors([...state.actors], filter).map((actor) => (
+          <li key={actor.id} data-testid="meeple" className="mb-4">
+            <Meeple meeple={actor} />
+          </li>
+        ))}
       </menu>
       <Outlet />
     </div>

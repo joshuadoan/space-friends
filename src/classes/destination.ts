@@ -25,8 +25,7 @@ export class Destination extends MeepleClass {
     });
   }
 
-  transact(meeple: MeepleClass, action?: string) {
-    console.log("transact", meeple.name, action);
+  transact(meeple: MeepleClass) {
     if (this.getStatus().stuff > 0) {
       this.setStatus({
         ...this.getStatus(),

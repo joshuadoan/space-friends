@@ -4,6 +4,7 @@ import { Destination } from "./destination";
 import { Lights, Meeple, MeepleKind, ShipState } from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { getDestinationName } from "../utils/get-name";
+import { MAX_SPEED, MIN_SPEED } from "../consts";
 
 const colors = [Color.Violet, Color.Viridian, Color.Gray, Color.Orange];
 
@@ -42,7 +43,7 @@ const machine: StateMachine = {
 };
 
 export class Ship extends Meeple {
-  private speed = randomIntFromInterval(27, 42);
+  private speed = randomIntFromInterval(MIN_SPEED, MAX_SPEED);
 
   constructor(options?: { name?: string }) {
     super({
@@ -68,6 +69,17 @@ export class Ship extends Meeple {
 
     engine.add(timer);
     timer.start();
+  }
+
+  onPostUpdate(_engine: Engine, _delta: number): void {
+    switch (this.getStatus().lights) {
+      case Lights.On:
+        this.graphics.opacity = 1;
+        break;
+      case Lights.Off:
+        this.graphics.opacity = 0.5;
+        break;
+    }
   }
 
   /**
@@ -114,15 +126,6 @@ export class Ship extends Meeple {
       return;
     }
 
-    switch (this.getStatus().lights) {
-      case Lights.On:
-        this.graphics.opacity = 1;
-        break;
-      case Lights.Off:
-        this.graphics.opacity = 0.5;
-        break;
-    }
-
     switch (this.getState()) {
       case ShipState.Off:
         this.dispatch(ShipAction.GoToWork);
@@ -139,7 +142,7 @@ export class Ship extends Meeple {
           stuff: this.getStatus().stuff + 1,
         });
 
-        if (this.getStatus().stuff > 5) {
+        if (this.getStatus().stuff > 3) {
           this.dispatch(ShipAction.GoHome);
         }
         break;

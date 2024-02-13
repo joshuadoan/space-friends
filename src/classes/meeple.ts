@@ -125,14 +125,14 @@ export class Meeple extends Actor {
   turnOffLights() {
     this.setStatus({
       ...this.getStatus(),
-      lights: Lights.On,
+      lights: Lights.Off,
     });
   }
 
   turnOnLights() {
     this.setStatus({
       ...this.getStatus(),
-      lights: Lights.Off,
+      lights: Lights.On,
     });
   }
 }

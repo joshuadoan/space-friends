@@ -24,18 +24,4 @@ export class Destination extends Meeple {
       stuff: 100,
     });
   }
-
-  transact() {
-    if (this.getStatus().stuff > 0) {
-      this.setStatus({
-        ...this.getStatus(),
-        stuff: this.getStatus().stuff - 1,
-      });
-    } else {
-      this.setStatus({
-        ...this.getStatus(),
-        stuff: 100,
-      });
-    }
-  }
 }

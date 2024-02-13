@@ -181,7 +181,7 @@ export class Ship extends Meeple {
         this.speed
       )
       .callMethod(() => {
-        destination.transact();
+        destination.transact(this);
       });
   }
 }

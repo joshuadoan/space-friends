@@ -1,7 +1,7 @@
 import { Color, DisplayMode } from "excalibur";
 
 export const NUMBER_OF_STARS = 256;
-export const NUMBER_OF_SPACE_SHOPS = 10;
+export const NUMBER_OF_SPACE_SHOPS = 5;
 export const NUMBER_OF_SPACE_HOMES = 10;
 export const NUMBER_OF_SHIPS = 42;
 export const MAX_SPEED = 42;

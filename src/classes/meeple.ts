@@ -1,7 +1,6 @@
 import { Actor } from "excalibur";
 import * as blockies from "blockies-ts";
 import { MAX_ZOOM } from "../consts";
-import { ShipAction } from "./ship";
 import Game from "./game";
 
 export enum MeepleKind {
@@ -39,7 +38,7 @@ export class Meeple extends Actor {
   } = {};
 
   private journal: {
-    [timeStamp: number]: ShipAction;
+    [timeStamp: number]: string;
   } = {};
 
   private imageUrl = "";
@@ -58,7 +57,7 @@ export class Meeple extends Actor {
     return this.status;
   }
 
-  setJournal(action: ShipAction) {
+  setJournal(action: string) {
     const timeStamp = Date.now();
     this.journal[timeStamp] = action;
   }
@@ -108,7 +107,8 @@ export class Meeple extends Actor {
     return this.scene.engine as Game;
   }
 
-  transact() {
+  transact(meeple: Meeple, action?: string) {
+    console.log("transact", meeple.name, action);
     if (this.getStatus().stuff > 0) {
       this.setStatus({
         ...this.getStatus(),
@@ -120,6 +120,7 @@ export class Meeple extends Actor {
         stuff: 100,
       });
     }
+    this.setJournal(`Transacted with ${meeple.name}`);
   }
 
   turnOffLights() {

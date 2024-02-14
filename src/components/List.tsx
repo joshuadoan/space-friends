@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import cx from "classnames";
 import { useOutletContext, Outlet } from "react-router-dom";
-import { Action, State } from "../types";
+import { Action, UxState } from "../types";
 import { filterActors } from "../utils/helpers";
 import Game from "../classes/game";
 import StyledNavLink from "./StyledNavLink";
@@ -12,7 +12,7 @@ const List = () => {
   const { filter } = useFilters();
   const { state, game } = useOutletContext() as {
     game: Game;
-    state: State;
+    state: UxState;
     dispatch: React.Dispatch<Action>;
   };
 

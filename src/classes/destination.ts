@@ -3,20 +3,23 @@ import { getDestinationName } from "../utils/get-name";
 import { MeepleClass } from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { randomIntFromInterval } from "../utils/helpers";
-import { DestinationAction, DestinationState, MeepleKind } from "../types";
+import {
+  DestinationActionKind,
+  DestinationState,
+  MeepleAction,
+  MeepleKind,
+} from "../types";
 
-export type Transitions = {
+const machine: {
   [state in DestinationState]: {
-    [action in DestinationAction]?: DestinationState;
+    [action in DestinationActionKind]?: DestinationState;
   };
-};
-
-const machine: Transitions = {
+} = {
   [DestinationState.Open]: {
-    [DestinationAction.Close]: DestinationState.Closed,
+    [DestinationActionKind.Close]: DestinationState.Closed,
   },
   [DestinationState.Closed]: {
-    [DestinationAction.Open]: DestinationState.Open,
+    [DestinationActionKind.Open]: DestinationState.Open,
   },
 };
 
@@ -48,7 +51,6 @@ export class Destination extends MeepleClass {
     });
 
     timer.on(() => this.next());
-
     engine.add(timer);
     timer.start();
   }
@@ -58,28 +60,19 @@ export class Destination extends MeepleClass {
    * of the ship based on the current state, runs actions, and the action
    * that was dispatched.
    */
-  async dispatch(action: DestinationAction) {
-    const newState = machine[this.getState() as DestinationState][action];
+  async dispatch(action: MeepleAction) {
+    const prevState = this.getState() as DestinationState;
+    const actionKind = action.kind as DestinationActionKind;
+    const newState = machine[prevState][actionKind];
 
     if (!newState) {
       throw new Error(
         `Action ${action} is not a valid step from state ${this.getState()}`
       );
     }
-    this.setJournal(action);
-
-    switch (action) {
-      case DestinationAction.Open:
-        this.turnOnLights();
-        break;
-      case DestinationAction.Close:
-        this.turnOffLights();
-        break;
-      default:
-        break;
-    }
-
+    this.setJournal(action.kind);
     this.setState(newState);
+    action.effect();
   }
 
   /**
@@ -94,7 +87,12 @@ export class Destination extends MeepleClass {
     switch (this.getState()) {
       case DestinationState.Open:
         if (this.getStatus().stuff < 1) {
-          this.dispatch(DestinationAction.Close);
+          this.dispatch({
+            kind: DestinationActionKind.Close,
+            effect: () => {
+              this.turnOffLights();
+            },
+          });
         }
         break;
       case DestinationState.Closed:
@@ -103,7 +101,12 @@ export class Destination extends MeepleClass {
           stuff: this.getStatus().stuff + 1,
         });
         if (this.getStatus().stuff > 99) {
-          this.dispatch(DestinationAction.Open);
+          this.dispatch({
+            kind: DestinationActionKind.Open,
+            effect: () => {
+              this.turnOnLights();
+            },
+          });
         }
 
         break;

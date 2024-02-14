@@ -1,6 +1,9 @@
 import Game from "./classes/game";
 import { MeepleClass } from "./classes/meeple";
 
+export type MeepleState = ShipState | DestinationState;
+export type MeepleActionKind = ShipActionKind | DestinationActionKind;
+
 export enum MeepleKind {
   SpaceLaborer = "space laborer",
   SpaceShop = "space shop",
@@ -23,8 +26,8 @@ export enum ShipActionKind {
   Hangout = "hang out at home",
 }
 
-export type ShipAction = {
-  kind: ShipActionKind;
+export type MeepleAction = {
+  kind: MeepleActionKind;
   effect: () => void;
 };
 
@@ -33,7 +36,7 @@ export enum DestinationState {
   Closed = "closed",
 }
 
-export enum DestinationAction {
+export enum DestinationActionKind {
   Open = "open",
   Close = "close",
 }
@@ -56,35 +59,35 @@ export enum Lights {
 export type Filter = "ships" | "destinations" | "homes";
 export type Tab = "meeples" | "help";
 
-export type State = {
+export type UxState = {
   selectedActor: MeepleClass | null;
   actors: MeepleClass[];
   paused: boolean;
 };
 
-export enum ActionNames {
+export enum UxActionKinds {
   SET_ACTORS = "SET_ACTORS",
   PAUSE_GAME = "PAUSE_GAME",
   RESUME_GAME = "RESUME_GAME",
 }
 
 type SetActors = {
-  name: ActionNames.SET_ACTORS;
+  kind: UxActionKinds.SET_ACTORS;
   payload: MeepleClass[];
 };
 
 type PauseGame = {
-  name: ActionNames.PAUSE_GAME;
+  kind: UxActionKinds.PAUSE_GAME;
 };
 
 type ResumeGame = {
-  name: ActionNames.RESUME_GAME;
+  kind: UxActionKinds.RESUME_GAME;
 };
 
 export type Action = SetActors | PauseGame | ResumeGame;
 
 export type OutletContext = {
   game: Game;
-  state: State;
+  state: UxState;
   dispatch: React.Dispatch<Action>;
 };

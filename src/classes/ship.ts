@@ -4,20 +4,18 @@ import { Destination } from "./destination";
 import { MeepleClass } from "./meeple";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { getDestinationName } from "../utils/get-name";
-import { MeepleKind, ShipAction, ShipActionKind, ShipState } from "../types";
+import { MeepleKind, MeepleAction, ShipActionKind, ShipState } from "../types";
 
 export const MAX_SPEED = 42;
 export const MIN_SPEED = 27;
 
 const colors = [Color.Violet, Color.Viridian, Color.Gray, Color.Orange];
 
-export type Transitions = {
+const machine: {
   [state in ShipState]: {
     [action in ShipActionKind]?: ShipState;
   };
-};
-
-const machine: Transitions = {
+} = {
   [ShipState.Off]: {
     [ShipActionKind.GoHome]: ShipState.TravelingHome,
     [ShipActionKind.GoToWork]: ShipState.TravelingToWork,
@@ -61,13 +59,14 @@ export class Ship extends MeepleClass {
     });
 
     timer.on(() => this.next());
-    timer.start();
-
     engine.add(timer);
+    timer.start();
   }
 
-  async dispatch(action: ShipAction) {
-    const newState = machine[this.getState() as ShipState][action.kind];
+  async dispatch(action: MeepleAction) {
+    const prevState = this.getState() as ShipState;
+    const actionKind = action.kind as ShipActionKind;
+    const newState = machine[prevState][actionKind];
 
     if (!newState) {
       console.warn(

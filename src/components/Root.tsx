@@ -8,7 +8,7 @@ import { makeStar } from "../utils/helpers";
 import useUxState from "../hooks/use-ux-state";
 import { Color } from "excalibur";
 import Nav from "./Nav";
-import { ActionNames, MeepleKind } from "../types";
+import { UxActionKinds, MeepleKind } from "../types";
 import { MeepleClass } from "../classes/meeple";
 
 export const NUMBER_OF_STARS = 256;
@@ -74,7 +74,7 @@ const Root = () => {
     function syncGameWithState() {
       const interval = setInterval(() => {
         dispatch({
-          name: ActionNames.SET_ACTORS,
+          kind: UxActionKinds.SET_ACTORS,
           payload: [
             ...(game?.currentScene.actors
               .filter((a) => a instanceof MeepleClass)

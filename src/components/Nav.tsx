@@ -2,9 +2,9 @@ import React from "react";
 import StyledNavLink from "./StyledNavLink";
 import Button from "./Button";
 import useFilters from "../hooks/useFilters";
-import { Action, ActionNames, State } from "../types";
+import { Action, UxActionKinds, UxState } from "../types";
 
-const Nav = (props: { state: State; dispatch: React.Dispatch<Action> }) => {
+const Nav = (props: { state: UxState; dispatch: React.Dispatch<Action> }) => {
   const { filter } = useFilters();
   return (
     <nav className="flex gap-2 p-4 items-center">
@@ -22,7 +22,7 @@ const Nav = (props: { state: State; dispatch: React.Dispatch<Action> }) => {
           title="pause"
           onClick={() =>
             props.dispatch({
-              name: ActionNames.RESUME_GAME,
+              kind: UxActionKinds.RESUME_GAME,
             })
           }
         >
@@ -33,7 +33,7 @@ const Nav = (props: { state: State; dispatch: React.Dispatch<Action> }) => {
           title="play"
           onClick={() =>
             props.dispatch({
-              name: ActionNames.PAUSE_GAME,
+              kind: UxActionKinds.PAUSE_GAME,
             })
           }
         >

@@ -11,4 +11,5 @@ Typescript, React, canvas state machines, and so many space friends!
 
 Demo https://pachinspac.com/
 
-![Space Friends 2024-02-08 at 9 58 08 AM](https://github.com/joshuadoan/space-friends/assets/5114910/fbe4cb07-ccb7-4024-8d57-47fb0777175b)
+![Screen Recording 2024-02-15 at 08 54 40 AM](https://github.com/joshuadoan/space-friends/assets/5114910/db9c306c-5dc5-4f3c-bd6c-553b45012969)
+

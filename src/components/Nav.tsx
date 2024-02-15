@@ -11,7 +11,6 @@ const Nav = (props: { state: UxState; dispatch: React.Dispatch<Action> }) => {
       <StyledNavLink
         to={{
           pathname: "/meeples",
-          search: `?filter=${filter}`,
         }}
       >
         meeples

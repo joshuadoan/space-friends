@@ -7,7 +7,7 @@ import useUxState from "../hooks/use-ux-state";
 import Nav from "./Nav";
 import { UxActionKinds } from "../types";
 import { Base, Home, SpaceShop } from "../classes/base";
-import { Laborer } from "../classes/laborer";
+import { Laborer } from "../classes/Laborer";
 
 export const NUMBER_OF_STARS = 256;
 export const NUMBER_OF_SPACE_SHOPS = 5;

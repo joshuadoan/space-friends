@@ -1,5 +1,5 @@
 import { Home, SpaceShop } from "../../classes/base";
-import { Laborer } from "../../classes/laborer";
+import { Laborer } from "../../classes/Laborer";
 
 export default async () => {
   return new Promise((resolve) => {

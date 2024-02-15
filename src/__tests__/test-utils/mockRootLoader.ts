@@ -1,6 +1,4 @@
-import { Destination } from "../../classes/destination";
-import { MeepleKind } from "../../types";
-import { Ship } from "../../classes/ship";
+import { Home, Ship, SpaceShop } from "../../classes/base";
 
 export default async () => {
   return new Promise((resolve) => {
@@ -17,13 +15,11 @@ export default async () => {
             new Ship({
               name: "Meeple 3",
             }),
-            new Destination({
+            new SpaceShop({
               name: "Destination 1",
-              kind: MeepleKind.SpaceShop,
             }),
-            new Destination({
+            new Home({
               name: "Destination 2",
-              kind: MeepleKind.SpaceShop,
             }),
           ],
         },

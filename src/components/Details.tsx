@@ -26,6 +26,9 @@ const MeepleDetail = () => {
   if (!meeple) {
     return null;
   }
+
+  const { journal } = meeple?.status;
+
   return (
     <section className="px-4">
       <p className="py-4">
@@ -39,7 +42,7 @@ const MeepleDetail = () => {
         </StyledLink>
       </p>
       <Meeple meeple={meeple} />
-      <Journal journal={meeple.getJournal()} />
+      <Journal journal={journal} />
     </section>
   );
 };

@@ -1,6 +1,5 @@
 import { Engine, vec } from "excalibur";
 import { MIN_ZOOM } from "../consts";
-
 /**
  * Resets the zoom of the camera.
  */

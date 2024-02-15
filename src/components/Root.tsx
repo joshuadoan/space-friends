@@ -1,15 +1,13 @@
 import React, { useEffect } from "react";
 import { Outlet, useLoaderData } from "react-router-dom";
 import Game from "../classes/game";
-import { Destination } from "../classes/destination";
-import { Ship } from "../classes/ship";
 import { ENGINE_DEFAULTS } from "../consts";
 import { makeStar } from "../utils/helpers";
 import useUxState from "../hooks/use-ux-state";
-import { Color } from "excalibur";
 import Nav from "./Nav";
-import { UxActionKinds, MeepleKind } from "../types";
-import { MeepleClass } from "../classes/meeple";
+import { UxActionKinds } from "../types";
+import { Base, Home, SpaceShop } from "../classes/base";
+import { Laborer } from "../classes/Laborer";
 
 export const NUMBER_OF_STARS = 256;
 export const NUMBER_OF_SPACE_SHOPS = 5;
@@ -24,23 +22,18 @@ export async function rootLoader() {
     game.add(star);
   }
 
-  for (let i = 0; i < NUMBER_OF_SPACE_SHOPS; i++) {
-    const station = new Destination({
-      kind: MeepleKind.SpaceShop,
-    });
-    game.add(station);
+  for (let i = 0; i < NUMBER_OF_SPACE_HOMES; i++) {
+    const ship = new Home();
+    game.add(ship);
   }
 
-  for (let i = 0; i < NUMBER_OF_SPACE_HOMES; i++) {
-    const station = new Destination({
-      kind: MeepleKind.Home,
-      color: Color.Orange,
-    });
-    game.add(station);
+  for (let i = 0; i < NUMBER_OF_SPACE_SHOPS; i++) {
+    const ship = new SpaceShop();
+    game.add(ship);
   }
 
   for (let i = 0; i < NUMBER_OF_SHIPS; i++) {
-    const ship = new Ship();
+    const ship = new Laborer();
     game.add(ship);
   }
 
@@ -51,7 +44,6 @@ export async function rootLoader() {
 const Root = () => {
   const { state, dispatch } = useUxState({
     actors: [],
-    selectedActor: null,
     paused: false,
   });
 
@@ -77,9 +69,8 @@ const Root = () => {
           kind: UxActionKinds.SET_ACTORS,
           payload: [
             ...(game?.currentScene.actors
-              .filter((a) => a instanceof MeepleClass)
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((a) => a as MeepleClass) ?? []),
+              .filter((a) => a instanceof Base)
+              .map((a) => a as Base) ?? []),
           ],
         });
       }, 300);

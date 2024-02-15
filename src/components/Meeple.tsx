@@ -1,11 +1,13 @@
 import React from "react";
-import { MeepleClass } from "../classes/meeple";
 import { useSearchParams } from "react-router-dom";
 import Avatar from "./Avatar";
 import StyledLink from "./StyledLink";
+import { Base } from "../classes/base";
 
-export const Meeple = (props: { meeple: MeepleClass }) => {
+export const Meeple = (props: { meeple: Base }) => {
   const [params] = useSearchParams();
+  const { imgUrl, health, stuff, journal } = props.meeple.status;
+  const state = journal[journal.length - 1]?.state;
   return (
     <div>
       <div className={"flex items-center gap-2"}>
@@ -14,27 +16,21 @@ export const Meeple = (props: { meeple: MeepleClass }) => {
           title="Click to zoom and follow"
         >
           <div className="w-full text-left flex items-center gap-2">
-            <Avatar url={props.meeple.getAvatar()} />
+            <Avatar url={imgUrl} />
             <div className="flex flex-col">
               {props.meeple.name}
-              {props.meeple.tags.map((tag, i) => (
-                <span key={i} className="opacity-70">
-                  {tag}
-                </span>
-              ))}
+              <span className="opacity-70">{props.meeple.kind}</span>
             </div>
           </div>
         </StyledLink>
       </div>
       <dl className={"px-2"}>
         <dd className="flex gap-2 items-center">
-          <label className="opacity-70">state:</label>
-          <span>{props.meeple.getState()}</span>
+          <label className="opacity-70">state: </label> {state}
         </dd>
         <dd className="flex gap-2 items-center">
-          <label className="opacity-70">status: </label>♡{" "}
-          {props.meeple.getStatus().health} &#65504;{" "}
-          {props.meeple.getStatus().stuff}
+          <label className="opacity-70">status: </label>♡ {health} &#65504;{" "}
+          {stuff}
         </dd>
         <dd className="flex gap-2 items-center">
           <label className="opacity-70">position:</label>

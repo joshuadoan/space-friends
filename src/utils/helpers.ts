@@ -1,9 +1,7 @@
 import { Actor, Color, Engine, vec } from "excalibur";
-import { Ship } from "../classes/ship";
-import { Destination } from "../classes/destination";
 import { getPersonName } from "./get-name";
-import { MeepleClass } from "../classes/meeple";
 import { Filter } from "../types";
+import { Base, Ship, Destination } from "../classes/base";
 
 /**
  * Returns a random integer between the given minimum and maximum values, inclusive.
@@ -29,7 +27,7 @@ export function filterActors(actors: Actor[], filter: Filter) {
       }
     })
     .map((a) => {
-      return a as MeepleClass;
+      return a as Base;
     });
 }
 

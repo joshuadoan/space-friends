@@ -1,5 +1,7 @@
+import { Color } from "excalibur";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { ActorKind, Ship } from "./base";
+import { getPersonName } from "../utils/get-name";
 
 export enum LaborerState {
   Off = "off",
@@ -16,6 +18,18 @@ export enum LaborerAction {
 }
 
 export class Laborer extends Ship {
+  constructor(options?: { name?: string; kind?: ActorKind }) {
+    super({
+      width: 4,
+      height: 2,
+      color: Color.Yellow,
+      name: getPersonName(),
+      kind: ActorKind.Laborer,
+      ...options,
+    });
+    this.kind = ActorKind.Laborer;
+  }
+
   private state: LaborerState = LaborerState.Off;
 
   onInitialize(): void {

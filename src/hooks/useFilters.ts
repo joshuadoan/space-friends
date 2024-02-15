@@ -1,9 +1,9 @@
 import { useSearchParams } from "react-router-dom";
-import { Filter } from "../types";
+import { ActorKind } from "../classes/base";
 
 export default function useFilters() {
   const [params] = useSearchParams();
   return {
-    filter: params.get("filter") as Filter,
+    filter: params.get("filter") as ActorKind,
   };
 }

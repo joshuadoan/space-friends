@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import cx from "classnames";
 import { useOutletContext, Outlet } from "react-router-dom";
 import { Action, UxState } from "../types";
-import { filterActors } from "../utils/helpers";
 import Game from "../classes/game";
 import StyledNavLink from "./StyledNavLink";
 import { Meeple } from "./Meeple";
 import useFilters from "../hooks/useFilters";
+import { ActorKind } from "../classes/base";
 
 const List = () => {
   const { filter } = useFilters();
@@ -35,31 +35,41 @@ const List = () => {
           all
         </StyledNavLink>
         <StyledNavLink
-          to="?filter=ships"
+          to={`?filter=${ActorKind.Laborer}`}
           className={cx("hover:underline p-2", {
-            "bg-purple-800 ": filter === "ships",
+            "bg-purple-800 ": filter === ActorKind.Laborer,
           })}
         >
           ships
         </StyledNavLink>
         <StyledNavLink
-          to="?filter=destinations"
+          to={`?filter=${ActorKind.SpaceShop}`}
           className={cx("hover:underline p-2", {
-            "bg-purple-800 ": filter === "destinations",
+            "bg-purple-800 ": filter === ActorKind.SpaceShop,
           })}
         >
-          destinations
+          space shops
+        </StyledNavLink>
+        <StyledNavLink
+          to={`?filter=${ActorKind.Home}`}
+          className={cx("hover:underline p-2", {
+            "bg-purple-800 ": filter === ActorKind.Home,
+          })}
+        >
+          homes
         </StyledNavLink>
       </nav>
       <menu
         className="flex flex-col justify-start overflow-auto flex-1 p-4"
         role="menu"
       >
-        {filterActors([...state.actors], filter).map((actor) => (
-          <li key={actor.id} data-testid="meeple" className="mb-4">
-            <Meeple meeple={actor} />
-          </li>
-        ))}
+        {state.actors
+          .filter((a) => (!!filter ? a.kind === filter : true))
+          .map((actor) => (
+            <li key={actor.id} data-testid="meeple" className="mb-4">
+              <Meeple meeple={actor} />
+            </li>
+          ))}
       </menu>
       <Outlet />
     </div>

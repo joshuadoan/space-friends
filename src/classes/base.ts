@@ -1,8 +1,8 @@
 import { Actor, Color, Engine, Timer, vec } from "excalibur";
 import * as blockies from "blockies-ts";
-import { getDestinationName, getPersonName } from "../utils/get-name";
+import { getDestinationName } from "../utils/get-name";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
-import { randomIntFromInterval } from "../utils/helpers";
+import { randomBetween } from "../utils/helpers";
 import Game from "./game";
 import { MAX_ZOOM } from "../consts";
 
@@ -10,6 +10,7 @@ export enum ActorKind {
   Laborer = "laborer",
   SpaceShop = "space-shop",
   Home = "home",
+  Unknown = "unknown",
 }
 
 export enum Lights {
@@ -35,19 +36,19 @@ export type Status = {
 };
 
 export class Base extends Actor {
-  public kind: ActorKind = ActorKind.Laborer;
+  public kind: ActorKind = ActorKind.Unknown;
   public status: Status = {
     health: 100,
     stuff: 0,
     lights: Lights.Off,
     imgUrl: blockies.create({ seed: "generic" }).toDataURL(),
     journal: [],
-    speed: randomIntFromInterval(20, 42),
+    speed: randomBetween(20, 42),
   };
 
   startTimer(next: () => void) {
     const timer = new Timer({
-      interval: randomIntFromInterval(1000, 3000),
+      interval: randomBetween(1000, 3000),
       repeats: true,
     });
 
@@ -124,8 +125,8 @@ export class Base extends Actor {
     return this.actions
       .moveTo(
         vec(
-          destination.pos.x + randomIntFromInterval(-10, 10),
-          destination.pos.y + randomIntFromInterval(-10, 10)
+          destination.pos.x + randomBetween(-10, 10),
+          destination.pos.y + randomBetween(-10, 10)
         ),
         this.status.speed
       )
@@ -149,19 +150,10 @@ export class Base extends Actor {
   }
 }
 
-export class Ship extends Base {
-  constructor(options?: { name?: string }) {
-    super({
-      width: 4,
-      height: 2,
-      color: Color.Yellow,
-      name: getPersonName(),
-      ...options,
-    });
-  }
-}
+export class Ship extends Base {}
+export class Destination extends Base {}
 
-export class Destination extends Base {
+export class SpaceShop extends Destination {
   constructor(options?: { name?: string }) {
     super({
       width: 8,
@@ -170,12 +162,10 @@ export class Destination extends Base {
       name: getDestinationName(),
       ...options,
     });
-  }
-}
 
-export class SpaceShop extends Destination {
-  onInitialize(_engine: Engine): void {
     this.kind = ActorKind.SpaceShop;
+  }
+  onInitialize(_engine: Engine): void {
     this.color = Color.Orange;
     this.pos = getRandomScreenPosition(this.scene.engine);
     this.setStatus({
@@ -193,6 +183,17 @@ export class SpaceShop extends Destination {
   }
 }
 export class Home extends Destination {
+  constructor(options?: { name?: string; kind?: ActorKind }) {
+    super({
+      width: 8,
+      height: 8,
+      color: Color.Azure,
+      name: getDestinationName(),
+      ...options,
+    });
+
+    this.kind = ActorKind.Home;
+  }
   onInitialize(_engine: Game): void {
     this.kind = ActorKind.Home;
     this.pos = getRandomScreenPosition(this.scene.engine);

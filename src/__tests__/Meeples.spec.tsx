@@ -20,17 +20,21 @@ test("Renders the ships and can filter", async () => {
   await screen.findByText("Meeple 3");
 
   let actors = await screen.findAllByTestId("meeple");
-  expect(actors.length).toBe(5);
-
-  await userEvent.click(await screen.findByText("destinations"));
-  actors = await screen.findAllByTestId("meeple");
-  expect(actors.length).toBe(2);
+  expect(actors.length).toBe(6);
 
   await userEvent.click(await screen.findByText("ships"));
   actors = await screen.findAllByTestId("meeple");
   expect(actors.length).toBe(3);
 
+  await userEvent.click(await screen.findByText("space shops"));
+  actors = await screen.findAllByTestId("meeple");
+  expect(actors.length).toBe(2);
+
+  await userEvent.click(await screen.findByText("homes"));
+  actors = await screen.findAllByTestId("meeple");
+  expect(actors.length).toBe(1);
+
   await userEvent.click(await screen.findByText("all"));
   actors = await screen.findAllByTestId("meeple");
-  expect(actors.length).toBe(5);
+  expect(actors.length).toBe(6);
 });

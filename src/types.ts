@@ -1,7 +1,6 @@
 import { Base } from "./classes/base";
 import Game from "./classes/game";
 
-export type Filter = "ships" | "destinations" | "homes";
 export type Tab = "meeples" | "help";
 
 export type UxState = {

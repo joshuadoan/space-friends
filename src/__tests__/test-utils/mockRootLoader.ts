@@ -1,4 +1,5 @@
-import { Home, Ship, SpaceShop } from "../../classes/base";
+import { Home, SpaceShop } from "../../classes/base";
+import { Laborer } from "../../classes/laborer";
 
 export default async () => {
   return new Promise((resolve) => {
@@ -6,14 +7,17 @@ export default async () => {
       game: {
         currentScene: {
           actors: [
-            new Ship({
+            new Laborer({
               name: "Meeple 1",
             }),
-            new Ship({
+            new Laborer({
               name: "Meeple 2",
             }),
-            new Ship({
+            new Laborer({
               name: "Meeple 3",
+            }),
+            new SpaceShop({
+              name: "Destination 1",
             }),
             new SpaceShop({
               name: "Destination 1",

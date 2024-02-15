@@ -1,34 +1,12 @@
 import { Actor, Color, Engine, vec } from "excalibur";
 import { getPersonName } from "./get-name";
-import { Filter } from "../types";
-import { Base, Ship, Destination } from "../classes/base";
+import { Destination } from "../classes/base";
 
 /**
  * Returns a random integer between the given minimum and maximum values, inclusive.
  */
-export function randomIntFromInterval(min: number, max: number) {
-  // min and max included
+export function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-/**
- * Filters an array of actors based on the specified filter criteria.
- */
-export function filterActors(actors: Actor[], filter: Filter) {
-  return actors
-    .filter((a) => {
-      switch (filter) {
-        case "ships":
-          return a instanceof Ship;
-        case "destinations":
-          return a instanceof Destination;
-        default:
-          return a instanceof Destination || a instanceof Ship;
-      }
-    })
-    .map((a) => {
-      return a as Base;
-    });
 }
 
 /**

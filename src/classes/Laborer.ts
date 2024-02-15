@@ -52,6 +52,41 @@ export class Laborer extends Ship {
   }
 
   dispatch(action: LaborerAction) {
+    switch (action) {
+      case LaborerAction.GoToWork: {
+        this.turnOnLights();
+        const destination = this.getRandomDestination(ActorKind.SpaceShop);
+        this.goToDestination(destination).callMethod(() => {
+          this.dispatch(LaborerAction.Work);
+        });
+        this.state = LaborerState.Traveling;
+        break;
+      }
+      case LaborerAction.GoHome: {
+        this.turnOnLights();
+        const destination = this.getRandomDestination(ActorKind.Home);
+        this.goToDestination(destination).callMethod(() => {
+          this.dispatch(LaborerAction.Hangout);
+        });
+        this.state = LaborerState.Traveling;
+        break;
+      }
+      case LaborerAction.Work: {
+        this.turnOffLights();
+
+        this.state = LaborerState.Working;
+        break;
+      }
+      case LaborerAction.Hangout: {
+        this.turnOffLights();
+        this.state = LaborerState.Home;
+        break;
+      }
+      default: {
+        return;
+      }
+    }
+
     this.setStatus({
       journal: [
         ...this.status.journal,
@@ -62,40 +97,6 @@ export class Laborer extends Ship {
         },
       ],
     });
-    switch (action) {
-      case LaborerAction.GoToWork: {
-        this.turnOnLights();
-        const destination = this.getRandomDestination(ActorKind.SpaceShop);
-        this.goToDestination(destination).callMethod(() => {
-          this.dispatch(LaborerAction.Work);
-        });
-        this.state = LaborerState.Traveling;
-        return;
-      }
-      case LaborerAction.GoHome: {
-        this.turnOnLights();
-        const destination = this.getRandomDestination(ActorKind.Home);
-        this.goToDestination(destination).callMethod(() => {
-          this.dispatch(LaborerAction.Hangout);
-        });
-        this.state = LaborerState.Traveling;
-        return;
-      }
-      case LaborerAction.Work: {
-        this.turnOffLights();
-
-        this.state = LaborerState.Working;
-        return;
-      }
-      case LaborerAction.Hangout: {
-        this.turnOffLights();
-        this.state = LaborerState.Home;
-        return;
-      }
-      default: {
-        return;
-      }
-    }
   }
 
   hangout() {}

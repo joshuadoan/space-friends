@@ -7,7 +7,7 @@ import { Base } from "../classes/base";
 export const Meeple = (props: { meeple: Base }) => {
   const [params] = useSearchParams();
   const { imgUrl, health, stuff, journal } = props.meeple.status;
-  const state = journal[journal.length - 1]?.state;
+  const event = journal[journal.length - 1];
   return (
     <div>
       <div className={"flex items-center gap-2"}>
@@ -26,7 +26,7 @@ export const Meeple = (props: { meeple: Base }) => {
       </div>
       <dl className={"px-2"}>
         <dd className="flex gap-2 items-center">
-          <label className="opacity-70">state: </label> {state}
+          <label className="opacity-70">state: </label> {event?.state}
         </dd>
         <dd className="flex gap-2 items-center">
           <label className="opacity-70">status: </label>♡ {health} &#65504;{" "}

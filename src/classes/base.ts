@@ -31,6 +31,7 @@ export type Status = {
   lights: Lights;
   imgUrl: string;
   journal: Event[];
+  speed: number;
 };
 
 export class Base extends Actor {
@@ -41,6 +42,7 @@ export class Base extends Actor {
     lights: Lights.Off,
     imgUrl: blockies.create({ seed: "generic" }).toDataURL(),
     journal: [],
+    speed: randomIntFromInterval(20, 42),
   };
 
   startTimer(next: () => void) {
@@ -125,7 +127,7 @@ export class Base extends Actor {
           destination.pos.x + randomIntFromInterval(-10, 10),
           destination.pos.y + randomIntFromInterval(-10, 10)
         ),
-        42
+        this.status.speed
       )
       .callMethod(() => {});
   }

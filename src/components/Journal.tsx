@@ -7,7 +7,7 @@ const Journal = ({ journal }: { journal: Journal }) => {
       <dt className="font-semibold">Journal</dt>
       {journal?.length ? (
         journal
-          ?.slice(Math.max(journal.length - 7, 0))
+          ?.slice(Math.max(journal.length - 10, 0))
           .map(({ timestamp, action }, i) => {
             const spaceDate = new Date(Number(timestamp) * 1000);
             return (

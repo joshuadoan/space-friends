@@ -10,6 +10,7 @@ export enum ActorKind {
   Laborer = "laborer",
   SpaceShop = "space-shop",
   Home = "home",
+  Pirate = "pirate",
   Unknown = "unknown",
 }
 
@@ -33,6 +34,7 @@ export type Status = {
   imgUrl: string;
   journal: Event[];
   speed: number;
+  target: Base | null;
 };
 
 export class Base extends Actor {
@@ -44,11 +46,13 @@ export class Base extends Actor {
     imgUrl: blockies.create({ seed: "generic" }).toDataURL(),
     journal: [],
     speed: randomBetween(20, 42),
+    target: null,
   };
 
   startTimer(next: () => void) {
     const timer = new Timer({
-      interval: randomBetween(1000, 3000),
+      // interval: randomBetween(1000, 1000),
+      interval: 1000,
       repeats: true,
     });
 
@@ -93,6 +97,13 @@ export class Base extends Actor {
       .toDataURL();
   }
 
+  distanceTo(other: Base) {
+    return Math.sqrt(
+      Math.pow(this.pos.x - other.pos.x, 2) +
+        Math.pow(this.pos.y - other.pos.y, 2)
+    );
+  }
+
   isActionComplete() {
     return this.actions.getQueue().isComplete();
   }
@@ -119,6 +130,14 @@ export class Base extends Actor {
       .filter((a): a is Destination => a.kind === kind);
 
     return destinations[Math.floor(Math.random() * destinations.length)];
+  }
+
+  getRandomShip(kind: ActorKind) {
+    const ships = this.scene.actors
+      .map((a) => a as Ship)
+      .filter((a): a is Ship => a.kind === kind);
+
+    return ships[Math.floor(Math.random() * ships.length)];
   }
 
   goToDestination(destination: Destination) {

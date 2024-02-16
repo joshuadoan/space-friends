@@ -1,4 +1,4 @@
-import { Actor, Color, Engine, vec } from "excalibur";
+import { Actor, Color, Engine, Vector, vec } from "excalibur";
 import { getPersonName } from "./get-name";
 import { Destination } from "../classes/base";
 
@@ -7,6 +7,10 @@ import { Destination } from "../classes/base";
  */
 export function randomBetween(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export function distanceBetween(a: Vector, b: Vector) {
+  return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 }
 
 /**

@@ -8,11 +8,13 @@ import Nav from "./Nav";
 import { UxActionKinds } from "../types";
 import { Base, Home, SpaceShop } from "../classes/base";
 import { Laborer } from "../classes/Laborer";
+import { Pirate } from "../classes/Pirate";
 
-export const NUMBER_OF_STARS = 256;
+export const NUMBER_OF_STARS = 100;
 export const NUMBER_OF_SPACE_SHOPS = 5;
-export const NUMBER_OF_SPACE_HOMES = 10;
-export const NUMBER_OF_SHIPS = 42;
+export const NUMBER_OF_SPACE_HOMES = 3;
+export const NUMBER_OF_SHIPS = 27;
+export const NUMBER_OF_PIRATES = 10;
 
 export async function rootLoader() {
   const game = new Game(ENGINE_DEFAULTS);
@@ -34,6 +36,11 @@ export async function rootLoader() {
 
   for (let i = 0; i < NUMBER_OF_SHIPS; i++) {
     const ship = new Laborer();
+    game.add(ship);
+  }
+
+  for (let i = 0; i < NUMBER_OF_PIRATES; i++) {
+    const ship = new Pirate();
     game.add(ship);
   }
 

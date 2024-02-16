@@ -50,8 +50,8 @@ export class Pirate extends Ship {
         break;
       case PirateState.Chasing:
         const target = this.status.target;
-        if (target && this.distanceTo(target) < 100) {
-          this.dispatch(PirateAction.Flee);
+        if (target && this.distanceTo(target) < 30) {
+          this.dispatch(PirateAction.TurnOff);
         }
         break;
       case PirateState.Fleeing:
@@ -77,21 +77,11 @@ export class Pirate extends Ship {
         break;
       }
       case PirateAction.TurnOff: {
-        this.turnOffLights();
-        this.state = PirateState.Off;
-        break;
-      }
-      case PirateAction.Flee: {
-        this.actions.clearActions();
-        this.actions
-          .moveTo(getRandomScreenPosition(this.scene.engine), this.status.speed)
-          .callMethod(() => {
-            this.dispatch(PirateAction.TurnOff);
-          });
         this.setStatus({
           target: null,
         });
-        this.state = PirateState.Fleeing;
+        this.turnOffLights();
+        this.state = PirateState.Off;
         break;
       }
 

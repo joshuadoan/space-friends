@@ -1,11 +1,9 @@
 import React from "react";
 import StyledNavLink from "./StyledNavLink";
 import Button from "./Button";
-import useFilters from "../hooks/useFilters";
 import { Action, UxActionKinds, UxState } from "../types";
 
 const Nav = (props: { state: UxState; dispatch: React.Dispatch<Action> }) => {
-  const { filter } = useFilters();
   return (
     <nav className="flex gap-2 p-4 items-center">
       <StyledNavLink

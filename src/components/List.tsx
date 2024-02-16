@@ -43,6 +43,14 @@ const List = () => {
           ships
         </StyledNavLink>
         <StyledNavLink
+          to={`?filter=${ActorKind.Pirate}`}
+          className={cx("hover:underline p-2", {
+            "bg-purple-800 ": filter === ActorKind.Pirate,
+          })}
+        >
+          pirates
+        </StyledNavLink>
+        <StyledNavLink
           to={`?filter=${ActorKind.SpaceShop}`}
           className={cx("hover:underline p-2", {
             "bg-purple-800 ": filter === ActorKind.SpaceShop,

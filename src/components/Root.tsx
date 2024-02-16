@@ -14,7 +14,7 @@ export const NUMBER_OF_STARS = 100;
 export const NUMBER_OF_SPACE_SHOPS = 5;
 export const NUMBER_OF_SPACE_HOMES = 3;
 export const NUMBER_OF_SHIPS = 27;
-export const NUMBER_OF_PIRATES = 10;
+export const NUMBER_OF_PIRATES = 2;
 
 export async function rootLoader() {
   const game = new Game(ENGINE_DEFAULTS);

@@ -1,6 +1,6 @@
 import { Color } from "excalibur";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
-import { ActorKind, Ship } from "./base";
+import { ActorKind, Base } from "./base";
 import { getPersonName } from "../utils/get-name";
 
 export enum LaborerState {
@@ -17,7 +17,7 @@ export enum LaborerAction {
   Hangout = "hangout",
 }
 
-export class Laborer extends Ship {
+export class Laborer extends Base {
   constructor(options?: { name?: string; kind?: ActorKind }) {
     super({
       width: 4,

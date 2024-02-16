@@ -5,6 +5,7 @@ import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { randomBetween } from "../utils/helpers";
 import Game from "./game";
 import { MAX_ZOOM } from "../consts";
+import { Laborer } from "./Laborer";
 
 export enum ActorKind {
   Laborer = "laborer",
@@ -97,7 +98,7 @@ export class Base extends Actor {
       .toDataURL();
   }
 
-  distanceTo(other: Base) {
+  distanceTo(other: Actor) {
     return Math.sqrt(
       Math.pow(this.pos.x - other.pos.x, 2) +
         Math.pow(this.pos.y - other.pos.y, 2)
@@ -116,6 +117,12 @@ export class Base extends Actor {
       .map((a) => a as SpaceShop);
   }
 
+  getLaborers() {
+    return this.scene.actors
+      .filter((a) => a instanceof Base)
+      .map((a) => a as Laborer);
+  }
+
   getHomes() {
     return this.scene.actors
       .filter((a) => {
@@ -126,21 +133,21 @@ export class Base extends Actor {
 
   getRandomDestination(kind: ActorKind) {
     const destinations = this.scene.actors
-      .map((a) => a as Destination)
-      .filter((a): a is Destination => a.kind === kind);
+      .map((a) => a as Base)
+      .filter((a): a is Base => a.kind === kind);
 
     return destinations[Math.floor(Math.random() * destinations.length)];
   }
 
   getRandomShip(kind: ActorKind) {
     const ships = this.scene.actors
-      .map((a) => a as Ship)
-      .filter((a): a is Ship => a.kind === kind);
+      .map((a) => a as Base)
+      .filter((a): a is Base => a.kind === kind);
 
     return ships[Math.floor(Math.random() * ships.length)];
   }
 
-  goToDestination(destination: Destination) {
+  goToDestination(destination: Base) {
     return this.actions
       .moveTo(
         vec(
@@ -169,10 +176,7 @@ export class Base extends Actor {
   }
 }
 
-export class Ship extends Base {}
-export class Destination extends Base {}
-
-export class SpaceShop extends Destination {
+export class SpaceShop extends Base {
   constructor(options?: { name?: string }) {
     super({
       width: 8,
@@ -201,7 +205,7 @@ export class SpaceShop extends Destination {
     });
   }
 }
-export class Home extends Destination {
+export class Home extends Base {
   constructor(options?: { name?: string; kind?: ActorKind }) {
     super({
       width: 8,

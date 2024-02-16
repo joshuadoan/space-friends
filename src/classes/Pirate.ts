@@ -1,6 +1,6 @@
 import { Color } from "excalibur";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
-import { ActorKind, Ship } from "./base";
+import { ActorKind, Base } from "./base";
 import { getPersonName } from "../utils/get-name";
 
 export enum PirateState {
@@ -17,7 +17,7 @@ export enum PirateAction {
   TurnOff = "turn off",
 }
 
-export class Pirate extends Ship {
+export class Pirate extends Base {
   constructor(options?: { name?: string; kind?: ActorKind }) {
     super({
       width: 4,
@@ -43,18 +43,26 @@ export class Pirate extends Ship {
   next() {
     switch (this.state) {
       case PirateState.Off:
+        this.setStatus({
+          target: null,
+        });
         this.dispatch(PirateAction.Hunt);
         break;
       case PirateState.Hunting:
         this.dispatch(PirateAction.Chase);
         break;
       case PirateState.Chasing:
-        const target = this.status.target;
-        if (target && this.distanceTo(target) < 30) {
-          this.dispatch(PirateAction.TurnOff);
+        const closestSpaceShop = this.getSpaceSHops().reduce((acc, val) => {
+          return this.distanceTo(acc) < this.distanceTo(val) ? acc : val;
+        });
+        if (this.distanceTo(closestSpaceShop) < 40) {
+          this.dispatch(PirateAction.Flee);
         }
         break;
       case PirateState.Fleeing:
+        if (this.isActionComplete()) {
+          this.dispatch(PirateAction.TurnOff);
+        }
         break;
     }
   }
@@ -63,8 +71,11 @@ export class Pirate extends Ship {
     switch (action) {
       case PirateAction.Hunt: {
         this.turnOnLights();
+
+        const target = this.getRandomShip(ActorKind.Laborer);
+
         this.setStatus({
-          target: this.getRandomShip(ActorKind.Laborer),
+          target,
         });
         this.state = PirateState.Hunting;
         break;
@@ -84,7 +95,15 @@ export class Pirate extends Ship {
         this.state = PirateState.Off;
         break;
       }
-
+      case PirateAction.Flee: {
+        this.actions.clearActions();
+        this.actions.moveTo(
+          getRandomScreenPosition(this.scene.engine),
+          this.status.speed
+        );
+        this.state = PirateState.Fleeing;
+        break;
+      }
       default: {
         return;
       }

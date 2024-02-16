@@ -1,6 +1,5 @@
 import { Actor, Color, Engine, Vector, vec } from "excalibur";
 import { getPersonName } from "./get-name";
-import { Destination } from "../classes/base";
 
 /**
  * Returns a random integer between the given minimum and maximum values, inclusive.
@@ -43,11 +42,4 @@ function getRandomScreenPosition(game: Engine) {
     Math.floor(Math.random() * (maxY - minY) + minY) *
       game.currentScene.camera.zoom
   );
-}
-
-/**
- * Returns a random element from an array.
- */
-export function getRandomDestination(actors: Destination[]) {
-  return actors[Math.floor(Math.random() * actors.length)];
 }

@@ -59,6 +59,9 @@ export class Pirate extends Base {
         );
 
         if (closestShop && this.distanceTo(closestShop) < 42) {
+          this.setStatus({
+            target: closestShop,
+          });
           this.dispatch(PirateAction.Flee);
         }
         break;
@@ -74,9 +77,7 @@ export class Pirate extends Base {
     switch (action) {
       case PirateAction.Hunt: {
         this.turnOnLights();
-
         const target = this.getRandomShip(ActorKind.Laborer);
-
         this.setStatus({
           target,
         });

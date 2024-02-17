@@ -19,7 +19,7 @@ Laborers go to work to earn stuff. When they have enough stuff they go home and 
 
 ### Pirates
 
-Pirates will pick a random laborer and chase them. Pirates will if flee if they get too close to a space shop.
+Pirates will pick a random laborer and chase and attack them. Pirates will if flee if they get too close to a space shop.
 
 ### Space Shop
 

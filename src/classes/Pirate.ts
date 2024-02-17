@@ -1,6 +1,6 @@
-import { Color } from "excalibur";
+import { Actor, Color } from "excalibur";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
-import { ActorKind, Base } from "./base";
+import { ActorKind, Base, Meeple } from "./base";
 import { getPersonName } from "../utils/get-name";
 
 export enum PirateState {
@@ -58,6 +58,10 @@ export class Pirate extends Base {
           }
         );
 
+        if (this.status.target && this.distanceTo(this.status.target) < 100) {
+          this.fire(this.status.target);
+        }
+
         if (closestShop && this.distanceTo(closestShop) < 42) {
           this.setStatus({
             target: closestShop,
@@ -71,6 +75,24 @@ export class Pirate extends Base {
         }
         break;
     }
+  }
+
+  fire(target: Meeple) {
+    const bullet = new Actor({
+      name: `bullet-${getPersonName()}`,
+      width: 1,
+      height: 1,
+      color: Color.Magenta,
+      pos: this.pos,
+    });
+
+    this.scene.add(bullet);
+    bullet.actions.meet(target, 100).callMethod(() => {
+      target.setStatus({
+        health: target.status.health - 1,
+      });
+      bullet.kill();
+    });
   }
 
   dispatch(action: PirateAction) {

@@ -58,7 +58,12 @@ export class Laborer extends Base {
         break;
       case LaborerState.Home:
         this.transact(-1);
-        if (this.status.stuff < 1) {
+        if (this.status.health < 100) {
+          this.setStatus({
+            health: this.status.health + 1,
+          });
+        }
+        if (this.status.stuff < 1 && this.status.health > 99) {
           this.dispatch(LaborerAction.GoToWork);
         }
         break;

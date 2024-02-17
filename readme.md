@@ -29,4 +29,8 @@ Homes take stuff from laborers for their time. They are always cozy.
 
 Demo https://pachinspac.com/
 
-![Screen Recording 2024-02-15 at 08 54 40 AM](https://github.com/joshuadoan/space-friends/assets/5114910/db9c306c-5dc5-4f3c-bd6c-553b45012969)
+### Screenshots 
+![Screen Recording 2024-02-15 at 08 54 40 AM](https://github.com/joshuadoan/space-friends/assets/5114910/1aad81a9-4dc3-4019-b9db-4da44c6bd4ff)
+
+![Space Friends 2024-02-16 at 4 29 58 PM](https://github.com/joshuadoan/space-friends/assets/5114910/4e9db47b-7d42-4256-a348-32c74e683b65)
+

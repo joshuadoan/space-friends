@@ -52,10 +52,13 @@ export class Pirate extends Base {
         this.dispatch(PirateAction.Chase);
         break;
       case PirateState.Chasing:
-        const closestSpaceShop = this.getSpaceSHops().reduce((acc, val) => {
-          return this.distanceTo(acc) < this.distanceTo(val) ? acc : val;
-        });
-        if (this.distanceTo(closestSpaceShop) < 40) {
+        const [closestShop] = this.getActorsMap()[ActorKind.SpaceShop].sort(
+          (a, b) => {
+            return a.distanceTo(this) - b.distanceTo(this);
+          }
+        );
+
+        if (closestShop && this.distanceTo(closestShop) < 42) {
           this.dispatch(PirateAction.Flee);
         }
         break;

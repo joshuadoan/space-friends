@@ -52,13 +52,13 @@ export class Laborer extends Base {
         break;
       case LaborerState.Working:
         this.transact(+1);
-        if (this.status.stuff > 5) {
+        if (this.status.stuff > 4) {
           this.dispatch(LaborerAction.GoHome);
         }
         break;
       case LaborerState.Home:
         this.transact(-1);
-        if (this.status.stuff < 0) {
+        if (this.status.stuff < 1) {
           this.dispatch(LaborerAction.GoToWork);
         }
         break;

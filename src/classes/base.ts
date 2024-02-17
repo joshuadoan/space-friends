@@ -6,6 +6,7 @@ import { randomBetween } from "../utils/helpers";
 import Game from "./game";
 import { MAX_ZOOM } from "../consts";
 import { Laborer } from "./Laborer";
+import { Pirate } from "./Pirate";
 
 export enum ActorKind {
   Laborer = "laborer",
@@ -36,6 +37,12 @@ export type Status = {
   journal: Event[];
   speed: number;
   target: Base | null;
+};
+
+export type Meeple = Laborer | SpaceShop | Home | Pirate;
+
+export type KindMap = {
+  [key in ActorKind]: Meeple[];
 };
 
 export class Base extends Actor {
@@ -71,6 +78,28 @@ export class Base extends Actor {
         this.graphics.opacity = 0.5;
         break;
     }
+  }
+
+  getActorsMap(): KindMap {
+    return this.scene.actors
+      .map((a) => a as Base)
+      .reduce(
+        (acc: KindMap, val: Meeple) => {
+          const current = acc[val.kind] ?? [];
+
+          return {
+            ...acc,
+            [val.kind]: [...current, val],
+          };
+        },
+        {
+          [ActorKind.Laborer]: [],
+          [ActorKind.SpaceShop]: [],
+          [ActorKind.Home]: [],
+          [ActorKind.Pirate]: [],
+          [ActorKind.Unknown]: [],
+        }
+      );
   }
 
   setStatus(status: Partial<Status>) {

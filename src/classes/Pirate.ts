@@ -62,7 +62,7 @@ export class Pirate extends Base {
           return a.distanceTo(this) - b.distanceTo(this);
         });
 
-        if (this.status.target && this.distanceTo(this.status.target) < 100) {
+        if (this.status.target && this.distanceTo(this.status.target) < 200) {
           this.fire(this.status.target);
         }
 

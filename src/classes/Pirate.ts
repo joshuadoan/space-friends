@@ -54,7 +54,7 @@ export class Pirate extends Base {
       case PirateState.Chasing:
         const destinations = this.getActorsMap();
 
-        const [closestHome] = destinations[ActorKind.SpaceShop].sort((a, b) => {
+        const [closestHome] = destinations[ActorKind.Home].sort((a, b) => {
           return a.distanceTo(this) - b.distanceTo(this);
         });
 
@@ -89,7 +89,7 @@ export class Pirate extends Base {
       name: `bullet-${getPersonName()}`,
       width: 1,
       height: 1,
-      color: Color.Magenta,
+      color: Color.White,
       pos: this.pos,
     });
 
@@ -115,7 +115,7 @@ export class Pirate extends Base {
       }
       case PirateAction.Chase: {
         if (!!this.status.target) {
-          this.actions.follow(this.status.target, 14);
+          this.actions.follow(this.status.target, 27);
         }
         this.state = PirateState.Chasing;
         break;

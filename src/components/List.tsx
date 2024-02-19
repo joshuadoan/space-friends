@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import cx from "classnames";
 import { useOutletContext, Outlet } from "react-router-dom";
 import { Action, UxState } from "../types";
-import Game from "../classes/Game";
+import Game from "../classes/foo";
 import StyledNavLink from "./StyledNavLink";
 import { Badge } from "./Badge";
 import useFilters from "../hooks/useFilters";

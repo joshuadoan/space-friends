@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Outlet, useLoaderData } from "react-router-dom";
-import Game from "../classes/Game";
+import Game from "../classes/foo";
 import { makeStar } from "../utils/helpers";
 import useUxState from "../hooks/use-ux-state";
 import Nav from "./Nav";

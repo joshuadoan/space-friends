@@ -1,5 +1,5 @@
 import { Meeple } from "./classes/Meeple";
-import Game from "./classes/Game";
+import Game from "./classes/foo";
 
 export type Tab = "meeples" | "help";
 

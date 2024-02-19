@@ -1,5 +1,5 @@
 import { Lights } from "./Lights";
-import { MeepleEvent } from "./MeepleEvent";
+import { MeepleEvent } from "./Journal";
 import { Meeple } from "./Meeple";
 
 export type Status = {

@@ -4,10 +4,9 @@ import { getDestinationName } from "../utils/get-name";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { randomBetween } from "../utils/helpers";
 import { MAX_ZOOM } from "../consts";
-import { ActorKind } from "./ActorKind";
+import { ActorKind, KindMap } from "./ActorKind";
 import { Lights } from "./Lights";
 import { Status } from "./Status";
-import { KindMap } from "./KindMap";
 
 export class Meeple extends Actor {
   public kind: ActorKind = ActorKind.Unknown;
@@ -62,6 +61,7 @@ export class Meeple extends Actor {
           [ActorKind.Home]: [],
           [ActorKind.Pirate]: [],
           [ActorKind.Unknown]: [],
+          [ActorKind.PirateBase]: [],
         }
       );
   }

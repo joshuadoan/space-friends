@@ -147,10 +147,12 @@ export class Pirate extends Meeple {
       }
       case PirateAction.Flee: {
         this.actions.clearActions();
-        this.actions.moveTo(
-          getRandomScreenPosition(this.scene.engine),
-          this.status.speed
-        );
+        const destination = this.getRandomDestination(ActorKind.PirateBase);
+        this.goToDestination(destination).callMethod(() => {
+          this.dispatch(PirateAction.TurnOff);
+          destination.turnOnLights();
+        });
+
         this.state = PirateState.Fleeing;
         break;
       }

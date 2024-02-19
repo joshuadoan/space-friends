@@ -1,6 +1,6 @@
 import { getDestinationName } from "../utils/get-name";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
-import Game from "./foo";
+import Game from "./Game";
 import { ActorKind } from "./ActorKind";
 import { MEEPLE_COLOR, Meeple } from "./Meeple";
 import { Lights } from "./Lights";

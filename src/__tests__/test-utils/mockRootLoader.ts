@@ -1,4 +1,4 @@
-import { SpaceShop } from "../../classes/Meeple";
+import { SpaceShop } from "../../classes/SpaceShop";
 import { Home } from "../../classes/Home";
 import { Laborer } from "../../classes/Laborer";
 

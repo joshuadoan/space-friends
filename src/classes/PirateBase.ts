@@ -4,12 +4,13 @@ import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import Game from "./Game";
 import { ActorKind } from "./ActorKind";
 import { Meeple } from "./Meeple";
+import { Lights } from "./Lights";
 
 export class PirateBase extends Meeple {
   constructor(options?: { name?: string; kind?: ActorKind }) {
     super({
-      width: 8,
-      height: 8,
+      width: 6,
+      height: 6,
       color: Color.Red,
       name: getDestinationName(),
       ...options,
@@ -23,6 +24,7 @@ export class PirateBase extends Meeple {
     this.setStatus({
       imgUrl: this.generateAvatar(),
       stuff: 100,
+      lights: Lights.On,
       journal: [
         {
           action: "open",

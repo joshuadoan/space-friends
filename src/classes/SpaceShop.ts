@@ -1,13 +1,12 @@
-import { Color } from "excalibur";
+import { Color, Engine } from "excalibur";
 import { getDestinationName } from "../utils/get-name";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
-import Game from "./Game";
 import { ActorKind } from "./ActorKind";
 import { Lights } from "./Lights";
 import { Meeple } from "./Meeple";
 
-export class Home extends Meeple {
-  constructor(options?: { name?: string; kind?: ActorKind }) {
+export class SpaceShop extends Meeple {
+  constructor(options?: { name?: string }) {
     super({
       width: 6,
       height: 6,
@@ -16,10 +15,10 @@ export class Home extends Meeple {
       ...options,
     });
 
-    this.kind = ActorKind.Home;
+    this.kind = ActorKind.SpaceShop;
   }
-  onInitialize(_engine: Game): void {
-    this.kind = ActorKind.Home;
+  onInitialize(_engine: Engine): void {
+    this.color = Color.Orange;
     this.pos = getRandomScreenPosition(this.scene.engine);
     this.setStatus({
       imgUrl: this.generateAvatar(),
@@ -27,8 +26,8 @@ export class Home extends Meeple {
       lights: Lights.On,
       journal: [
         {
-          action: "open",
-          state: "cozy",
+          action: "Open",
+          state: "open",
           timestamp: Date.now(),
         },
       ],

@@ -1,7 +1,5 @@
-import { Actor, Color, Engine, Timer, vec } from "excalibur";
+import { Actor, Timer, vec } from "excalibur";
 import * as blockies from "blockies-ts";
-import { getDestinationName } from "../utils/get-name";
-import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { randomBetween } from "../utils/helpers";
 import { MAX_ZOOM } from "../consts";
 import { ActorKind, KindMap } from "./ActorKind";
@@ -102,14 +100,6 @@ export class Meeple extends Actor {
     return this.actions.getQueue().isComplete();
   }
 
-  getSpaceSHops() {
-    return this.scene.actors
-      .filter((a) => {
-        return a instanceof SpaceShop;
-      })
-      .map((a) => a as SpaceShop);
-  }
-
   getRandomDestination(kind: ActorKind) {
     const destinations = this.scene.actors
       .map((a) => a as Meeple)
@@ -151,36 +141,6 @@ export class Meeple extends Actor {
   transact(number: number): void {
     this.setStatus({
       stuff: this.status.stuff + number,
-    });
-  }
-}
-
-export class SpaceShop extends Meeple {
-  constructor(options?: { name?: string }) {
-    super({
-      width: 8,
-      height: 8,
-      color: Color.Azure,
-      name: getDestinationName(),
-      ...options,
-    });
-
-    this.kind = ActorKind.SpaceShop;
-  }
-  onInitialize(_engine: Engine): void {
-    this.color = Color.Orange;
-    this.pos = getRandomScreenPosition(this.scene.engine);
-    this.setStatus({
-      imgUrl: this.generateAvatar(),
-      stuff: 100,
-      lights: Lights.On,
-      journal: [
-        {
-          action: "Open",
-          state: "open",
-          timestamp: Date.now(),
-        },
-      ],
     });
   }
 }

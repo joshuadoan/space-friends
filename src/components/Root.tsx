@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import { Outlet, useLoaderData } from "react-router-dom";
 import Game from "../classes/Game";
-import { ENGINE_DEFAULTS } from "../consts";
 import { makeStar } from "../utils/helpers";
 import useUxState from "../hooks/use-ux-state";
 import Nav from "./Nav";
 import { UxActionKinds } from "../types";
-import { Meeple, SpaceShop } from "../classes/Meeple";
+import { Meeple } from "../classes/Meeple";
+import { SpaceShop } from "../classes/SpaceShop";
 import { Home } from "../classes/Home";
 import { Laborer } from "../classes/Laborer";
 import { Pirate } from "../classes/Pirate";
 import { PirateBase } from "../classes/PirateBase";
+import { Color, DisplayMode } from "excalibur";
 
 export const NUMBER_OF_STARS = 100;
 export const NUMBER_OF_SPACE_SHOPS = 5;
@@ -20,7 +21,12 @@ export const NUMBER_OF_PIRATES = 5;
 export const NUMBER_OF_PIRATE_BASES = 1;
 
 export async function rootLoader() {
-  const game = new Game(ENGINE_DEFAULTS);
+  const game = new Game({
+    displayMode: DisplayMode.FillContainer,
+    backgroundColor: Color.Black,
+    canvasElementId: "canvas",
+    antialiasing: false,
+  });
 
   for (let i = 0; i < NUMBER_OF_STARS; i++) {
     const star = makeStar(game);

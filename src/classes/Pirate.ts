@@ -1,6 +1,6 @@
 import { Actor, Color } from "excalibur";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
-import { Meeple } from "./Meeple";
+import { MEEPLE_COLOR, Meeple } from "./Meeple";
 import { ActorKind } from "./ActorKind";
 import { getPersonName } from "../utils/get-name";
 import { Laborer } from "./Laborer";
@@ -25,7 +25,7 @@ export class Pirate extends Meeple {
     super({
       width: 4,
       height: 2,
-      color: Color.Rose,
+      color: MEEPLE_COLOR[ActorKind.Pirate],
       name: getPersonName(),
       kind: ActorKind.Pirate,
       ...options,

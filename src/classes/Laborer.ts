@@ -1,6 +1,5 @@
-import { Color } from "excalibur";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
-import { Meeple } from "./Meeple";
+import { MEEPLE_COLOR, Meeple } from "./Meeple";
 import { ActorKind } from "./ActorKind";
 import { getPersonName } from "../utils/get-name";
 
@@ -23,7 +22,7 @@ export class Laborer extends Meeple {
     super({
       width: 4,
       height: 2,
-      color: Color.Yellow,
+      color: MEEPLE_COLOR[ActorKind.Laborer],
       name: getPersonName(),
       kind: ActorKind.Laborer,
       ...options,

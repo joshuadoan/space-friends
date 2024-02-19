@@ -1,10 +1,19 @@
-import { Actor, Timer, vec } from "excalibur";
+import { Actor, Color, Timer, vec } from "excalibur";
 import * as blockies from "blockies-ts";
 import { randomBetween } from "../utils/helpers";
 import { MAX_ZOOM } from "../consts";
 import { ActorKind, KindMap } from "./ActorKind";
 import { Lights } from "./Lights";
 import { Status } from "./Status";
+
+export const MEEPLE_COLOR = {
+  [ActorKind.Laborer]: Color.White,
+  [ActorKind.SpaceShop]: Color.Blue,
+  [ActorKind.Home]: Color.Green,
+  [ActorKind.Pirate]: Color.Red,
+  [ActorKind.PirateBase]: Color.Red,
+  [ActorKind.Unknown]: Color.White,
+};
 
 export class Meeple extends Actor {
   public kind: ActorKind = ActorKind.Unknown;

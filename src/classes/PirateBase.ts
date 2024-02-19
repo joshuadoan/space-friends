@@ -1,9 +1,8 @@
-import { Color } from "excalibur";
 import { getDestinationName } from "../utils/get-name";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import Game from "./Game";
 import { ActorKind } from "./ActorKind";
-import { Meeple } from "./Meeple";
+import { MEEPLE_COLOR, Meeple } from "./Meeple";
 import { Lights } from "./Lights";
 
 export class PirateBase extends Meeple {
@@ -11,7 +10,7 @@ export class PirateBase extends Meeple {
     super({
       width: 6,
       height: 6,
-      color: Color.Red,
+      color: MEEPLE_COLOR[ActorKind.PirateBase],
       name: getDestinationName(),
       ...options,
     });

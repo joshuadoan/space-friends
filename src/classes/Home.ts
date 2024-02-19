@@ -1,17 +1,16 @@
-import { Color } from "excalibur";
 import { getDestinationName } from "../utils/get-name";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import Game from "./Game";
 import { ActorKind } from "./ActorKind";
 import { Lights } from "./Lights";
-import { Meeple } from "./Meeple";
+import { MEEPLE_COLOR, Meeple } from "./Meeple";
 
 export class Home extends Meeple {
   constructor(options?: { name?: string; kind?: ActorKind }) {
     super({
       width: 6,
       height: 6,
-      color: Color.Azure,
+      color: MEEPLE_COLOR[ActorKind.Home],
       name: getDestinationName(),
       ...options,
     });

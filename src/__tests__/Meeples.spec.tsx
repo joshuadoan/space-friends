@@ -9,6 +9,16 @@ import { mockRouter } from "./test-utils/mockRouter";
 
 enableFetchMocks();
 
+// React Markdown Jest issue
+jest.mock("../components/Help", () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <div></div>;
+    },
+  };
+});
+
 test("Renders the ships and can filter", async () => {
   render(<RouterProvider router={mockRouter()} />);
 

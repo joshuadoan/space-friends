@@ -7,16 +7,15 @@ import { Lights } from "./Lights";
 import { Status } from "./Status";
 
 export const MEEPLE_COLOR = {
-  [ActorKind.Laborer]: Color.White,
+  [ActorKind.Laborer]: Color.ExcaliburBlue,
   [ActorKind.SpaceShop]: Color.Blue,
-  [ActorKind.Home]: Color.Green,
-  [ActorKind.Pirate]: Color.Red,
+  [ActorKind.Home]: Color.Orange,
+  [ActorKind.Pirate]: Color.Magenta,
   [ActorKind.PirateBase]: Color.Red,
-  [ActorKind.Unknown]: Color.White,
 };
 
 export class Meeple extends Actor {
-  public kind: ActorKind = ActorKind.Unknown;
+  public kind: ActorKind = ActorKind.Laborer;
   public status: Status = {
     health: 100,
     stuff: 0,
@@ -67,7 +66,6 @@ export class Meeple extends Actor {
           [ActorKind.SpaceShop]: [],
           [ActorKind.Home]: [],
           [ActorKind.Pirate]: [],
-          [ActorKind.Unknown]: [],
           [ActorKind.PirateBase]: [],
         }
       );

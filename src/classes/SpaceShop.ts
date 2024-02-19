@@ -1,16 +1,16 @@
-import { Color, Engine } from "excalibur";
+import { Engine } from "excalibur";
 import { getDestinationName } from "../utils/get-name";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { ActorKind } from "./ActorKind";
 import { Lights } from "./Lights";
-import { Meeple } from "./Meeple";
+import { MEEPLE_COLOR, Meeple } from "./Meeple";
 
 export class SpaceShop extends Meeple {
   constructor(options?: { name?: string }) {
     super({
       width: 6,
       height: 6,
-      color: Color.Azure,
+      color: MEEPLE_COLOR[ActorKind.SpaceShop],
       name: getDestinationName(),
       ...options,
     });
@@ -18,7 +18,6 @@ export class SpaceShop extends Meeple {
     this.kind = ActorKind.SpaceShop;
   }
   onInitialize(_engine: Engine): void {
-    this.color = Color.Orange;
     this.pos = getRandomScreenPosition(this.scene.engine);
     this.setStatus({
       imgUrl: this.generateAvatar(),

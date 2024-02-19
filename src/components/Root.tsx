@@ -12,6 +12,7 @@ import { Laborer } from "../classes/Laborer";
 import { Pirate } from "../classes/Pirate";
 import { PirateBase } from "../classes/PirateBase";
 import { Color, DisplayMode } from "excalibur";
+import { Legend } from "../classes/Legend";
 
 export const NUMBER_OF_STARS = 100;
 export const NUMBER_OF_SPACE_SHOPS = 5;
@@ -101,10 +102,13 @@ const Root = () => {
   );
 
   return (
-    <div className="h-full absolute">
-      <Nav state={state} dispatch={dispatch} />
-      <Outlet context={{ game, state, dispatch }} />
-    </div>
+    <>
+      <Legend />
+      <div className="h-full absolute">
+        <Nav state={state} dispatch={dispatch} />
+        <Outlet context={{ game, state, dispatch }} />
+      </div>
+    </>
   );
 };
 export default Root;

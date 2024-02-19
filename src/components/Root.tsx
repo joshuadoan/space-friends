@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { Outlet, useLoaderData } from "react-router-dom";
-import Game from "../classes/game";
+import Game from "../classes/Game";
 import { ENGINE_DEFAULTS } from "../consts";
 import { makeStar } from "../utils/helpers";
 import useUxState from "../hooks/use-ux-state";
 import Nav from "./Nav";
 import { UxActionKinds } from "../types";
-import { Base, Home, SpaceShop } from "../classes/base";
+import { Meeple, SpaceShop } from "../classes/Meeple";
+import { Home } from "../classes/Home";
 import { Laborer } from "../classes/Laborer";
 import { Pirate } from "../classes/Pirate";
 
@@ -76,8 +77,8 @@ const Root = () => {
           kind: UxActionKinds.SET_ACTORS,
           payload: [
             ...(game?.currentScene.actors
-              .filter((a) => a instanceof Base)
-              .map((a) => a as Base) ?? []),
+              .filter((a) => a instanceof Meeple)
+              .map((a) => a as Meeple) ?? []),
           ],
         });
       }, 300);

@@ -1,6 +1,7 @@
 import { Color } from "excalibur";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
-import { ActorKind, Base } from "./base";
+import { Meeple } from "./Meeple";
+import { ActorKind } from "./ActorKind";
 import { getPersonName } from "../utils/get-name";
 
 export enum LaborerState {
@@ -10,14 +11,14 @@ export enum LaborerState {
   Home = "home",
 }
 
-export enum LaborerAction {
+export enum LaborerActionName {
   GoToWork = "go to work",
   GoHome = "go home",
   Work = "work",
   Hangout = "hangout",
 }
 
-export class Laborer extends Base {
+export class Laborer extends Meeple {
   constructor(options?: { name?: string; kind?: ActorKind }) {
     super({
       width: 4,
@@ -46,52 +47,52 @@ export class Laborer extends Base {
     }
     switch (this.state) {
       case LaborerState.Off:
-        this.dispatch(LaborerAction.GoToWork);
+        this.dispatch(LaborerActionName.GoToWork);
         break;
       case LaborerState.Traveling:
         break;
       case LaborerState.Working:
         this.transact(+1);
         if (this.status.stuff > 4) {
-          this.dispatch(LaborerAction.GoHome);
+          this.dispatch(LaborerActionName.GoHome);
         }
         break;
       case LaborerState.Home:
         this.transact(-1);
         if (this.status.stuff < 1) {
-          this.dispatch(LaborerAction.GoToWork);
+          this.dispatch(LaborerActionName.GoToWork);
         }
         break;
     }
   }
 
-  dispatch(action: LaborerAction) {
+  dispatch(action: LaborerActionName) {
     switch (action) {
-      case LaborerAction.GoToWork: {
+      case LaborerActionName.GoToWork: {
         this.turnOnLights();
         const destination = this.getRandomDestination(ActorKind.SpaceShop);
         this.goToDestination(destination).callMethod(() => {
-          this.dispatch(LaborerAction.Work);
+          this.dispatch(LaborerActionName.Work);
         });
         this.state = LaborerState.Traveling;
         break;
       }
-      case LaborerAction.GoHome: {
+      case LaborerActionName.GoHome: {
         this.turnOnLights();
         const destination = this.getRandomDestination(ActorKind.Home);
         this.goToDestination(destination).callMethod(() => {
-          this.dispatch(LaborerAction.Hangout);
+          this.dispatch(LaborerActionName.Hangout);
         });
         this.state = LaborerState.Traveling;
         break;
       }
-      case LaborerAction.Work: {
+      case LaborerActionName.Work: {
         this.turnOffLights();
 
         this.state = LaborerState.Working;
         break;
       }
-      case LaborerAction.Hangout: {
+      case LaborerActionName.Hangout: {
         this.turnOffLights();
         this.state = LaborerState.Home;
         break;

@@ -1,7 +1,10 @@
 import { Actor, Color } from "excalibur";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
-import { ActorKind, Base, Meeple } from "./base";
+import { Meeple } from "./Meeple";
+import { ActorKind } from "./ActorKind";
 import { getPersonName } from "../utils/get-name";
+import { Laborer } from "./Laborer";
+import { Home } from "./Home";
 
 export enum PirateState {
   Off = "off",
@@ -17,7 +20,7 @@ export enum PirateAction {
   TurnOff = "turn off",
 }
 
-export class Pirate extends Base {
+export class Pirate extends Meeple {
   constructor(options?: { name?: string; kind?: ActorKind }) {
     super({
       width: 4,
@@ -38,6 +41,20 @@ export class Pirate extends Base {
     this.setStatus({
       imgUrl: this.generateAvatar(),
     });
+  }
+
+  getLaborers() {
+    return this.scene.actors
+      .filter((a) => a instanceof Meeple)
+      .map((a) => a as Laborer);
+  }
+
+  getHomes() {
+    return this.scene.actors
+      .filter((a) => {
+        return a instanceof Home;
+      })
+      .map((a) => a as Home);
   }
 
   next() {

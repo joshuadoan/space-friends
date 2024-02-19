@@ -1,10 +1,10 @@
-import { Base } from "./classes/base";
-import Game from "./classes/game";
+import { Meeple } from "./classes/Meeple";
+import Game from "./classes/Game";
 
 export type Tab = "meeples" | "help";
 
 export type UxState = {
-  actors: Base[];
+  actors: Meeple[];
   paused: boolean;
 };
 
@@ -16,7 +16,7 @@ export enum UxActionKinds {
 
 type SetActors = {
   kind: UxActionKinds.SET_ACTORS;
-  payload: Base[];
+  payload: Meeple[];
 };
 
 type PauseGame = {

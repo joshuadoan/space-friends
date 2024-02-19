@@ -1,5 +1,5 @@
 import React from "react";
-import { Journal } from "../classes/base";
+import { Journal } from "../classes/Journal";
 
 const Journal = ({ journal }: { journal: Journal }) => {
   return (

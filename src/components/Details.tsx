@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import { OutletContext } from "../types";
 import StyledLink from "./StyledLink";
-import { Meeple } from "./Meeple";
+import { Badge } from "./Badge";
 import Journal from "./Journal";
 import useFilters from "../hooks/useFilters";
 
@@ -41,7 +41,7 @@ const MeepleDetail = () => {
           {`<--`} back
         </StyledLink>
       </p>
-      <Meeple meeple={meeple} />
+      <Badge meeple={meeple} />
       <Journal journal={journal} />
     </section>
   );

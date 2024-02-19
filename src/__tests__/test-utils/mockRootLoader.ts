@@ -1,4 +1,5 @@
-import { Home, SpaceShop } from "../../classes/base";
+import { SpaceShop } from "../../classes/Meeple";
+import { Home } from "../../classes/Home";
 import { Laborer } from "../../classes/Laborer";
 
 export default async () => {

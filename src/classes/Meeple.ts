@@ -3,49 +3,13 @@ import * as blockies from "blockies-ts";
 import { getDestinationName } from "../utils/get-name";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { randomBetween } from "../utils/helpers";
-import Game from "./game";
 import { MAX_ZOOM } from "../consts";
-import { Laborer } from "./Laborer";
-import { Pirate } from "./Pirate";
+import { ActorKind } from "./ActorKind";
+import { Lights } from "./Lights";
+import { Status } from "./Status";
+import { KindMap } from "./KindMap";
 
-export enum ActorKind {
-  Laborer = "laborer",
-  SpaceShop = "space-shop",
-  Home = "home",
-  Pirate = "pirate",
-  Unknown = "unknown",
-}
-
-export enum Lights {
-  On = "on",
-  Off = "off",
-}
-
-export type Event = {
-  timestamp: number;
-  action: string;
-  state: string;
-};
-
-export type Journal = Event[];
-
-export type Status = {
-  health: number;
-  stuff: number;
-  lights: Lights;
-  imgUrl: string;
-  journal: Event[];
-  speed: number;
-  target: Base | null;
-};
-
-export type Meeple = Laborer | SpaceShop | Home | Pirate;
-
-export type KindMap = {
-  [key in ActorKind]: Meeple[];
-};
-
-export class Base extends Actor {
+export class Meeple extends Actor {
   public kind: ActorKind = ActorKind.Unknown;
   public status: Status = {
     health: 100,
@@ -82,7 +46,7 @@ export class Base extends Actor {
 
   getActorsMap(): KindMap {
     return this.scene.actors
-      .map((a) => a as Base)
+      .map((a) => a as Meeple)
       .reduce(
         (acc: KindMap, val: Meeple) => {
           const current = acc[val.kind] ?? [];
@@ -146,37 +110,23 @@ export class Base extends Actor {
       .map((a) => a as SpaceShop);
   }
 
-  getLaborers() {
-    return this.scene.actors
-      .filter((a) => a instanceof Base)
-      .map((a) => a as Laborer);
-  }
-
-  getHomes() {
-    return this.scene.actors
-      .filter((a) => {
-        return a instanceof Home;
-      })
-      .map((a) => a as Home);
-  }
-
   getRandomDestination(kind: ActorKind) {
     const destinations = this.scene.actors
-      .map((a) => a as Base)
-      .filter((a): a is Base => a.kind === kind);
+      .map((a) => a as Meeple)
+      .filter((a): a is Meeple => a.kind === kind);
 
     return destinations[Math.floor(Math.random() * destinations.length)];
   }
 
   getRandomShip(kind: ActorKind) {
     const ships = this.scene.actors
-      .map((a) => a as Base)
-      .filter((a): a is Base => a.kind === kind);
+      .map((a) => a as Meeple)
+      .filter((a): a is Meeple => a.kind === kind);
 
     return ships[Math.floor(Math.random() * ships.length)];
   }
 
-  goToDestination(destination: Base) {
+  goToDestination(destination: Meeple) {
     return this.actions
       .moveTo(
         vec(
@@ -205,7 +155,7 @@ export class Base extends Actor {
   }
 }
 
-export class SpaceShop extends Base {
+export class SpaceShop extends Meeple {
   constructor(options?: { name?: string }) {
     super({
       width: 8,
@@ -228,35 +178,6 @@ export class SpaceShop extends Base {
         {
           action: "Open",
           state: "open",
-          timestamp: Date.now(),
-        },
-      ],
-    });
-  }
-}
-export class Home extends Base {
-  constructor(options?: { name?: string; kind?: ActorKind }) {
-    super({
-      width: 8,
-      height: 8,
-      color: Color.Azure,
-      name: getDestinationName(),
-      ...options,
-    });
-
-    this.kind = ActorKind.Home;
-  }
-  onInitialize(_engine: Game): void {
-    this.kind = ActorKind.Home;
-    this.pos = getRandomScreenPosition(this.scene.engine);
-    this.setStatus({
-      imgUrl: this.generateAvatar(),
-      stuff: 100,
-      lights: Lights.On,
-      journal: [
-        {
-          action: "open",
-          state: "cozy",
           timestamp: Date.now(),
         },
       ],

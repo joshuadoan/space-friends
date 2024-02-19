@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import cx from "classnames";
 import { useOutletContext, Outlet } from "react-router-dom";
 import { Action, UxState } from "../types";
-import Game from "../classes/game";
+import Game from "../classes/Game";
 import StyledNavLink from "./StyledNavLink";
-import { Meeple } from "./Meeple";
+import { Badge } from "./Badge";
 import useFilters from "../hooks/useFilters";
-import { ActorKind } from "../classes/base";
+import { ActorKind } from "../classes/ActorKind";
 
 const List = () => {
   const { filter } = useFilters();
@@ -75,7 +75,7 @@ const List = () => {
           .filter((a) => (!!filter ? a.kind === filter : true))
           .map((actor) => (
             <li key={actor.id} data-testid="meeple" className="mb-4">
-              <Meeple meeple={actor} />
+              <Badge meeple={actor} />
             </li>
           ))}
       </menu>

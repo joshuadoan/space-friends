@@ -2,9 +2,9 @@ import React from "react";
 import { useSearchParams } from "react-router-dom";
 import Avatar from "./Avatar";
 import StyledLink from "./StyledLink";
-import { Base } from "../classes/base";
+import { Meeple } from "../classes/Meeple";
 
-export const Meeple = (props: { meeple: Base }) => {
+export const Badge = (props: { meeple: Meeple }) => {
   const [params] = useSearchParams();
   const { imgUrl, health, stuff, journal } = props.meeple.status;
   const event = journal[journal.length - 1];

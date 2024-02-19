@@ -19,7 +19,15 @@ export const Badge = (props: { meeple: Meeple }) => {
             <Avatar url={imgUrl} />
             <div className="flex flex-col">
               {props.meeple.name}
-              <span className="opacity-70">{props.meeple.kind}</span>
+              <span className="opacity-70 flex items-center gap-2">
+                {props.meeple.kind}
+                <div
+                  className="w-2 h-2"
+                  style={{
+                    backgroundColor: props.meeple.color.toString(),
+                  }}
+                />
+              </span>
             </div>
           </div>
         </StyledLink>

@@ -45,8 +45,10 @@
     "vite": "5.1.1"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.10",
     "@tensorflow/tfjs": "^4.16.0",
     "@types/react-router-dom": "^5.3.3",
+    "@vitejs/plugin-react": "^4.2.1",
     "blockies-ts": "^1.0.0",
     "classnames": "^2.3.2",
     "jest-canvas-mock": "^2.5.2",
@@ -55,12 +57,17 @@
     "react-blockies": "^1.4.1",
     "react-dom": "^18.2.0",
     "react-fps": "^1.0.6",
+    "react-markdown": "^9.0.1",
     "react-router-dom": "^6.22.0",
     "react-typing-effect": "^2.0.5",
+    "remark-gfm": "^4.0.0",
     "ts-node": "^10.9.2",
     "unique-names-generator": "^4.7.1",
     "vitest": "^1.2.2"
   },
+  "assetsInclude": [
+    "**/*.md"
+  ],
   "jest": {
     "setupFiles": [
       "jest-canvas-mock"

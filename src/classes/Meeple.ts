@@ -1,10 +1,12 @@
 import { Actor, Color, Timer, vec } from "excalibur";
 import * as blockies from "blockies-ts";
 import { randomBetween } from "../utils/helpers";
-import { MAX_ZOOM } from "../consts";
 import { ActorKind, KindMap } from "./ActorKind";
 import { Lights } from "./Lights";
 import { Status } from "./Status";
+
+export const MAX_ZOOM = 5;
+export const MIN_ZOOM = 0.5;
 
 export const MEEPLE_COLOR = {
   [ActorKind.Laborer]: Color.ExcaliburBlue,

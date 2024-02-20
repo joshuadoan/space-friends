@@ -20,6 +20,11 @@ export default function useUxState(defaultState: UxState) {
             ...state,
             paused: false,
           };
+        case UxActionKinds.SET_ZOOM:
+          return {
+            ...state,
+            zoom: action.payload,
+          };
         default:
           return state;
       }

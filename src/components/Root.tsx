@@ -5,7 +5,7 @@ import { makeStar } from "../utils/helpers";
 import useUxState from "../hooks/use-ux-state";
 import Nav from "./Nav";
 import { UxActionKinds } from "../types";
-import { Meeple } from "../classes/Meeple";
+import { MAX_ZOOM, Meeple } from "../classes/Meeple";
 import { SpaceShop } from "../classes/SpaceShop";
 import { Home } from "../classes/Home";
 import { Laborer } from "../classes/Laborer";
@@ -13,6 +13,7 @@ import { Pirate } from "../classes/Pirate";
 import { PirateBase } from "../classes/PirateBase";
 import { Color, DisplayMode } from "excalibur";
 import { Legend } from "../classes/Legend";
+import { Controls } from "./Controls";
 
 export const NUMBER_OF_STARS = 100;
 export const NUMBER_OF_SPACE_SHOPS = 5;
@@ -67,6 +68,7 @@ const Root = () => {
   const { state, dispatch } = useUxState({
     actors: [],
     paused: false,
+    zoom: MAX_ZOOM,
   });
 
   const { game } = useLoaderData() as {
@@ -85,6 +87,17 @@ const Root = () => {
   );
 
   useEffect(
+    function handleInitial() {
+      game.resetZoom();
+    },
+    [game]
+  );
+
+  useEffect(() => {
+    game.currentScene.camera.zoom = state.zoom;
+  }, [state.zoom]);
+
+  useEffect(
     function syncGameWithState() {
       const interval = setInterval(() => {
         dispatch({
@@ -95,6 +108,10 @@ const Root = () => {
               .map((a) => a as Meeple) ?? []),
           ],
         });
+        dispatch({
+          kind: UxActionKinds.SET_ZOOM,
+          payload: game?.currentScene.camera.zoom,
+        });
       }, 300);
       return () => clearInterval(interval);
     },
@@ -103,7 +120,8 @@ const Root = () => {
 
   return (
     <>
-      <Legend />
+      <Legend state={state} />
+      <Controls state={state} dispatch={dispatch} />
       <div className="h-full absolute">
         <Nav state={state} dispatch={dispatch} />
         <Outlet context={{ game, state, dispatch }} />

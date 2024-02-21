@@ -1,17 +1,26 @@
 import React from "react";
 import cx from "classnames";
+import { useParams } from "react-router-dom";
 import StyledNavLink from "./StyledNavLink";
 import { ActorKind } from "../classes/ActorKind";
 import useFilters from "../hooks/useFilters";
 const Filters = () => {
   const { filter } = useFilters();
+  let { meepleId } = useParams<{
+    meepleId: string;
+  }>();
 
   return (
-    <nav className="flex items-center gap-2 bg-black bg-opacity-50 px-4">
+    <nav
+      className={cx("flex items-center gap-2 bg-black bg-opacity-50 px-4", {
+        hidden: !!meepleId,
+      })}
+    >
       <StyledNavLink
         to="/meeples"
         className={cx("hover:underline p-2", {
           "bg-purple-800 ": !filter,
+          "opacity-50": !!meepleId,
         })}
       >
         all

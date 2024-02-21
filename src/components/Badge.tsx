@@ -12,7 +12,9 @@ export const Badge = (props: { meeple: Meeple }) => {
     <div>
       <div className={"flex items-center gap-2"}>
         <StyledLink
-          to={`/meeples/${props.meeple.id}?filter=${params.get("filter")}`}
+          to={`/meeples/${props.meeple.id}?filter=${
+            params.get("filter") ?? ""
+          }`}
           title="Click to zoom and follow"
         >
           <div className="w-full text-left flex items-center gap-2">

@@ -36,7 +36,7 @@ const MeepleDetail = () => {
         <StyledLink
           to={{
             pathname: "/meeples",
-            search: `?filter=${filter}`,
+            search: `?filter=${filter ?? ""}`,
           }}
         >
           {`<--`} back

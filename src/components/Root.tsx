@@ -14,7 +14,6 @@ import { PirateBase } from "../classes/PirateBase";
 import { Color, DisplayMode } from "excalibur";
 import { Legend } from "../classes/Legend";
 import { Controls } from "./Controls";
-import Filters from "./FIlters";
 
 export const NUMBER_OF_STARS = 100;
 export const NUMBER_OF_SPACE_SHOPS = 5;
@@ -87,12 +86,12 @@ const Root = () => {
     [state.paused]
   );
 
-  useEffect(
-    function handleInitial() {
-      game.resetZoom();
-    },
-    [game]
-  );
+  // useEffect(
+  //   function handleInitial() {
+  //     game.resetZoom();
+  //   },
+  //   [game]
+  // );
 
   useEffect(
     function syncGameWithState() {
@@ -119,7 +118,6 @@ const Root = () => {
     <div className="text-white">
       <div className="h-full flex flex-col absolute ">
         <Nav state={state} dispatch={dispatch} />
-        <Filters />
         <Outlet context={{ game, state, dispatch }} />
       </div>
       <Legend state={state} />

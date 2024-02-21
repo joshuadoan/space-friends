@@ -9,9 +9,13 @@ Typescript, React, canvas state machines, and so many space friends!
 - Fully navigatable by keyboard
 - Tested with React Testing Library
 
-## The Simulation:
+## Controls
 
-Clicking on the name of a laborer, pirate, shop, etc will take you to their journal.
+- Clicking on the name of a laborer, pirate, shop, etc will take you to their journal.
+- wasd (or arrow keys) will move the camera
+- zoom slider will zoom
+
+## The Simulation:
 
 ### Laborers
 

@@ -1,29 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Action, UxActionKinds, UxState } from "../types";
 import { MAX_ZOOM, MIN_ZOOM } from "../classes/Meeple";
 import Game from "../classes/Game";
-
-export function useDebounce<T>(value: T, delay?: number): T {
-  const [debouncedValue, setDebouncedValue] = useState<T>(value);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay ?? 500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
-}
+import { vec } from "excalibur";
 
 export const Controls = (props: {
   state: UxState;
   dispatch: React.Dispatch<Action>;
   game: Game;
 }) => {
+  useEffect(() => {
+    function handleKeydown(event: KeyboardEvent) {
+      event.preventDefault();
+      const { camera } = props.game.currentScene;
+      switch (event.key) {
+        case "ArrowUp":
+        case "w":
+          camera.move(vec(camera.pos.x, camera.pos.y - 20), 100);
+          break;
+        case "ArrowDown":
+        case "s":
+          camera.move(vec(camera.pos.x, camera.pos.y + 20), 100);
+          break;
+        case "ArrowLeft":
+        case "a":
+          camera.move(vec(camera.pos.x - 20, camera.pos.y), 100);
+          break;
+        case "ArrowRight":
+        case "d":
+          camera.move(vec(camera.pos.x + 20, camera.pos.y), 100);
+          break;
+        case "":
+          break;
+      }
+    }
+    window.addEventListener("keydown", handleKeydown);
+    return () => {
+      window.removeEventListener("keydown", handleKeydown);
+    };
+  }, []);
   return (
     <div className="absolute right-4 bottom-4 flex items-center gap-2">
       <div className="flex flex-col items-center gap-2 ">
@@ -35,7 +50,6 @@ export const Controls = (props: {
           value={props.state.zoom}
           className="range bg-purple-600"
           onChange={(e) => {
-            console.log(e.target.value);
             props.dispatch({
               kind: UxActionKinds.SET_ZOOM,
               payload: parseFloat(e.target.value),

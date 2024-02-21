@@ -6,7 +6,8 @@ import { Lights } from "./Lights";
 import { Status } from "./Status";
 
 export const MAX_ZOOM = 5;
-export const MIN_ZOOM = 0.5;
+export const MIN_ZOOM = 1;
+export const DEFAULT_ZOOM = 2;
 
 export const MEEPLE_COLOR = {
   [ActorKind.Laborer]: Color.ExcaliburBlue,

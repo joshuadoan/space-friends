@@ -7,6 +7,7 @@ export default async () => {
     resolve({
       game: {
         currentScene: {
+          camera: {},
           actors: [
             new Laborer({
               name: "Meeple 1",

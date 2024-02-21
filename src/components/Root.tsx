@@ -5,7 +5,7 @@ import { makeStar } from "../utils/helpers";
 import useUxState from "../hooks/use-ux-state";
 import Nav from "./Nav";
 import { UxActionKinds } from "../types";
-import { MAX_ZOOM, Meeple } from "../classes/Meeple";
+import { DEFAULT_ZOOM, Meeple } from "../classes/Meeple";
 import { SpaceShop } from "../classes/SpaceShop";
 import { Home } from "../classes/Home";
 import { Laborer } from "../classes/Laborer";
@@ -24,7 +24,7 @@ export const NUMBER_OF_PIRATE_BASES = 1;
 
 export async function rootLoader() {
   const game = new Game({
-    displayMode: DisplayMode.FillContainer,
+    displayMode: DisplayMode.FitScreenAndFill,
     backgroundColor: Color.Black,
     canvasElementId: "canvas",
     antialiasing: false,
@@ -68,7 +68,7 @@ const Root = () => {
   const { state, dispatch } = useUxState({
     actors: [],
     paused: false,
-    zoom: MAX_ZOOM,
+    zoom: DEFAULT_ZOOM,
   });
 
   const { game } = useLoaderData() as {
@@ -121,8 +121,8 @@ const Root = () => {
   return (
     <>
       <Legend state={state} />
-      <Controls state={state} dispatch={dispatch} />
-      <div className="h-full absolute">
+      <Controls state={state} dispatch={dispatch} game={game} />
+      <div className="flex flex-col h-full absolute ">
         <Nav state={state} dispatch={dispatch} />
         <Outlet context={{ game, state, dispatch }} />
       </div>

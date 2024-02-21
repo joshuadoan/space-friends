@@ -24,7 +24,7 @@ const List = () => {
   );
 
   return (
-    <div className="flex flex-col h-full">
+    <>
       <nav className="flex items-center gap-2 bg-black bg-opacity-50 px-4">
         <StyledNavLink
           to="/meeples"
@@ -80,7 +80,7 @@ const List = () => {
           ))}
       </menu>
       <Outlet />
-    </div>
+    </>
   );
 };
 

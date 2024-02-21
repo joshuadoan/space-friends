@@ -41,3 +41,10 @@ export type OutletContext = {
   state: UxState;
   dispatch: React.Dispatch<Action>;
 };
+
+export enum Direction {
+  Up = "Up",
+  Down = "Down",
+  Left = "Left",
+  Right = "Right",
+}

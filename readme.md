@@ -13,7 +13,7 @@ Typescript, React, canvas state machines, and so many space friends!
 
 - Clicking on the name of a laborer, pirate, shop, etc will take you to their journal.
 - wasd (or arrow keys) will move the camera
-- zoom slider will zoom
+- zoom slider will zoom (or command + or command -)
 
 ## The Simulation:
 

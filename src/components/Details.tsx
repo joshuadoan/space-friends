@@ -18,6 +18,7 @@ const MeepleDetail = () => {
 
   useEffect(
     function handleSelected() {
+      console.log("handleSelected");
       meeple?.zoomTo();
     },
     [meeple]

@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { Action, UxActionKinds, UxState } from "../types";
+import { Action, Direction, UxActionKinds, UxState } from "../types";
 import { MAX_ZOOM, MIN_ZOOM } from "../classes/Meeple";
 import Game from "../classes/Game";
-import { vec } from "excalibur";
 
 export const Controls = (props: {
   state: UxState;
@@ -12,24 +11,40 @@ export const Controls = (props: {
   useEffect(() => {
     function handleKeydown(event: KeyboardEvent) {
       event.preventDefault();
-      const { camera } = props.game.currentScene;
       switch (event.key) {
         case "ArrowUp":
         case "w":
-          camera.move(vec(camera.pos.x, camera.pos.y - 20), 100);
+          props.game.panCamera(Direction.Up);
           break;
         case "ArrowDown":
         case "s":
-          camera.move(vec(camera.pos.x, camera.pos.y + 20), 100);
+          props.game.panCamera(Direction.Down);
           break;
         case "ArrowLeft":
         case "a":
-          camera.move(vec(camera.pos.x - 20, camera.pos.y), 100);
+          props.game.panCamera(Direction.Left);
           break;
         case "ArrowRight":
         case "d":
-          camera.move(vec(camera.pos.x + 20, camera.pos.y), 100);
+          props.game.panCamera(Direction.Right);
           break;
+        case "-": {
+          if (event.metaKey && props.state.zoom - 0.5 >= MIN_ZOOM) {
+            props.dispatch({
+              kind: UxActionKinds.SET_ZOOM,
+              payload: (props.state.zoom -= 0.5),
+            });
+          }
+          return;
+        }
+        case "=": {
+          if (event.metaKey && props.state.zoom + 0.5 <= MAX_ZOOM) {
+            props.dispatch({
+              kind: UxActionKinds.SET_ZOOM,
+              payload: (props.state.zoom += 0.5),
+            });
+          }
+        }
         case "":
           break;
       }
@@ -39,6 +54,10 @@ export const Controls = (props: {
       window.removeEventListener("keydown", handleKeydown);
     };
   }, []);
+
+  useEffect(() => {
+    props.game.currentScene.camera.zoom = props.state.zoom;
+  }, [props.state.zoom]);
   return (
     <div className="absolute right-4 bottom-4 flex items-center gap-2">
       <div className="flex flex-col items-center gap-2 ">

@@ -33,6 +33,7 @@ export default async () => {
         start: jest.fn(),
         stop: jest.fn(),
         resetZoom: jest.fn(),
+        zoomOut: jest.fn(),
       },
     });
   });

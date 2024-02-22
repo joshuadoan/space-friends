@@ -37,6 +37,7 @@ export class Laborer extends Meeple {
     this.startTimer(() => this.next());
     this.setStatus({
       imgUrl: this.generateAvatar(),
+      home: this.getRandomDestination(ActorKind.Home),
     });
   }
 
@@ -77,12 +78,15 @@ export class Laborer extends Meeple {
         break;
       }
       case LaborerActionName.GoHome: {
-        this.turnOnLights();
-        const destination = this.getRandomDestination(ActorKind.Home);
-        this.goToDestination(destination).callMethod(() => {
-          this.dispatch(LaborerActionName.Hangout);
-        });
-        this.state = LaborerState.Traveling;
+        if (this.status?.home) {
+          this.turnOnLights();
+          this.goToDestination(this.status?.home).callMethod(() => {
+            this.dispatch(LaborerActionName.Hangout);
+          });
+          this.state = LaborerState.Traveling;
+          break;
+        }
+
         break;
       }
       case LaborerActionName.Work: {

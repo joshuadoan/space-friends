@@ -1,5 +1,5 @@
 import { Engine } from "excalibur";
-import { getDestinationName } from "../utils/get-name";
+import { getSpaceBarName } from "../utils/get-name";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { ActorKind } from "./ActorKind";
 import { Lights } from "./Lights";
@@ -11,7 +11,7 @@ export class SpaceShop extends Meeple {
       width: 6,
       height: 6,
       color: MEEPLE_COLOR[ActorKind.SpaceShop],
-      name: getDestinationName(),
+      name: `The ${getSpaceBarName()}`,
       ...options,
     });
 

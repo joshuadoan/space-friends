@@ -1,4 +1,4 @@
-import { Actor, Color } from "excalibur";
+import { Actor, Color, Scene } from "excalibur";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { MEEPLE_COLOR, Meeple } from "./Meeple";
 import { ActorKind } from "./ActorKind";
@@ -41,6 +41,10 @@ export class Pirate extends Meeple {
     this.setStatus({
       imgUrl: this.generateAvatar(),
     });
+  }
+
+  onPostKill(_scene: Scene<unknown>): void {
+      
   }
 
   getLaborers() {

@@ -24,7 +24,7 @@ export const Badge = (props: { meeple: Meeple }) => {
               <span className="opacity-70 flex items-center gap-2">
                 {props.meeple.kind}
                 <div
-                  className="w-2 h-2"
+                  className="w-2 h-2 rounded-md"
                   style={{
                     backgroundColor: props.meeple.color.toString(),
                   }}

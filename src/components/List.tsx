@@ -16,7 +16,7 @@ const List = () => {
 
   useEffect(
     function handleSelected() {
-      game.resetZoom();
+      game.zoomOut();
     },
     [game]
   );

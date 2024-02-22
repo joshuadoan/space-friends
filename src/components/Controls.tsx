@@ -45,7 +45,7 @@ export const Controls = (props: {
             });
           }
         }
-        case "":
+        default:
           break;
       }
     }
@@ -58,6 +58,17 @@ export const Controls = (props: {
   useEffect(() => {
     props.game.currentScene.camera.zoom = props.state.zoom;
   }, [props.state.zoom]);
+
+  useEffect(
+    function handlePause() {
+      if (props.state.paused) {
+        props.game.stop();
+      } else {
+        props.game.start();
+      }
+    },
+    [props.state.paused]
+  );
   return (
     <div className="absolute right-4 bottom-4 flex items-center gap-2">
       <div className="flex flex-col items-center gap-2 ">

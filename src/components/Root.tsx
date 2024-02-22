@@ -76,24 +76,6 @@ const Root = () => {
   };
 
   useEffect(
-    function handlePause() {
-      if (state.paused) {
-        game.stop();
-      } else {
-        game.start();
-      }
-    },
-    [state.paused]
-  );
-
-  // useEffect(
-  //   function handleInitial() {
-  //     game.resetZoom();
-  //   },
-  //   [game]
-  // );
-
-  useEffect(
     function syncGameWithState() {
       const interval = setInterval(() => {
         dispatch({
@@ -115,14 +97,14 @@ const Root = () => {
   );
 
   return (
-    <div className="text-white">
+    <>
       <div className="h-full flex flex-col absolute ">
         <Nav state={state} dispatch={dispatch} />
         <Outlet context={{ game, state, dispatch }} />
       </div>
       <Legend state={state} />
       <Controls state={state} dispatch={dispatch} game={game} />
-    </div>
+    </>
   );
 };
 export default Root;

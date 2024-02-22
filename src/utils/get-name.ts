@@ -4,20 +4,25 @@ import {
   colors,
   names,
   starWars,
+  animals,
 } from "unique-names-generator";
+import { randomFromArray } from "./helpers";
 
 export function getPersonName() {
   return uniqueNamesGenerator({
-    dictionaries: [names, starWars, colors, adjectives],
+    dictionaries: [
+      randomFromArray([starWars, names]),
+      randomFromArray([starWars, names]),
+    ],
     separator: " ",
     length: 2,
     style: "capital",
   });
 }
 
-export function getDestinationName() {
+export function getSpaceBarName() {
   return uniqueNamesGenerator({
-    dictionaries: [names, colors, adjectives],
+    dictionaries: [randomFromArray([colors, adjectives]), animals],
     separator: " ",
     style: "capital",
     length: 2,

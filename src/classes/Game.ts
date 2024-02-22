@@ -9,14 +9,17 @@ class Game extends Engine {
     this.currentScene.camera.move(pos, 1000);
   }
   resetZoom() {
+    this.zoomOut();
     const center = vec(
       (this.drawWidth / 2) * this.currentScene.camera.zoom,
       (this.drawHeight / 2) * this.currentScene.camera.zoom
     );
-
     const camera = this.currentScene.camera;
     camera.clearAllStrategies();
     camera.strategy.camera.move(center, 500);
+  }
+  zoomOut() {
+    const camera = this.currentScene.camera;
     camera.strategy.camera.zoomOverTime(DEFAULT_ZOOM, 500);
   }
   panCamera(direction: Direction) {

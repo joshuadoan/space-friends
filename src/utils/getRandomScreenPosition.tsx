@@ -5,8 +5,8 @@ import { Engine, vec } from "excalibur";
  */
 
 export function getRandomScreenPosition(game: Engine) {
-  let maxX = game.drawWidth - game.drawWidth * 0.1;
-  let maxY = game.drawHeight - game.drawHeight * 0.1;
+  let maxX = game.drawWidth * 1.5;
+  let maxY = game.drawHeight * 1.5;
   let minY = game.drawHeight * 0.1;
   let minX = game.drawWidth * 0.1;
 

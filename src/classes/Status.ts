@@ -10,4 +10,5 @@ export type Status = {
   journal: MeepleEvent[];
   speed: number;
   target: Meeple | null;
+  home: Meeple | null;
 };

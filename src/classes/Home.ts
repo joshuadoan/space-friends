@@ -1,4 +1,3 @@
-import { getDestinationName } from "../utils/get-name";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { ActorKind } from "./ActorKind";
 import Game from "./Game";
@@ -11,7 +10,7 @@ export class Home extends Meeple {
       width: 6,
       height: 6,
       color: MEEPLE_COLOR[ActorKind.Home],
-      name: getDestinationName(),
+      name: "Home", // guests
       ...options,
     });
 

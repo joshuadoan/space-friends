@@ -1,4 +1,3 @@
-import { getDestinationName } from "../utils/get-name";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import Game from "./Game";
 import { ActorKind } from "./ActorKind";
@@ -11,7 +10,7 @@ export class PirateBase extends Meeple {
       width: 6,
       height: 6,
       color: MEEPLE_COLOR[ActorKind.PirateBase],
-      name: getDestinationName(),
+      name: "Grrrr",
       ...options,
     });
 

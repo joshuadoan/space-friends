@@ -10,7 +10,7 @@ export const MIN_ZOOM = 1;
 export const DEFAULT_ZOOM = 2;
 
 export const MEEPLE_COLOR = {
-  [ActorKind.Laborer]: Color.ExcaliburBlue,
+  [ActorKind.Laborer]: Color.Green,
   [ActorKind.SpaceShop]: Color.Blue,
   [ActorKind.Home]: Color.Orange,
   [ActorKind.Pirate]: Color.Magenta,
@@ -27,6 +27,7 @@ export class Meeple extends Actor {
     journal: [],
     speed: randomBetween(20, 42),
     target: null,
+    home: null,
   };
 
   startTimer(next: () => void) {

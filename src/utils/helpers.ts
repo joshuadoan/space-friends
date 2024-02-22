@@ -27,6 +27,10 @@ export function makeStar(game: Engine) {
   return star;
 }
 
+export function randomFromArray<T>(array: T[]) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
 /**
  * Returns a random position on the screen.
  */

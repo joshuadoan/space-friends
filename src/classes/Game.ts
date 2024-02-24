@@ -1,5 +1,5 @@
 import { Engine, vec, Vector } from "excalibur";
-import { DEFAULT_ZOOM } from "./Meeple";
+import { DEFAULT_ZOOM } from "./Base";
 import { Direction } from "../types";
 /**
  * Resets the zoom of the camera.

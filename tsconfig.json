@@ -4,7 +4,10 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "moduleResolution": "Node",
     "strict": true,
     "skipLibCheck": true,
@@ -15,7 +18,13 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "types": ["node", "jest"]
+    "types": [
+      "node",
+      "jest"
+    ]
   },
-  "include": ["./src", "src/__tests__"]
+  "include": [
+    "./src",
+    "src/__tests__"
+  ]
 }

@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { useOutletContext, Outlet } from "react-router-dom";
 import { Action, UxState } from "../types";
 import Game from "../classes/Game";
-import { Badge } from "./Badge";
+import { Badge } from "../components/Badge";
 import useFilters from "../hooks/useFilters";
-import Filters from "./FIlters";
+import Filters from "../components/FIlters";
 
 const List = () => {
-  const { filter } = useFilters();
+  const { actorKind: actor } = useFilters();
   const { state, game } = useOutletContext() as {
     game: Game;
     state: UxState;
@@ -27,11 +27,12 @@ const List = () => {
       <menu
         className="flex flex-col justify-start overflow-auto flex-1 p-4"
         role="menu"
+        data-test-id="menu"
       >
         {state.actors
-          .filter((a) => (!!filter ? a.kind === filter : true))
+          .filter((a) => (!!actor ? a.kind === actor : true))
           .map((actor) => (
-            <li key={actor.id} data-testid="meeple" className="mb-4">
+            <li key={actor.id} data-testid="actor" className="mb-4">
               <Badge meeple={actor} />
             </li>
           ))}

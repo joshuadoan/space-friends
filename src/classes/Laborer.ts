@@ -1,5 +1,5 @@
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
-import { MEEPLE_COLOR, Meeple } from "./Meeple";
+import { MEEPLE_COLOR, ActorBase } from "./Base";
 import { ActorKind } from "./ActorKind";
 import { getPersonName } from "../utils/get-name";
 
@@ -17,7 +17,7 @@ export enum LaborerActionName {
   Hangout = "hangout",
 }
 
-export class Laborer extends Meeple {
+export class Laborer extends ActorBase {
   constructor(options?: { name?: string; kind?: ActorKind }) {
     super({
       width: 4,

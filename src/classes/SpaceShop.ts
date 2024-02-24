@@ -3,9 +3,9 @@ import { getSpaceBarName } from "../utils/get-name";
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { ActorKind } from "./ActorKind";
 import { Lights } from "./Lights";
-import { MEEPLE_COLOR, Meeple } from "./Meeple";
+import { MEEPLE_COLOR, ActorBase } from "./Base";
 
-export class SpaceShop extends Meeple {
+export class SpaceShop extends ActorBase {
   constructor(options?: { name?: string }) {
     super({
       width: 6,

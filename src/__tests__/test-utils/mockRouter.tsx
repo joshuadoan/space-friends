@@ -1,9 +1,9 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
-import Root from "../../components/Root";
-import ErrorPage from "../../components/ErrorPage";
+import Root from "../../pages/Root";
+import ErrorPage from "../../pages/ErrorPage";
 import mockRootLoader from "./mockRootLoader";
-import List from "../../components/List";
+import List from "../../pages/Actors";
 import Help from "../../components/Help";
 import MeepleDetail from "../../components/Details";
 
@@ -21,11 +21,7 @@ export function mockRouter() {
           element: <List />,
         },
         {
-          path: "/meeples",
-          element: <List />,
-        },
-        {
-          path: "/meeples/:meepleId",
+          path: "/:meepleId",
           element: <MeepleDetail />,
         },
         {

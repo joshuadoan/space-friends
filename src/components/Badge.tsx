@@ -2,19 +2,17 @@ import React from "react";
 import { useSearchParams } from "react-router-dom";
 import Avatar from "./Avatar";
 import StyledLink from "./StyledLink";
-import { Meeple } from "../classes/Meeple";
+import { ActorBase } from "../classes/Base";
 
-export const Badge = (props: { meeple: Meeple }) => {
-  const [params] = useSearchParams();
+export const Badge = (props: { meeple: ActorBase }) => {
+  const [searchParams] = useSearchParams();
   const { imgUrl, health, stuff, journal } = props.meeple.status;
   const event = journal[journal.length - 1];
   return (
     <div>
       <div className={"flex items-center gap-2"}>
         <StyledLink
-          to={`/meeples/${props.meeple.id}?filter=${
-            params.get("filter") ?? ""
-          }`}
+          to={`/${props.meeple.id}?${searchParams.toString()}`}
           title="Click to zoom and follow"
         >
           <div className="w-full text-left flex items-center gap-2">

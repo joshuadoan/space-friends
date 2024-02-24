@@ -5,7 +5,7 @@ import help from "../../readme.md";
 
 const Help = () => {
   return (
-    <div className="prose lg:prose-base prose-pink  rounded-md p-4 overflow-auto flex flex-col h-full bg-white bg-opacity-90">
+    <div className="prose text-white prose-headings:text-white overflow-auto prose-img:border prose-img:border-white prose-a:text-white p-4">
       <Markdown remarkPlugins={[remarkGfm]}>{help}</Markdown>
     </div>
   );

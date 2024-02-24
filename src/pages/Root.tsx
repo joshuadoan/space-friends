@@ -3,9 +3,9 @@ import { Outlet, useLoaderData } from "react-router-dom";
 import Game from "../classes/Game";
 import { makeStar } from "../utils/helpers";
 import useUxState from "../hooks/use-ux-state";
-import Nav from "./Nav";
+import Nav from "../components/Nav";
 import { UxActionKinds } from "../types";
-import { DEFAULT_ZOOM, Meeple } from "../classes/Meeple";
+import { DEFAULT_ZOOM, ActorBase } from "../classes/Base";
 import { SpaceShop } from "../classes/SpaceShop";
 import { Home } from "../classes/Home";
 import { Laborer } from "../classes/Laborer";
@@ -13,7 +13,7 @@ import { Pirate } from "../classes/Pirate";
 import { PirateBase } from "../classes/PirateBase";
 import { Color, DisplayMode } from "excalibur";
 import { Legend } from "../classes/Legend";
-import { Controls } from "./Controls";
+import { Controls } from "../components/Controls";
 
 export const NUMBER_OF_STARS = 100;
 export const NUMBER_OF_SPACE_SHOPS = 5;
@@ -82,8 +82,8 @@ const Root = () => {
           kind: UxActionKinds.SET_ACTORS,
           payload: [
             ...(game?.currentScene.actors
-              .filter((a) => a instanceof Meeple)
-              .map((a) => a as Meeple) ?? []),
+              .filter((a) => a instanceof ActorBase)
+              .map((a) => a as ActorBase) ?? []),
           ],
         });
         dispatch({

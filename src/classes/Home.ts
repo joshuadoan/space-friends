@@ -2,15 +2,16 @@ import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import { ActorKind } from "./ActorKind";
 import Game from "./Game";
 import { Lights } from "./Lights";
-import { MEEPLE_COLOR, Meeple } from "./Meeple";
+import { MEEPLE_COLOR, ActorBase } from "./Base";
+import { getSpaceBarName } from "../utils/get-name";
 
-export class Home extends Meeple {
+export class Home extends ActorBase {
   constructor(options?: { name?: string; kind?: ActorKind }) {
     super({
       width: 6,
       height: 6,
       color: MEEPLE_COLOR[ActorKind.Home],
-      name: "Home", // guests
+      name: getSpaceBarName(),
       ...options,
     });
 

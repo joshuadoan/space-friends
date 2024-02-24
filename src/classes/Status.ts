@@ -1,6 +1,6 @@
 import { Lights } from "./Lights";
 import { MeepleEvent } from "./Journal";
-import { Meeple } from "./Meeple";
+import { ActorBase } from "./Base";
 
 export type Status = {
   health: number;
@@ -9,6 +9,6 @@ export type Status = {
   imgUrl: string;
   journal: MeepleEvent[];
   speed: number;
-  target: Meeple | null;
-  home: Meeple | null;
+  target: ActorBase | null;
+  home: ActorBase | null;
 };

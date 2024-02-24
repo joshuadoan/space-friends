@@ -8,10 +8,10 @@ const Nav = (props: { state: UxState; dispatch: React.Dispatch<Action> }) => {
     <nav className="flex gap-2 p-4 items-center">
       <StyledNavLink
         to={{
-          pathname: "/meeples",
+          pathname: "/",
         }}
       >
-        meeples
+        home
       </StyledNavLink>
       <StyledNavLink to="/help">help</StyledNavLink>
       {props.state.paused ? (

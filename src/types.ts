@@ -1,10 +1,10 @@
-import { Meeple } from "./classes/Meeple";
+import { ActorBase } from "./classes/Base";
 import Game from "./classes/Game";
 
 export type Tab = "meeples" | "help";
 
 export type UxState = {
-  actors: Meeple[];
+  actors: ActorBase[];
   paused: boolean;
   zoom: number;
 };
@@ -18,7 +18,7 @@ export enum UxActionKinds {
 
 type SetActors = {
   kind: UxActionKinds.SET_ACTORS;
-  payload: Meeple[];
+  payload: ActorBase[];
 };
 
 type SetZoom = {

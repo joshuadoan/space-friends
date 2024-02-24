@@ -1,24 +1,23 @@
 import React, { useEffect } from "react";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext, useParams, useSearchParams } from "react-router-dom";
 import { OutletContext } from "../types";
 import StyledLink from "./StyledLink";
 import { Badge } from "./Badge";
 import Journal from "./Journal";
-import useFilters from "../hooks/useFilters";
 
 const MeepleDetail = () => {
-  const { filter } = useFilters();
   const { state } = useOutletContext() as OutletContext;
+  const [searchParams] = useSearchParams();
 
-  let { meepleId } = useParams<{
+  const { meepleId } = useParams<{
     meepleId: string;
   }>();
-
   const meeple = state.actors.find((a) => a.id === Number(meepleId));
+
+
 
   useEffect(
     function handleSelected() {
-      console.log("handleSelected");
       meeple?.zoomTo();
     },
     [meeple]
@@ -35,8 +34,8 @@ const MeepleDetail = () => {
       <p className="py-4">
         <StyledLink
           to={{
-            pathname: "/meeples",
-            search: `?filter=${filter ?? ""}`,
+            pathname: "/",
+            search: `?${searchParams.toString()}`,
           }}
         >
           {`<--`} back

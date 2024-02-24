@@ -17,7 +17,7 @@ export const MEEPLE_COLOR = {
   [ActorKind.PirateBase]: Color.Red,
 };
 
-export class Meeple extends Actor {
+export class ActorBase extends Actor {
   public kind: ActorKind = ActorKind.Laborer;
   public status: Status = {
     health: 100,
@@ -55,9 +55,9 @@ export class Meeple extends Actor {
 
   getActorsMap(): KindMap {
     return this.scene.actors
-      .map((a) => a as Meeple)
+      .map((a) => a as ActorBase)
       .reduce(
-        (acc: KindMap, val: Meeple) => {
+        (acc: KindMap, val: ActorBase) => {
           const current = acc[val.kind] ?? [];
 
           return {
@@ -113,21 +113,21 @@ export class Meeple extends Actor {
 
   getRandomDestination(kind: ActorKind) {
     const destinations = this.scene.actors
-      .map((a) => a as Meeple)
-      .filter((a): a is Meeple => a.kind === kind);
+      .map((a) => a as ActorBase)
+      .filter((a): a is ActorBase => a.kind === kind);
 
     return destinations[Math.floor(Math.random() * destinations.length)];
   }
 
   getRandomShip(kind: ActorKind) {
     const ships = this.scene.actors
-      .map((a) => a as Meeple)
-      .filter((a): a is Meeple => a.kind === kind);
+      .map((a) => a as ActorBase)
+      .filter((a): a is ActorBase => a.kind === kind);
 
     return ships[Math.floor(Math.random() * ships.length)];
   }
 
-  goToDestination(destination: Meeple) {
+  goToDestination(destination: ActorBase) {
     return this.actions
       .moveTo(
         vec(

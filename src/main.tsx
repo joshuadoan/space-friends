@@ -1,11 +1,11 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ReactDOM from "react-dom/client";
-import Root from "./components/Root";
-import List from "./components/List";
+import Root from "./pages/Root";
+import List from "./pages/Actors";
 import Help from "./components/Help";
-import { rootLoader } from "./components/Root";
-import ErrorPage from "./components/ErrorPage";
+import { rootLoader } from "./pages/Root";
+import ErrorPage from "./pages/ErrorPage";
 import MeepleDetail from "./components/Details";
 
 export const routes = [
@@ -21,11 +21,7 @@ export const routes = [
         element: <List />,
       },
       {
-        path: "/meeples",
-        element: <List />,
-      },
-      {
-        path: "/meeples/:meepleId",
+        path: "/:meepleId",
         element: <MeepleDetail />,
       },
       {

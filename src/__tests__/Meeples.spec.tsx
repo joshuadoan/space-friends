@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import "@testing-library/jest-dom/jest-globals";
 import { enableFetchMocks } from "jest-fetch-mock";
 import { RouterProvider } from "react-router-dom";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within, act } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { mockRouter } from "./test-utils/mockRouter";
 
@@ -19,32 +19,34 @@ jest.mock("../components/Help", () => {
   };
 });
 
+beforeEach(async () => {
+  await act(() => render(<RouterProvider router={mockRouter()} />));
+})
+
 test("Renders the ships and can filter", async () => {
-  render(<RouterProvider router={mockRouter()} />);
+  const nav = screen.getByRole("navigation")
+  within(nav).getByText("home");
+  within(nav).getByText("help");
+  within(nav).getByText("pause");
 
-  await screen.findByText("meeples");
-  await screen.findByText("help");
-
-  await screen.findByText("Meeple 1");
-  await screen.findByText("Meeple 2");
-  await screen.findByText("Meeple 3");
-
-  let actors = await screen.findAllByTestId("meeple");
+  const filters = await screen.findByTestId("filters");
+  let actors = await screen.findAllByTestId("actor");
   expect(actors.length).toBe(6);
 
-  await userEvent.click(await screen.findByText("ships"));
-  actors = await screen.findAllByTestId("meeple");
+  await userEvent.click(within(filters).getByText("laborer"));
+  actors = await screen.findAllByTestId("actor");
   expect(actors.length).toBe(3);
 
-  await userEvent.click(await screen.findByText("space shops"));
-  actors = await screen.findAllByTestId("meeple");
+  await userEvent.click(within(filters).getByText("space-shop"));
+  actors = await screen.findAllByTestId("actor");
   expect(actors.length).toBe(2);
 
-  await userEvent.click(await screen.findByText("homes"));
-  actors = await screen.findAllByTestId("meeple");
+  await userEvent.click(within(filters).getByText("home"));
+  actors = await screen.findAllByTestId("actor");
   expect(actors.length).toBe(1);
 
-  await userEvent.click(await screen.findByText("all"));
-  actors = await screen.findAllByTestId("meeple");
+  await userEvent.click(within(filters).getByText("all"));
+  actors = await screen.findAllByTestId("actor");
   expect(actors.length).toBe(6);
+
 });

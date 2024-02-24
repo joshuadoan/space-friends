@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Action, Direction, UxActionKinds, UxState } from "../types";
-import { MAX_ZOOM, MIN_ZOOM } from "../classes/Meeple";
+import { MAX_ZOOM, MIN_ZOOM } from "../classes/Base";
 import Game from "../classes/Game";
 
 export const Controls = (props: {

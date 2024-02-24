@@ -1,4 +1,4 @@
-import { Meeple } from "./Meeple";
+import { ActorBase } from "./Base";
 
 export enum ActorKind {
   Laborer = "laborer",
@@ -9,5 +9,5 @@ export enum ActorKind {
 }
 
 export type KindMap = {
-  [key in ActorKind]: Meeple[];
+  [key in ActorKind]: ActorBase[];
 };

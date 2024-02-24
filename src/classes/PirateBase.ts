@@ -1,10 +1,10 @@
 import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 import Game from "./Game";
 import { ActorKind } from "./ActorKind";
-import { MEEPLE_COLOR, Meeple } from "./Meeple";
+import { MEEPLE_COLOR, ActorBase } from "./Base";
 import { Lights } from "./Lights";
 
-export class PirateBase extends Meeple {
+export class PirateBase extends ActorBase {
   constructor(options?: { name?: string; kind?: ActorKind }) {
     super({
       width: 6,

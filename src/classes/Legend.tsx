@@ -1,5 +1,5 @@
 import React from "react";
-import { MEEPLE_COLOR } from "./Meeple";
+import { MEEPLE_COLOR } from "./Base";
 import { UxState } from "../types";
 
 export const Legend = (props: { state: UxState }) => {

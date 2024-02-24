@@ -4,7 +4,7 @@ import { UxState } from "../types";
 
 export const Legend = (props: { state: UxState }) => {
   return (
-    <ul className="flex flex-col  max-w-32 absolute right-4 top-4">
+    <ul className="flex items-center gap-2">
       {Object.entries(MEEPLE_COLOR).map(([name, color]) => (
         <li key={name} className="rounded-md flex items-center gap-2">
           <div
@@ -13,7 +13,6 @@ export const Legend = (props: { state: UxState }) => {
               backgroundColor: color.toString(),
             }}
           />
-          {name}
           <span>
             {props.state.actors.reduce((acc, meeple) => {
               if (meeple.kind === name) {

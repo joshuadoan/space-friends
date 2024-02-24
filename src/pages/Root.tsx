@@ -11,9 +11,9 @@ import { Laborer } from "../classes/Laborer";
 import { Pirate } from "../classes/Pirate";
 import { PirateBase } from "../classes/PirateBase";
 import { Color, DisplayMode } from "excalibur";
-import { Legend } from "../classes/Legend";
-import { Controls } from "../components/Controls";
+import { Footer } from "../components/Footer";
 import StyledNavLink from "../components/StyledNavLink";
+import useControls from "../hooks/use-controls";
 
 export const NUMBER_OF_STARS = 100;
 export const NUMBER_OF_SPACE_SHOPS = 5;
@@ -75,6 +75,8 @@ const Root = () => {
     game: Game;
   };
 
+  useControls(game, state, dispatch);
+
   useEffect(
     function syncGameWithState() {
       const interval = setInterval(() => {
@@ -97,23 +99,20 @@ const Root = () => {
   );
 
   return (
-    <>
-      <div className="h-full flex flex-col absolute ">
-        <nav className="flex gap-2 p-4 items-center">
-          <StyledNavLink
-            to={{
-              pathname: "/",
-            }}
-          >
-            home
-          </StyledNavLink>
-          <StyledNavLink to="/help">help</StyledNavLink>
-        </nav>
-        <Outlet context={{ state, dispatch }} />
-      </div>
-      <Legend state={state} />
-      <Controls state={state} dispatch={dispatch} game={game} />
-    </>
+    <div className="h-full flex flex-col absolute   w-full">
+      <nav className="flex gap-2 p-4 items-center">
+        <StyledNavLink
+          to={{
+            pathname: "/",
+          }}
+        >
+          home
+        </StyledNavLink>
+        <StyledNavLink to="/help">help</StyledNavLink>
+      </nav>
+      <Outlet context={{ state, dispatch }} />
+      <Footer state={state} dispatch={dispatch} game={game} />
+    </div>
   );
 };
 export default Root;

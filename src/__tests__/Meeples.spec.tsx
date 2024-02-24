@@ -23,17 +23,16 @@ beforeEach(async () => {
   await act(() => render(<RouterProvider router={mockRouter()} />));
 })
 
-test("Renders the ships and can filter", async () => {
+test("Renders the navigation and actor list", async () => {
   const nav = screen.getByRole("navigation")
   within(nav).getByText("home");
   within(nav).getByText("help");
-  within(nav).getByText("pause");
 
   const filters = await screen.findByTestId("filters");
   let actors = await screen.findAllByTestId("actor");
   expect(actors.length).toBe(6);
 
-  await userEvent.click(within(filters).getByText("laborer"));
+  await userEvent.click(within(filters).getByText("space-trader"));
   actors = await screen.findAllByTestId("actor");
   expect(actors.length).toBe(3);
 

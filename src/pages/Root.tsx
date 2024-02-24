@@ -3,7 +3,6 @@ import { Outlet, useLoaderData } from "react-router-dom";
 import Game from "../classes/Game";
 import { makeStar } from "../utils/helpers";
 import useUxState from "../hooks/use-ux-state";
-import Nav from "../components/Nav";
 import { UxActionKinds } from "../types";
 import { DEFAULT_ZOOM, ActorBase } from "../classes/Base";
 import { SpaceShop } from "../classes/SpaceShop";
@@ -14,6 +13,7 @@ import { PirateBase } from "../classes/PirateBase";
 import { Color, DisplayMode } from "excalibur";
 import { Legend } from "../classes/Legend";
 import { Controls } from "../components/Controls";
+import StyledNavLink from "../components/StyledNavLink";
 
 export const NUMBER_OF_STARS = 100;
 export const NUMBER_OF_SPACE_SHOPS = 5;
@@ -99,8 +99,17 @@ const Root = () => {
   return (
     <>
       <div className="h-full flex flex-col absolute ">
-        <Nav state={state} dispatch={dispatch} />
-        <Outlet context={{ game, state, dispatch }} />
+        <nav className="flex gap-2 p-4 items-center">
+          <StyledNavLink
+            to={{
+              pathname: "/",
+            }}
+          >
+            home
+          </StyledNavLink>
+          <StyledNavLink to="/help">help</StyledNavLink>
+        </nav>
+        <Outlet context={{ state, dispatch }} />
       </div>
       <Legend state={state} />
       <Controls state={state} dispatch={dispatch} game={game} />

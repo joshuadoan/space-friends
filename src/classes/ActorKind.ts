@@ -1,7 +1,7 @@
 import { ActorBase } from "./Base";
 
 export enum ActorKind {
-  Laborer = "laborer",
+  Laborer = "space-trader",
   SpaceShop = "space-shop",
   Home = "home",
   Pirate = "pirate",

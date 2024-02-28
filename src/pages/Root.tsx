@@ -99,8 +99,8 @@ const Root = () => {
   );
 
   return (
-    <div className="h-full flex flex-col absolute   w-full">
-      <nav className="flex gap-2 p-4 items-center">
+    <div className="h-full flex flex-col absolute w-full"  >
+      <nav className="flex gap-2 p-4 items-center"  >
         <StyledNavLink
           to={{
             pathname: "/",

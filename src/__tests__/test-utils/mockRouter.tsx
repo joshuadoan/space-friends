@@ -4,8 +4,8 @@ import Root from "../../pages/Root";
 import ErrorPage from "../../pages/ErrorPage";
 import mockRootLoader from "./mockRootLoader";
 import List from "../../pages/Actors";
-import Help from "../../components/Help";
-import MeepleDetail from "../../components/Details";
+import Help from "../../pages/Help";
+import MeepleDetail from "../../pages/[id]";
 
 export function mockRouter() {
   return createBrowserRouter([

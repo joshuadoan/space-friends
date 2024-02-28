@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useOutletContext, useParams, useSearchParams } from "react-router-dom";
 import { OutletContext } from "../types";
-import StyledLink from "./StyledLink";
-import { Badge } from "./Badge";
-import Journal from "./Journal";
+import StyledLink from "../components/StyledLink";
+import { Badge } from "../components/Badge";
+import Journal from "../components/Journal";
 
 const MeepleDetail = () => {
   const { state } = useOutletContext() as OutletContext;

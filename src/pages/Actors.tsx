@@ -3,7 +3,7 @@ import { useOutletContext, Outlet } from "react-router-dom";
 import { Action, UxState } from "../types";
 import { Badge } from "../components/Badge";
 import useFilters from "../hooks/useFilters";
-import Filters from "../components/FIlters";
+import Filters from "../components/Filters";
 
 const List = () => {
   const { actorKind: actor } = useFilters();

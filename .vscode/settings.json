@@ -1,3 +1,11 @@
 {
-  "cSpell.words": ["Meeple"]
+  "cSpell.words": [
+    "Meeple"
+  ],
+  "files.exclude": {
+    "": true
+  },
+  "search.exclude": {
+    "": true
+  }
 }

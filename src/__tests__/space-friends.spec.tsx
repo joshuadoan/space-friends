@@ -10,7 +10,7 @@ import { mockRouter } from "./test-utils/mockRouter";
 enableFetchMocks();
 
 // React Markdown Jest issue
-jest.mock("../components/Help", () => {
+jest.mock("../pages/Help", () => {
   return {
     __esModule: true,
     default: () => {

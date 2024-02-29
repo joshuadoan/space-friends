@@ -1,6 +1,6 @@
 import React from "react";
 import { useOutletContext, Outlet } from "react-router-dom";
-import { Action, UxState } from "../types";
+import { UxAction, UxState } from "../types";
 import { Badge } from "../components/Badge";
 import useFilters from "../hooks/useFilters";
 import Filters from "../components/Filters";
@@ -9,7 +9,7 @@ const List = () => {
   const { actorKind: actor } = useFilters();
   const { state } = useOutletContext() as {
     state: UxState;
-    dispatch: React.Dispatch<Action>;
+    dispatch: React.Dispatch<UxAction>;
   };
 
 

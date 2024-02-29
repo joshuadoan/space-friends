@@ -21,7 +21,7 @@ export const NUMBER_OF_PIRATE_BASES = 1;
 class Game extends Engine {
   constructor() {
     super({
-      displayMode: DisplayMode.FitScreenAndFill,
+      displayMode: DisplayMode.FitContainer,
       backgroundColor: Color.Black,
       canvasElementId: "canvas",
       antialiasing: false,
@@ -58,6 +58,7 @@ class Game extends Engine {
       this.add(ship);
     }
   }
+
   panTo(pos: Vector) {
     this.currentScene.camera.move(pos, 1000);
   }

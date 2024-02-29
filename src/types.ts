@@ -7,6 +7,7 @@ export type UxState = {
   actors: ActorBase[];
   paused: boolean;
   zoom: number;
+  cameraDirection: Direction;
 };
 
 export enum UxActionKinds {
@@ -14,6 +15,7 @@ export enum UxActionKinds {
   PAUSE_GAME = "PAUSE_GAME",
   RESUME_GAME = "RESUME_GAME",
   SET_ZOOM = "SET_ZOOM",
+  SET_CAMERA_DIRECTION = "SET_CAMERA_DIRECTION",
 }
 
 type SetActors = {
@@ -34,12 +36,22 @@ type ResumeGame = {
   kind: UxActionKinds.RESUME_GAME;
 };
 
-export type Action = SetActors | PauseGame | ResumeGame | SetZoom;
+type SetCameraDirection = {
+  kind: UxActionKinds.SET_CAMERA_DIRECTION;
+  payload: Direction;
+};
+
+export type UxAction =
+  | SetActors
+  | PauseGame
+  | ResumeGame
+  | SetZoom
+  | SetCameraDirection;
 
 export type OutletContext = {
   game: Game;
   state: UxState;
-  dispatch: React.Dispatch<Action>;
+  dispatch: React.Dispatch<UxAction>;
 };
 
 export enum Direction {

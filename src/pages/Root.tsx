@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Outlet, useLoaderData } from "react-router-dom";
 import Game from "../classes/Game";
 import useUxState from "../hooks/use-ux-state";
-import { UxActionKinds } from "../types";
+import { Direction, UxActionKinds } from "../types";
 import { DEFAULT_ZOOM, ActorBase } from "../classes/Base";
 import { Footer } from "../components/Footer";
 import StyledNavLink from "../components/StyledNavLink";
@@ -21,6 +21,7 @@ const Root = () => {
     actors: [],
     paused: false,
     zoom: DEFAULT_ZOOM,
+    cameraDirection: Direction.Left,
   });
 
   const { game } = useLoaderData() as {
@@ -40,6 +41,7 @@ const Root = () => {
               .map((a) => a as ActorBase) ?? []),
           ],
         });
+
       }, 300);
       return () => clearInterval(interval);
     },

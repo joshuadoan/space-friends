@@ -1,19 +1,20 @@
 import React from "react";
-import { Action, UxActionKinds, UxState } from "../types";
+import { UxAction, UxActionKinds, UxState } from "../types";
 import { MAX_ZOOM, MIN_ZOOM } from "../classes/Base";
 import Game from "../classes/Game";
 import Button from "./Button";
 import { Legend } from "../classes/Legend";
+import { CameraControls } from "./CameraControls";
 
 export const Footer = (props: {
   state: UxState;
-  dispatch: React.Dispatch<Action>;
+  dispatch: React.Dispatch<UxAction>;
   game: Game;
 }) => {
   return (
     <footer className="flex items-center gap-4 justify-end p-4 ">
       <Legend state={props.state} />
-      <Button>Drag me</Button>
+      <CameraControls state={props.state} dispatch={props.dispatch} game={props.game} />
       {props.state.paused ? (
         <Button
           title="pause"

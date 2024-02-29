@@ -7,7 +7,7 @@ export type UxState = {
   actors: ActorBase[];
   paused: boolean;
   zoom: number;
-  cameraDirection: Direction;
+  cameraDirection: Direction | null;
 };
 
 export enum UxActionKinds {
@@ -38,7 +38,7 @@ type ResumeGame = {
 
 type SetCameraDirection = {
   kind: UxActionKinds.SET_CAMERA_DIRECTION;
-  payload: Direction;
+  payload: Direction | null;
 };
 
 export type UxAction =

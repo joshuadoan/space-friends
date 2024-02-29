@@ -12,7 +12,13 @@ export const CameraControls = (props: {
 
   useEffect(() => {
     window.addEventListener("mousedown", () => setMouseDown(true));
-    window.addEventListener("mouseup", () => setMouseDown(false));
+    window.addEventListener("mouseup", () => {
+      setMouseDown(false)
+      props.dispatch({
+        kind: UxActionKinds.SET_CAMERA_DIRECTION,
+        payload: null
+      })
+    });
     return () => {
       window.removeEventListener("mousedown", () => () => setMouseDown(true));
       window.removeEventListener("mouseup", () => setMouseDown(false));
@@ -51,7 +57,7 @@ export const CameraControls = (props: {
   }, [mouseDown])
 
 
-  return <div className="flex flex-col justify-center gap-1">
+  return <div className="flex flex-col justify-center gap-1 text-xs">
     <Button className="self-center" onMouseDown={() => {
       props.dispatch({
         kind: UxActionKinds.SET_CAMERA_DIRECTION,

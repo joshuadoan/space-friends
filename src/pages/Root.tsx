@@ -1,26 +1,14 @@
 import React, { useEffect } from "react";
 import { Outlet, useLoaderData } from "react-router-dom";
 import Game from "../classes/Game";
-import { makeStar } from "../utils/helpers";
 import useUxState from "../hooks/use-ux-state";
 import { UxActionKinds } from "../types";
 import { DEFAULT_ZOOM, ActorBase } from "../classes/Base";
-import { SpaceShop } from "../classes/SpaceShop";
-import { Home } from "../classes/Home";
-import { Laborer } from "../classes/Laborer";
-import { Pirate } from "../classes/Pirate";
-import { PirateBase } from "../classes/PirateBase";
 import { Color, DisplayMode } from "excalibur";
 import { Footer } from "../components/Footer";
 import StyledNavLink from "../components/StyledNavLink";
 import useControls from "../hooks/use-controls";
-
-export const NUMBER_OF_STARS = 100;
-export const NUMBER_OF_SPACE_SHOPS = 5;
-export const NUMBER_OF_SPACE_HOMES = 3;
-export const NUMBER_OF_SHIPS = 27;
-export const NUMBER_OF_PIRATES = 5;
-export const NUMBER_OF_PIRATE_BASES = 1;
+import { ActorKind } from "../classes/ActorKind";
 
 export async function rootLoader() {
   const game = new Game({
@@ -29,36 +17,6 @@ export async function rootLoader() {
     canvasElementId: "canvas",
     antialiasing: false,
   });
-
-  for (let i = 0; i < NUMBER_OF_STARS; i++) {
-    const star = makeStar(game);
-    game.add(star);
-  }
-
-  for (let i = 0; i < NUMBER_OF_SPACE_HOMES; i++) {
-    const ship = new Home();
-    game.add(ship);
-  }
-
-  for (let i = 0; i < NUMBER_OF_SPACE_SHOPS; i++) {
-    const ship = new SpaceShop();
-    game.add(ship);
-  }
-
-  for (let i = 0; i < NUMBER_OF_SHIPS; i++) {
-    const ship = new Laborer();
-    game.add(ship);
-  }
-
-  for (let i = 0; i < NUMBER_OF_PIRATES; i++) {
-    const ship = new Pirate();
-    game.add(ship);
-  }
-
-  for (let i = 0; i < NUMBER_OF_PIRATE_BASES; i++) {
-    const ship = new PirateBase();
-    game.add(ship);
-  }
 
   await game.start();
   return { game };
@@ -84,7 +42,7 @@ const Root = () => {
           kind: UxActionKinds.SET_ACTORS,
           payload: [
             ...(game?.currentScene.actors
-              .filter((a) => a instanceof ActorBase)
+              .filter((a) => a instanceof ActorBase && a.kind !== ActorKind.Star)
               .map((a) => a as ActorBase) ?? []),
           ],
         });

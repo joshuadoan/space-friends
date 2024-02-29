@@ -5,7 +5,7 @@ import StyledNavLink from "./StyledNavLink";
 import { ActorKind } from "../classes/ActorKind";
 import useFilters, { FilterKinds } from "../hooks/useFilters";
 const Filters = () => {
-  const { actorKind } = useFilters();
+  const { actorKind: actorKindFromParams } = useFilters();
   let { meepleId } = useParams<{
     meepleId: string;
   }>();
@@ -21,22 +21,24 @@ const Filters = () => {
         to="/"
 
         className={cx("hover:underline p-2", {
-          "bg-purple-800 ": !actorKind,
+          "bg-purple-800 ": !actorKindFromParams,
           "opacity-50": !!meepleId,
         })}
       >
         all
       </StyledNavLink>
       {
-        (Object.keys(ActorKind) as Array<keyof typeof ActorKind>).map((key, i) => {
+        (Object.values(ActorKind) as Array<ActorKind>).filter(f => {
+          return f !== ActorKind.Star;
+        }).map((key, i) => {
           return <StyledNavLink
             key={i}
-            to={`?${FilterKinds.Actor}=${ActorKind[key]}`}
+            to={`?${FilterKinds.Actor}=${key}`}
             className={cx("hover:underline p-2", {
-              "bg-purple-800 ": actorKind === ActorKind[key],
+              "bg-purple-800 ": actorKindFromParams === key,
             })}
           >
-            {ActorKind[key]}
+            {key}
           </StyledNavLink>
         })
       }

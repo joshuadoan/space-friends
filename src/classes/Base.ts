@@ -32,8 +32,7 @@ export class ActorBase extends Actor {
 
   startTimer(next: () => void) {
     const timer = new Timer({
-      // interval: randomBetween(1000, 1000),
-      interval: 1000,
+      interval: randomBetween(1000, 5000),
       repeats: true,
     });
 
@@ -71,6 +70,7 @@ export class ActorBase extends Actor {
           [ActorKind.Home]: [],
           [ActorKind.Pirate]: [],
           [ActorKind.PirateBase]: [],
+          [ActorKind.Star]: [],
         }
       );
   }

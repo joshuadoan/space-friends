@@ -12,8 +12,8 @@ export function getRandomScreenPosition(game: Engine) {
 
   return vec(
     Math.floor(Math.random() * (maxX - minX) + minX) *
-      game.currentScene.camera.zoom,
+    game.currentScene.camera.zoom,
     Math.floor(Math.random() * (maxY - minY) + minY) *
-      game.currentScene.camera.zoom
+    game.currentScene.camera.zoom
   );
 }

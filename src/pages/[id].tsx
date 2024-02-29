@@ -30,7 +30,7 @@ const MeepleDetail = () => {
   const { journal } = meeple?.status;
 
   return (
-    <section className="px-4">
+    <section className="h-full px-4">
       <p className="py-4">
         <StyledLink
           to={{

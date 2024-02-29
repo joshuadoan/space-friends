@@ -6,6 +6,7 @@ export enum ActorKind {
   Home = "home",
   Pirate = "pirate",
   PirateBase = "pirate-base",
+  Star = "star",
 }
 
 export type KindMap = {

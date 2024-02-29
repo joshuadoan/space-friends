@@ -17,9 +17,9 @@ export class Home extends ActorBase {
 
     this.kind = ActorKind.Home;
   }
-  onInitialize(_engine: Game): void {
+  onInitialize(engine: Game): void {
     this.kind = ActorKind.Home;
-    this.pos = getRandomScreenPosition(this.scene.engine);
+    this.pos = getRandomScreenPosition(engine);
     this.setStatus({
       imgUrl: this.generateAvatar(),
       stuff: 100,

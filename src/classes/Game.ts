@@ -1,4 +1,4 @@
-import { Engine, vec, Vector } from "excalibur";
+import { Color, DisplayMode, Engine, vec, Vector } from "excalibur";
 import { DEFAULT_ZOOM } from "./Base";
 import { Direction } from "../types";
 import { Home } from "./Home";
@@ -19,6 +19,14 @@ export const NUMBER_OF_PIRATE_BASES = 1;
  * Resets the zoom of the camera.
  */
 class Game extends Engine {
+  constructor() {
+    super({
+      displayMode: DisplayMode.FitScreenAndFill,
+      backgroundColor: Color.Black,
+      canvasElementId: "canvas",
+      antialiasing: false,
+    });
+  }
   onInitialize(_engine: Engine): void {
     for (let i = 0; i < NUMBER_OF_STARS; i++) {
       const star = new Star();

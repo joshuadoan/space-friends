@@ -13,6 +13,7 @@ export const Footer = (props: {
   return (
     <footer className="flex items-center gap-4 justify-end p-4 ">
       <Legend state={props.state} />
+      <Button>Drag me</Button>
       {props.state.paused ? (
         <Button
           title="pause"

@@ -4,19 +4,13 @@ import Game from "../classes/Game";
 import useUxState from "../hooks/use-ux-state";
 import { UxActionKinds } from "../types";
 import { DEFAULT_ZOOM, ActorBase } from "../classes/Base";
-import { Color, DisplayMode } from "excalibur";
 import { Footer } from "../components/Footer";
 import StyledNavLink from "../components/StyledNavLink";
 import useControls from "../hooks/use-controls";
 import { ActorKind } from "../classes/ActorKind";
 
 export async function rootLoader() {
-  const game = new Game({
-    displayMode: DisplayMode.FitScreenAndFill,
-    backgroundColor: Color.Black,
-    canvasElementId: "canvas",
-    antialiasing: false,
-  });
+  const game = new Game();
 
   await game.start();
   return { game };
@@ -45,10 +39,6 @@ const Root = () => {
               .filter((a) => a instanceof ActorBase && a.kind !== ActorKind.Star)
               .map((a) => a as ActorBase) ?? []),
           ],
-        });
-        dispatch({
-          kind: UxActionKinds.SET_ZOOM,
-          payload: game?.currentScene.camera.zoom,
         });
       }, 300);
       return () => clearInterval(interval);

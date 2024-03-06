@@ -1,15 +1,21 @@
 import React from "react";
-import { useOutletContext, Outlet, useSearchParams } from "react-router-dom";
+import cx from "classnames"
+import { useOutletContext, Outlet, useSearchParams, useParams } from "react-router-dom";
 import { UxAction, UxState } from "../types";
 import { ActorDetails } from "../components/ActorDetails";
-import useFilters from "../hooks/useFilters";
+import useFilters, { FilterKinds } from "../hooks/useFilters";
 import StyledLink from "../components/StyledLink";
 import Avatar from "../components/Avatar";
+import StyledNavLink from "../components/StyledNavLink";
+import { ActorKind } from "../classes/ActorKind";
 // import { Filters } from "../components/Filters";
 
 const List = () => {
   const [searchParams] = useSearchParams();
-  const { actorKind: actor } = useFilters();
+  const { actorKind } = useFilters();
+  let { meepleId } = useParams<{
+    meepleId: string;
+  }>();
   const { state } = useOutletContext() as {
     state: UxState;
     dispatch: React.Dispatch<UxAction>;
@@ -18,14 +24,45 @@ const List = () => {
 
   return (
     <>
-      {/* <Filters /> */}
+      <div
+        className={cx("flex items-center gap-2 bg-black bg-opacity-50 px-4", {
+          // hidden: !!meepleId,
+        })}
+        data-testid="filters"
+      >
+        <StyledNavLink
+          to="/"
+
+          className={cx("hover:underline p-2", {
+            "bg-purple-800 ": !actorKind,
+            "opacity-50": !!meepleId,
+          })}
+        >
+          all
+        </StyledNavLink>
+        {
+          (Object.values(ActorKind) as Array<ActorKind>).filter(f => {
+            return f !== ActorKind.Star;
+          }).map((key, i) => {
+            return <StyledNavLink
+              key={i}
+              to={`?${FilterKinds.Actor}=${key}`}
+              className={cx("hover:underline p-2", {
+                "bg-purple-800 ": actorKind === key,
+              })}
+            >
+              {key}
+            </StyledNavLink>
+          })
+        }
+      </div>
       <menu
         className="flex flex-col justify-start overflow-auto flex-1 p-4"
         role="menu"
         data-test-id="menu"
       >
         {state.actors
-          .filter((a) => (!!actor ? a.kind === actor : true))
+          .filter((a) => (!!actorKind ? a.kind === actorKind : true))
           .map((actor) => (
             <li key={actor.id} data-testid="actor" className="mb-4">
               <div className={"flex items-center gap-2"}>

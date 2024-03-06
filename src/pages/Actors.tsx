@@ -5,7 +5,7 @@ import { ActorDetails } from "../components/ActorDetails";
 import useFilters from "../hooks/useFilters";
 import StyledLink from "../components/StyledLink";
 import Avatar from "../components/Avatar";
-import { Filters } from "../components/Filters";
+// import { Filters } from "../components/Filters";
 
 const List = () => {
   const [searchParams] = useSearchParams();
@@ -18,7 +18,7 @@ const List = () => {
 
   return (
     <>
-      <Filters />
+      {/* <Filters /> */}
       <menu
         className="flex flex-col justify-start overflow-auto flex-1 p-4"
         role="menu"

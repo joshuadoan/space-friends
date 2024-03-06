@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useOutletContext, useParams, useSearchParams } from "react-router-dom";
 import { OutletContext } from "../types";
 import StyledLink from "../components/StyledLink";
-import { Badge } from "../components/Badge";
+import { ActorDetails } from "../components/ActorDetails";
 import Journal from "../components/Journal";
 
 const MeepleDetail = () => {
@@ -41,7 +41,7 @@ const MeepleDetail = () => {
           {`<--`} back
         </StyledLink>
       </p>
-      <Badge meeple={meeple} />
+      <ActorDetails meeple={meeple} />
       <Journal journal={journal} />
     </section>
   );

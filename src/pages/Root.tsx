@@ -3,11 +3,14 @@ import { Outlet, useLoaderData } from "react-router-dom";
 import Game from "../classes/Game";
 import useUxState from "../hooks/use-ux-state";
 import { Direction, UxActionKinds } from "../types";
-import { DEFAULT_ZOOM, ActorBase } from "../classes/Base";
-import { Footer } from "../components/Footer";
+import { DEFAULT_ZOOM, ActorBase, MIN_ZOOM, MAX_ZOOM } from "../classes/Base";
 import StyledNavLink from "../components/StyledNavLink";
 import useControls from "../hooks/use-controls";
 import { ActorKind } from "../classes/ActorKind";
+import Button from "../components/Button";
+import { CameraControls } from "../components/CameraControls";
+import { Legend } from "../classes/Legend";
+import { Slider } from "../components/Slider";
 
 export async function rootLoader() {
   const game = new Game();
@@ -61,8 +64,44 @@ const Root = () => {
         <StyledNavLink to="/help">help</StyledNavLink>
       </nav>
       <Outlet context={{ state, dispatch }} />
-      <Footer state={state} dispatch={dispatch} game={game} />
+      <footer className="flex items-center gap-4 justify-end p-4 md:absolute right-0 bottom-0 size ">
+        <Legend state={state} />
+        <CameraControls state={state} dispatch={dispatch} game={game} />
+        {state.paused ? (
+          <Button
+            title="pause"
+            onClick={() =>
+              dispatch({
+                kind: UxActionKinds.RESUME_GAME,
+              })
+            }
+          >
+            play
+          </Button>
+        ) : (
+          <Button
+            title="play"
+            onClick={() =>
+              dispatch({
+                kind: UxActionKinds.PAUSE_GAME,
+              })
+            }
+          >
+            pause
+          </Button>
+        )}
+        <Slider min={MIN_ZOOM} max={MAX_ZOOM} value={state.zoom}
+          disabled={!!state.paused}
+          onChange={function (value: number) {
+            dispatch({
+              kind: UxActionKinds.SET_ZOOM,
+              payload: value,
+            });
+          }} />
+      </footer>
     </div>
   );
 };
 export default Root;
+
+

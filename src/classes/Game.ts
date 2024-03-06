@@ -8,12 +8,12 @@ import { Pirate } from "./Pirate";
 import { PirateBase } from "./PirateBase";
 import { Star } from "./Star";
 
-export const NUMBER_OF_STARS = 100;
-export const NUMBER_OF_SPACE_SHOPS = 5;
-export const NUMBER_OF_SPACE_HOMES = 3;
-export const NUMBER_OF_SHIPS = 27;
-export const NUMBER_OF_PIRATES = 5;
-export const NUMBER_OF_PIRATE_BASES = 1;
+export const NUMBER_OF_STARS = 156;
+export const NUMBER_OF_SPACE_SHOPS = 10;
+export const NUMBER_OF_SPACE_HOMES = 5;
+export const NUMBER_OF_SHIPS = 42;
+export const NUMBER_OF_PIRATES = 9;
+export const NUMBER_OF_PIRATE_BASES = 3;
 
 /**
  * Resets the zoom of the camera.

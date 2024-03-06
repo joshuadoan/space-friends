@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Badge } from "../components/Badge";
+import { ActorDetails } from "../components/ActorDetails";
 import { ActorBase } from "../classes/Base";
 import { Color } from "excalibur";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
   title: "Compnents/Badge",
-  component: Badge,
+  component: ActorDetails,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
@@ -16,7 +16,7 @@ const meta = {
   tags: ["autodocs"],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {},
-} satisfies Meta<typeof Badge>;
+} satisfies Meta<typeof ActorDetails>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

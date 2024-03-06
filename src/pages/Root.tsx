@@ -6,10 +6,8 @@ import { Direction, UxActionKinds } from "../types";
 import { DEFAULT_ZOOM, ActorBase, MIN_ZOOM, MAX_ZOOM } from "../classes/Base";
 import StyledNavLink from "../components/StyledNavLink";
 import useControls from "../hooks/use-controls";
-import { ActorKind } from "../classes/ActorKind";
 import Button from "../components/Button";
 import { CameraControls } from "../components/CameraControls";
-import { Legend } from "../classes/Legend";
 import { Slider } from "../components/Slider";
 
 export async function rootLoader() {
@@ -40,7 +38,6 @@ const Root = () => {
           kind: UxActionKinds.SET_ACTORS,
           payload: [
             ...(game?.currentScene.actors
-              .filter((a) => a instanceof ActorBase && a.kind !== ActorKind.Star)
               .map((a) => a as ActorBase) ?? []),
           ],
         });
@@ -61,11 +58,17 @@ const Root = () => {
         >
           home
         </StyledNavLink>
+        <StyledNavLink
+          to={{
+            pathname: "/actors",
+          }}
+        >
+          actors
+        </StyledNavLink>
         <StyledNavLink to="/help">help</StyledNavLink>
       </nav>
       <Outlet context={{ state, dispatch }} />
       <footer className="flex items-center gap-4 justify-end p-4 md:absolute right-0 bottom-0 size ">
-        <Legend state={state} />
         <CameraControls state={state} dispatch={dispatch} game={game} />
         {state.paused ? (
           <Button

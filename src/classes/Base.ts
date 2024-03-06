@@ -9,12 +9,15 @@ export const MAX_ZOOM = 5;
 export const MIN_ZOOM = 1;
 export const DEFAULT_ZOOM = 2;
 
-export const MEEPLE_COLOR = {
+export const MEEPLE_COLOR: {
+  [key in ActorKind]: Color;
+} = {
   [ActorKind.Laborer]: Color.Green,
   [ActorKind.SpaceShop]: Color.Blue,
   [ActorKind.Home]: Color.Orange,
   [ActorKind.Pirate]: Color.Magenta,
   [ActorKind.PirateBase]: Color.Red,
+  [ActorKind.Star]: Color.White,
 };
 
 export class ActorBase extends Actor {

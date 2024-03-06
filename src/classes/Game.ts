@@ -21,7 +21,7 @@ export const NUMBER_OF_PIRATE_BASES = 3;
 class Game extends Engine {
   constructor() {
     super({
-      displayMode: DisplayMode.FitContainer,
+      displayMode: DisplayMode.FillScreen,
       backgroundColor: Color.Black,
       canvasElementId: "canvas",
       antialiasing: false,
@@ -99,8 +99,8 @@ class Game extends Engine {
   getRandomScreenPosition() {
     let maxX = this.drawWidth * 1.5;
     let maxY = this.drawHeight * 1.5;
-    let minY = this.drawHeight * 0.1;
-    let minX = this.drawWidth * 0.1;
+    let minY = this.drawHeight * 1.5;
+    let minX = this.drawWidth * 1.5;
 
     return vec(
       Math.floor(Math.random() * (maxX - minX) + minX) *

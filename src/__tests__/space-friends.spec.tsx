@@ -26,26 +26,26 @@ beforeEach(async () => {
 test("Renders the navigation and actor list", async () => {
   const nav = screen.getByRole("navigation")
   within(nav).getByText("home");
+  within(nav).getByText("actors");
   within(nav).getByText("help");
 
-  const filters = await screen.findByTestId("filters");
+  await userEvent.click(within(nav).getByText("actors"));
+
   let actors = await screen.findAllByTestId("actor");
   expect(actors.length).toBe(6);
 
-  await userEvent.click(within(filters).getByText("space-trader"));
+  const filters = await screen.findByTestId("filters");
+
+  await userEvent.click(within(filters).getByTitle("filter by space-trader"));
   actors = await screen.findAllByTestId("actor");
   expect(actors.length).toBe(3);
 
-  await userEvent.click(within(filters).getByText("space-shop"));
+  await userEvent.click(within(filters).getByTitle("filter by space-shop"));
   actors = await screen.findAllByTestId("actor");
   expect(actors.length).toBe(2);
 
-  await userEvent.click(within(filters).getByText("home"));
+  await userEvent.click(within(filters).getByTitle("filter by home"));
   actors = await screen.findAllByTestId("actor");
   expect(actors.length).toBe(1);
-
-  await userEvent.click(within(filters).getByText("all"));
-  actors = await screen.findAllByTestId("actor");
-  expect(actors.length).toBe(6);
 
 });

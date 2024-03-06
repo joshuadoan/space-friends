@@ -10,6 +10,10 @@ export type UxState = {
   cameraDirection: Direction | null;
 };
 
+export enum FilterKinds {
+  Actor = "actors",
+}
+
 export enum UxActionKinds {
   SET_ACTORS = "SET_ACTORS",
   PAUSE_GAME = "PAUSE_GAME",

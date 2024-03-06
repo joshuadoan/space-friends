@@ -1,10 +1,10 @@
 
 import Root from "./pages/Root";
-import List from "./pages/Actors";
+import List from "./pages/actors/Actors";
 import Help from "./pages/Help";
 import { rootLoader } from "./pages/Root";
 import ErrorPage from "./pages/ErrorPage";
-import MeepleDetail from "./pages/[id]"; import React from "react";
+import MeepleDetail from "./pages/actors/[id]"; import React from "react";
 ;
 export const routes = [
   {
@@ -15,13 +15,16 @@ export const routes = [
     shouldRevalidate: () => false,
     children: [
       {
-        path: "/",
+        path: "/actors",
         element: <List />,
+        children: [
+          {
+            path: "/actors/:actorId",
+            element: <MeepleDetail />,
+          },
+        ]
       },
-      {
-        path: "/:meepleId",
-        element: <MeepleDetail />,
-      },
+
       {
         path: "/help",
         element: <Help />,

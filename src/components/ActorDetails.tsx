@@ -5,7 +5,7 @@ export const ActorDetails = (props: { meeple: ActorBase }) => {
   const { health, stuff, journal } = props.meeple.status;
   const event = journal[journal.length - 1];
   return (
-    <dl className={"px-2  "}>
+    <dl className={""}>
       <dd className="flex gap-2 items-center">
         <label className="opacity-70">state: </label> {event?.state}
       </dd>

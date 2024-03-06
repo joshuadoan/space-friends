@@ -3,7 +3,7 @@ import { Journal } from "../classes/Journal";
 
 const Journal = ({ journal }: { journal: Journal }) => {
   return (
-    <dl className={"p-2"}>
+    <dl>
       <dt className="font-semibold">Journal</dt>
       {journal?.length ? (
         journal

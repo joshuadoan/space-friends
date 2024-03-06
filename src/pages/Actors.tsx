@@ -3,9 +3,9 @@ import { useOutletContext, Outlet, useSearchParams } from "react-router-dom";
 import { UxAction, UxState } from "../types";
 import { ActorDetails } from "../components/ActorDetails";
 import useFilters from "../hooks/useFilters";
-import Filters from "../components/Filters";
 import StyledLink from "../components/StyledLink";
 import Avatar from "../components/Avatar";
+import Filters from "../components/Filters";
 
 const List = () => {
   const [searchParams] = useSearchParams();

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import StyledNavLink from "./StyledNavLink";
 import { ActorKind } from "../classes/ActorKind";
 import useFilters, { FilterKinds } from "../hooks/useFilters";
-const Filters = () => {
+export const Filters = () => {
   const { actorKind: actorKindFromParams } = useFilters();
   let { meepleId } = useParams<{
     meepleId: string;
@@ -45,5 +45,3 @@ const Filters = () => {
     </div>
   );
 };
-
-export default Filters;

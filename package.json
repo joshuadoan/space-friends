@@ -17,8 +17,7 @@
     "vite",
     "game-engine"
   ],
-  "author": "Erik Onarheim",
-  "license": "BSD-2-Clause",
+  "author": "Joshua Doan",
   "homepage": "https://pachinspac.com/",
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.17",

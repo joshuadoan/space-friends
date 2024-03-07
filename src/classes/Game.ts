@@ -16,6 +16,13 @@ export const NUMBER_OF_SHIPS = 42;
 export const NUMBER_OF_PIRATES = 3;
 export const NUMBER_OF_PIRATE_BASES = 1;
 
+enum BOUNDS {
+  MIN_X = -500000,
+  MAX_X = 500000,
+  MIN_Y = -500000,
+  MAX_Y = 500000,
+}
+
 /**
  * Resets the zoom of the camera.
  */
@@ -106,13 +113,6 @@ class Game extends Engine {
     }
   }
   getRandomScreenPosition() {
-    enum BOUNDS {
-      MIN_X = -500000,
-      MAX_X = 500000,
-      MIN_Y = -500000,
-      MAX_Y = 500000,
-    }
-
     return vec(
       Math.floor(Math.random() * (BOUNDS.MAX_X - BOUNDS.MIN_X) + BOUNDS.MIN_X) *
         this.currentScene.camera.zoom,

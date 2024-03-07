@@ -77,11 +77,7 @@ const List = () => {
             <li key={actor.id} data-testid="actor" className={cx({
               "hidden": actorId && actor.id !== Number(actorId),
             })}>
-              <div
-
-                className="flex gap-2 items-start"
-                title="Click to zoom and follow"
-              >
+              <div className="flex gap-2 items-start">
                 <Avatar url={actor.status?.imgUrl} />
                 <div className="flex flex-col">
                   <StyledLink

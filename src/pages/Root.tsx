@@ -68,29 +68,18 @@ const Root = () => {
       <Outlet context={{ state, dispatch }} />
       <footer className="flex items-center gap-4 justify-end p-4 md:absolute right-0 bottom-0 size ">
         <CameraControls state={state} dispatch={dispatch} game={game} />
-        {state.paused ? (
-          <Button
-            title="pause"
-            onClick={() =>
-              dispatch({
-                kind: UxActionKinds.RESUME_GAME,
-              })
-            }
-          >
-            play
-          </Button>
-        ) : (
-          <Button
-            title="play"
-            onClick={() =>
-              dispatch({
-                kind: UxActionKinds.PAUSE_GAME,
-              })
-            }
-          >
-            pause
-          </Button>
-        )}
+        <Button
+          title="play"
+          onClick={() =>
+            dispatch({
+              kind: state.paused
+                ? UxActionKinds.RESUME_GAME
+                : UxActionKinds.PAUSE_GAME,
+            })
+          }
+        >
+          {state.paused ? "play" : "pause"}
+        </Button>
         <Slider min={MIN_ZOOM} max={MAX_ZOOM} value={state.zoom}
           disabled={!!state.paused}
           onChange={function (value: number) {

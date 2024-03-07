@@ -62,16 +62,6 @@ class Game extends Engine {
   panTo(pos: Vector) {
     this.currentScene.camera.move(pos, 1000);
   }
-  resetZoom() {
-    this.zoomOut();
-    const center = vec(
-      (this.drawWidth / 2) * this.currentScene.camera.zoom,
-      (this.drawHeight / 2) * this.currentScene.camera.zoom
-    );
-    const camera = this.currentScene.camera;
-    camera.clearAllStrategies();
-    camera.strategy.camera.move(center, 500);
-  }
   zoomOut() {
     const camera = this.currentScene.camera;
     camera.strategy.camera.zoomOverTime(DEFAULT_ZOOM, 500);
@@ -83,24 +73,33 @@ class Game extends Engine {
     const duration = 10;
     switch (direction) {
       case Direction.Up:
-        camera.move(vec(camera.pos.x, camera.pos.y - 20), duration);
+        console.log(camera.pos.y);
+        if (camera.pos.y - 20 > 0) {
+          camera.move(vec(camera.pos.x, camera.pos.y - 20), duration);
+        }
         break;
       case Direction.Down:
-        camera.move(vec(camera.pos.x, camera.pos.y + 20), duration);
+        if (camera.pos.y + 20 < this.drawHeight) {
+          camera.move(vec(camera.pos.x, camera.pos.y + 20), duration);
+        }
         break;
       case Direction.Left:
-        camera.move(vec(camera.pos.x - 20, camera.pos.y), duration);
+        if (camera.pos.x - 20 > 0) {
+          camera.move(vec(camera.pos.x - 20, camera.pos.y), duration);
+        }
         break;
       case Direction.Right:
-        camera.move(vec(camera.pos.x + 20, camera.pos.y), duration);
+        if (camera.pos.x + 20 < this.drawWidth) {
+          camera.move(vec(camera.pos.x + 20, camera.pos.y), duration);
+        }
         break;
     }
   }
   getRandomScreenPosition() {
-    let maxX = this.drawWidth * 1.5;
-    let maxY = this.drawHeight * 1.5;
-    let minY = this.drawHeight * 1.5;
-    let minX = this.drawWidth * 1.5;
+    let maxX = this.drawWidth;
+    let maxY = this.drawHeight;
+    let minY = this.drawHeight;
+    let minX = this.drawWidth;
 
     return vec(
       Math.floor(Math.random() * (maxX - minX) + minX) *

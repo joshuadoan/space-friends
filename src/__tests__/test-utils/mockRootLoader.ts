@@ -35,7 +35,6 @@ export default async (): Promise<{
         isRunning: jest.fn().mockImplementation(() => true),
         start: jest.fn(),
         stop: jest.fn(),
-        resetZoom: jest.fn(),
         zoomOut: jest.fn(),
       },
     });

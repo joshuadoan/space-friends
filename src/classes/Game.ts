@@ -87,27 +87,21 @@ class Game extends Engine {
     const { camera } = this.currentScene;
     camera.clearAllStrategies();
 
-    const duration = 10;
+    const duration = 1;
     switch (direction) {
       case Direction.Up:
-        if (camera.pos.y - 20 > 0) {
-          camera.move(vec(camera.pos.x, camera.pos.y - 20), duration);
-        }
+        camera.move(vec(camera.pos.x, camera.pos.y - 20), duration);
         break;
       case Direction.Down:
-        if (camera.pos.y + 20 < this.drawHeight) {
-          camera.move(vec(camera.pos.x, camera.pos.y + 20), duration);
-        }
+        camera.move(vec(camera.pos.x, camera.pos.y + 20), duration);
+
         break;
       case Direction.Left:
-        if (camera.pos.x - 20 > 0) {
-          camera.move(vec(camera.pos.x - 20, camera.pos.y), duration);
-        }
+        camera.move(vec(camera.pos.x - 20, camera.pos.y), duration);
         break;
       case Direction.Right:
-        if (camera.pos.x + 20 < this.drawWidth) {
-          camera.move(vec(camera.pos.x + 20, camera.pos.y), duration);
-        }
+        camera.move(vec(camera.pos.x + 20, camera.pos.y), duration);
+
         break;
     }
   }

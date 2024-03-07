@@ -3,7 +3,7 @@ import { Outlet, useLoaderData } from "react-router-dom";
 import Game from "../classes/Game";
 import useUxState from "../hooks/use-ux-state";
 import { Direction, UxActionKinds } from "../types";
-import { DEFAULT_ZOOM, ActorBase, MIN_ZOOM, MAX_ZOOM } from "../classes/Base";
+import { DEFAULT_ZOOM, MIN_ZOOM, MAX_ZOOM } from "../classes/Base";
 import StyledNavLink from "../components/StyledNavLink";
 import useControls from "../hooks/use-controls";
 import Button from "../components/Button";
@@ -18,16 +18,16 @@ export async function rootLoader() {
 }
 
 const Root = () => {
+  const { game } = useLoaderData() as {
+    game: Game;
+  };
+
   const { state, dispatch } = useUxState({
-    actors: [],
+    actors: game.actors,
     paused: false,
     zoom: DEFAULT_ZOOM,
     cameraDirection: Direction.Left,
   });
-
-  const { game } = useLoaderData() as {
-    game: Game;
-  };
 
   useControls(game, state, dispatch);
 
@@ -36,10 +36,7 @@ const Root = () => {
       const interval = setInterval(() => {
         dispatch({
           kind: UxActionKinds.SET_ACTORS,
-          payload: [
-            ...(game?.currentScene.actors
-              .map((a) => a as ActorBase) ?? []),
-          ],
+          payload: game.actors,
         });
 
         dispatch({
@@ -47,7 +44,7 @@ const Root = () => {
           payload: game.currentScene.camera.zoom,
         })
 
-      }, 500);
+      }, 300);
       return () => clearInterval(interval);
     },
     [game]

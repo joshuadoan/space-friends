@@ -1,5 +1,5 @@
 import { Color, DisplayMode, Engine, vec, Vector } from "excalibur";
-import { DEFAULT_ZOOM } from "./Base";
+import { ActorBase, DEFAULT_ZOOM } from "./Base";
 import { Direction } from "../types";
 import { Home } from "./Home";
 import { SpaceShop } from "./SpaceShop";
@@ -7,18 +7,20 @@ import { Laborer } from "./Laborer";
 import { Pirate } from "./Pirate";
 import { PirateBase } from "./PirateBase";
 import { Star } from "./Star";
+import { ActorKind } from "./ActorKind";
 
 export const NUMBER_OF_STARS = 156;
-export const NUMBER_OF_SPACE_SHOPS = 10;
-export const NUMBER_OF_SPACE_HOMES = 5;
+export const NUMBER_OF_SPACE_SHOPS = 5;
+export const NUMBER_OF_SPACE_HOMES = 2;
 export const NUMBER_OF_SHIPS = 42;
-export const NUMBER_OF_PIRATES = 9;
-export const NUMBER_OF_PIRATE_BASES = 3;
+export const NUMBER_OF_PIRATES = 3;
+export const NUMBER_OF_PIRATE_BASES = 1;
 
 /**
  * Resets the zoom of the camera.
  */
 class Game extends Engine {
+  public actors: ActorBase[] = [];
   constructor() {
     super({
       displayMode: DisplayMode.FillScreen,
@@ -57,6 +59,21 @@ class Game extends Engine {
       const ship = new PirateBase();
       this.add(ship);
     }
+
+    const kindOrder = Object.values(ActorKind);
+
+    this.actors =
+      this.currentScene.actors
+        .map((a) => a as ActorBase)
+        .sort((a, b) => {
+          const aIndex = kindOrder.indexOf(a.kind);
+          const bIndex = kindOrder.indexOf(b.kind);
+
+          if (aIndex < bIndex) {
+            return -1;
+          }
+          return 0;
+        }) ?? [];
   }
 
   panTo(pos: Vector) {
@@ -73,7 +90,6 @@ class Game extends Engine {
     const duration = 10;
     switch (direction) {
       case Direction.Up:
-        console.log(camera.pos.y);
         if (camera.pos.y - 20 > 0) {
           camera.move(vec(camera.pos.x, camera.pos.y - 20), duration);
         }
@@ -96,15 +112,17 @@ class Game extends Engine {
     }
   }
   getRandomScreenPosition() {
-    let maxX = this.drawWidth;
-    let maxY = this.drawHeight;
-    let minY = this.drawHeight;
-    let minX = this.drawWidth;
+    enum BOUNDS {
+      MIN_X = -500000,
+      MAX_X = 500000,
+      MIN_Y = -500000,
+      MAX_Y = 500000,
+    }
 
     return vec(
-      Math.floor(Math.random() * (maxX - minX) + minX) *
+      Math.floor(Math.random() * (BOUNDS.MAX_X - BOUNDS.MIN_X) + BOUNDS.MIN_X) *
         this.currentScene.camera.zoom,
-      Math.floor(Math.random() * (maxY - minY) + minY) *
+      Math.floor(Math.random() * (BOUNDS.MAX_Y - BOUNDS.MIN_Y) + BOUNDS.MIN_Y) *
         this.currentScene.camera.zoom
     );
   }

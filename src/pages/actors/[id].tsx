@@ -13,8 +13,6 @@ const MeepleDetail = () => {
 
   const meeple = state.actors.find((a) => a.id === Number(actorId));
 
-
-
   useEffect(
     function handleSelected() {
       meeple?.zoomTo();

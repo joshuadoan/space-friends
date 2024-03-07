@@ -7,7 +7,7 @@ import { Status } from "./Status";
 
 export const MAX_ZOOM = 5;
 export const MIN_ZOOM = 1;
-export const DEFAULT_ZOOM = 2;
+export const DEFAULT_ZOOM = 1;
 
 export const MEEPLE_COLOR: {
   [key in ActorKind]: Color;

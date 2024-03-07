@@ -9,6 +9,26 @@ export default async (): Promise<{
   return new Promise((resolve) => {
     resolve({
       game: {
+        actors: [
+          new Laborer({
+            name: "Meeple 1",
+          }),
+          new Laborer({
+            name: "Meeple 2",
+          }),
+          new Laborer({
+            name: "Meeple 3",
+          }),
+          new SpaceShop({
+            name: "Destination 1",
+          }),
+          new SpaceShop({
+            name: "Destination 1",
+          }),
+          new Home({
+            name: "Destination 2",
+          }),
+        ],
         currentScene: {
           camera: new Camera(),
           actors: [

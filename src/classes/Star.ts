@@ -214,6 +214,7 @@ function getRandomStarName() {
 }
 
 export class Star extends ActorBase {
+  public kind: ActorKind = ActorKind.Star;
   constructor(options?: { name?: string; kind?: ActorKind }) {
     super({
       width: 2,
@@ -225,7 +226,6 @@ export class Star extends ActorBase {
   }
 
   onInitialize(engine: Game): void {
-    this.kind = ActorKind.Star;
     this.pos = getRandomScreenPosition(engine);
     this.startTimer(() => this.next());
     this.setStatus({

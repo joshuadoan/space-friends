@@ -67,7 +67,7 @@ const List = () => {
         </p>
       }
       <menu
-        className="flex flex-col justify-start overflow-auto px-4 py-2 gap-2"
+        className="hidden md:flex flex-col justify-start overflow-auto px-4 py-2 gap-2"
         role="menu"
         data-test-id="menu"
       >

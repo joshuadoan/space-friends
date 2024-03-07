@@ -63,7 +63,7 @@ const Root = () => {
         <StyledNavLink to="/help">help</StyledNavLink>
       </nav>
       <Outlet context={{ state, dispatch }} />
-      <footer className="flex items-center gap-4 justify-end p-4 md:absolute right-0 bottom-0 size ">
+      <footer className="items-center gap-4 justify-end p-4 md:absolute right-0 bottom-0 size hidden md:flex ">
         <CameraControls state={state} dispatch={dispatch} game={game} />
         <Button
           title="play"

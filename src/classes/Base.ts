@@ -144,8 +144,8 @@ export class ActorBase extends Actor {
   zoomTo() {
     const camera = this.scene.camera;
     camera.clearAllStrategies();
-    camera.strategy.elasticToActor(this, 0.3, 0.3);
-    camera.strategy.camera.zoomOverTime(MAX_ZOOM, 5000);
+    camera.strategy.elasticToActor(this, 0.1, 0.1);
+    camera.strategy.camera.zoomOverTime(3, 5000);
   }
 
   /**

@@ -3,6 +3,18 @@ import Game from "../classes/Game";
 import { UxAction, Direction, UxActionKinds, UxState } from "../types";
 import { MAX_ZOOM, MIN_ZOOM } from "../classes/Base";
 
+enum MyKeys {
+  ArrowUp = "ArrowUp",
+  ArrowDown = "ArrowDown",
+  ArrowLeft = "ArrowLeft",
+  ArrowRight = "ArrowRight",
+  "w" = "w",
+  "a" = "a",
+  "s" = "s",
+  "d" = "d",
+  "-" = "-",
+  "=" = "=",
+}
 export default function useControls(
   game: Game,
   state: UxState,
@@ -10,6 +22,9 @@ export default function useControls(
 ) {
   useEffect(() => {
     function handleKeydown(event: KeyboardEvent) {
+      if (!MyKeys[event.key as keyof typeof MyKeys]) {
+        return;
+      }
       event.preventDefault();
       switch (event.key) {
         case "ArrowUp":

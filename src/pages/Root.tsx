@@ -42,7 +42,12 @@ const Root = () => {
           ],
         });
 
-      }, 300);
+        dispatch({
+          kind: UxActionKinds.SET_ZOOM,
+          payload: game.currentScene.camera.zoom,
+        })
+
+      }, 500);
       return () => clearInterval(interval);
     },
     [game]
@@ -53,17 +58,10 @@ const Root = () => {
       <nav className="flex gap-2 p-4 items-center"  >
         <StyledNavLink
           to={{
-            pathname: "/",
-          }}
-        >
-          home
-        </StyledNavLink>
-        <StyledNavLink
-          to={{
             pathname: "/actors",
           }}
         >
-          actors
+          home
         </StyledNavLink>
         <StyledNavLink to="/help">help</StyledNavLink>
       </nav>
@@ -105,6 +103,5 @@ const Root = () => {
     </div>
   );
 };
+
 export default Root;
-
-

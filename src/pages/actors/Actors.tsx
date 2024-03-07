@@ -102,6 +102,7 @@ const List = () => {
                         backgroundColor: actor.color.toString(),
                       }}
                     />
+                    {actor.status?.journal.length && actor.status.journal[actor.status.journal.length - 1].state}
                   </span>
                   <span className="flex gap-2 items-center">
                     <span>x: {Math.round(actor.pos.x)}</span>

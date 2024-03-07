@@ -1,13 +1,16 @@
 import { SpaceShop } from "../../classes/SpaceShop";
 import { Home } from "../../classes/Home";
 import { Laborer } from "../../classes/Laborer";
+import { Camera } from "excalibur";
 
-export default async () => {
+export default async (): Promise<{
+  game: any;
+}> => {
   return new Promise((resolve) => {
     resolve({
       game: {
         currentScene: {
-          camera: {},
+          camera: new Camera(),
           actors: [
             new Laborer({
               name: "Meeple 1",

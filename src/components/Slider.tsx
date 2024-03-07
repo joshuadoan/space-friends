@@ -11,17 +11,21 @@ export const Slider = (props: {
     <input
       disabled={props.disabled}
       type="range"
-      min={props.min}
-      max={props.max}
+      min={props.min * 10}
+      max={props.max * 10}
       title={props.value.toString()}
-      value={props.value}
-      className="range bg-purple-600 disabled:opacity-70"
-      onChange={(e) => props.onChange(Number(e.target.value))} />
+      value={props.value * 10}
+      className=" bg-purple-600 disabled:opacity-70"
+      onChange={(e) => props.onChange(Number(e.target.value) / 10)} />
     <div className="w-full flex justify-between text-xs px-2">
       <span>|</span>
+      <span>z</span>
       <span>|</span>
+      <span>o</span>
       <span>|</span>
+      <span>o</span>
       <span>|</span>
+      <span>m</span>
       <span>|</span>
     </div>
   </div>;

@@ -11,10 +11,6 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/excaliburjs/template-ts-vite.git"
-  },
   "keywords": [
     "excalibur",
     "excaliburjs",
@@ -23,10 +19,7 @@
   ],
   "author": "Erik Onarheim",
   "license": "BSD-2-Clause",
-  "bugs": {
-    "url": "https://github.com/excaliburjs/template-ts-vite/issues"
-  },
-  "homepage": "https://github.com/excaliburjs/template-ts-vite#readme",
+  "homepage": "https://pachinspac.com/",
   "devDependencies": {
     "@storybook/addon-essentials": "^7.6.17",
     "@storybook/addon-interactions": "^7.6.17",

@@ -1,7 +1,7 @@
 {
-  "name": "template-ts-vite",
-  "version": "1.1.0",
-  "description": "Excalibur TypeScript template for Vite",
+  "name": "space-friends",
+  "version": "0.0.1",
+  "description": "Space friends!",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
